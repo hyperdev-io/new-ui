@@ -1,7 +1,3 @@
-# meteor-starter-coffeescript-react
+# BigBoat Dashboard UI
 
-A starter project for Meteor + CoffeeScript + React + React-Router
-
-# Run
-
-      meteor
+A Dashboard UI for the BigBoat ecosystem

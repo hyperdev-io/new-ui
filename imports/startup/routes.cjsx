@@ -4,9 +4,11 @@ React = require 'react'
 App     = require '../ui/App.cjsx'
 Page    = require '../ui/Page.cjsx'
 Page1   = require '../ui/pages/Page1.cjsx'
-InstancesPage   = require '../ui/pages/Instances.cjsx'
+InstancesPage       = require '../ui/pages/meteor/InstancesPage.coffee'
+InstanceDetailPage  = require '../ui/pages/meteor/InstanceDetailPage.coffee'
 
-module.exports = ->
+module.exports = (Collections) ->
+  
   <Router history={browserHistory}>
     <Route path="/" component={App}>
       <IndexRoute component={Page1} />
@@ -14,7 +16,8 @@ module.exports = ->
         <IndexRoute component={Page1} />
       </Route>
       <Route path="instances" component={Page} title='Instances'>
-        <IndexRoute component={InstancesPage} />
+        <IndexRoute component={InstancesPage} Collections={Collections} />
       </Route>
+      <Route path="instances/:name" component={InstanceDetailPage} Collections={Collections} />
     </Route>
   </Router>

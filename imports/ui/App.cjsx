@@ -15,7 +15,6 @@ module.exports = App = React.createClass
     @setState priority: (if @state.priority is 'right' then 'left' else 'right')
 
   render: ->
-    console.log G.Split
     <G.App centered=false>
       <G.Split flex='right' priority={@state.priority}>
         <G.Sidebar colorIndex='neutral-1'>

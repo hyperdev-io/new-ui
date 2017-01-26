@@ -2,10 +2,15 @@
 
 
 module.exports = createContainer (props) ->
+  App = props.route.App
+  Instances = App.collections.Instances
+
+  App.subscribe.allInstances()
+
   name = props.params.name
-  Instances = props.route.Collections.Instances
 
   instance: Instances.findOne name: name
   title: name
+  emit: App.emit
 
 , require '../InstanceDetailPage.cjsx'

@@ -3,21 +3,21 @@ React = require 'react'
 
 App     = require '../ui/App.cjsx'
 Page    = require '../ui/Page.cjsx'
-Page1   = require '../ui/pages/Page1.cjsx'
+AppsPage            = require '../ui/pages/meteor/AppsPage.coffee'
 InstancesPage       = require '../ui/pages/meteor/InstancesPage.coffee'
 InstanceDetailPage  = require '../ui/pages/meteor/InstanceDetailPage.coffee'
 
-module.exports = (Collections) ->
-  
-  <Router history={browserHistory}>
+
+module.exports = (props) ->
+
+  <Router history={browserHistory} >
     <Route path="/" component={App}>
-      <IndexRoute component={Page1} />
       <Route path="apps" component={Page} title='Apps'>
-        <IndexRoute component={Page1} />
+        <IndexRoute component={AppsPage} App={props} />
       </Route>
       <Route path="instances" component={Page} title='Instances'>
-        <IndexRoute component={InstancesPage} Collections={Collections} />
+        <IndexRoute component={InstancesPage} App={props} />
       </Route>
-      <Route path="instances/:name" component={InstanceDetailPage} Collections={Collections} />
+      <Route path="instances/:name" component={InstanceDetailPage} App={props} />
     </Route>
   </Router>

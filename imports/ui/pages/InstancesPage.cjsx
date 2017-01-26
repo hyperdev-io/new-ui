@@ -8,7 +8,7 @@ module.exports = React.createClass
   displayName: 'InstancesPage'
 
   render: ->
-    console.log
+    console.log @
     <G.Section pad='none'>
       <G.Header size='small' justify='start' separator='top' pad={horizontal:'small'}>
         <G.Label size='small'>Today</G.Label>

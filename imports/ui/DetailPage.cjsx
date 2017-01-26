@@ -1,12 +1,13 @@
 React = require 'react'
 G     = require 'grommet'
 
-{ browserHistory } = require 'react-router'
+{ Router, browserHistory } = require 'react-router'
 
 module.exports  = React.createClass
   displayName: 'DetailPage'
 
-  goBack: -> browserHistory.goBack()
+  goBack: ->
+    browserHistory.goBack()
 
   render: ->
     <G.Article>

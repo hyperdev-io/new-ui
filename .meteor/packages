@@ -24,3 +24,5 @@ jhartma:cjsx
 coffeescript
 fourseven:scss
 react-meteor-data
+accounts-base
+typ:accounts-ldap

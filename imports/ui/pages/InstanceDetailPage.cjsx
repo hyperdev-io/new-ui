@@ -6,6 +6,8 @@ Helpers       = require '../Helpers.coffee'
 
 { Header, Split, Sidebar, Notification, Section, List, ListItem, Heading, Menu, Button, Icons } = require 'grommet'
 
+InstanceControls = require '../menus/InstanceControls.cjsx'
+
 li = (name, val) ->
   <ListItem justify='between'>
     <span>{name}</span>
@@ -53,10 +55,6 @@ module.exports = React.createClass
       </DetailPage>
       <Sidebar size='medium' colorIndex='light-2' direction='column'>
         <Header pad='medium' size='large' />
-        <Menu pad='medium'>
-          <Button align='start' plain=true label='Stop' href='#' icon={<Icons.Base.Power />}></Button>
-          <Button align='start' plain=true label='Logs' href='#' icon={<Icons.Base.Notes />}></Button>
-          <Button align='start' plain=true label='Remove' href='#' icon={<Icons.Base.Trash />}></Button>
-        </Menu>
+        <InstanceControls instanceName={@props.instance.name} emit={@props.emit} />
       </Sidebar>
     </Split>

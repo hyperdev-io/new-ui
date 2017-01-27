@@ -3,6 +3,8 @@ React               = require 'react'
 
 { Article, Box, Header, Heading, Search, Title, Box, List, ListItem, Split } = require 'grommet'
 
+console.log require 'grommet-addons/components/AnnotatedMeter'
+
 module.exports = React.createClass
   displayName: 'StoragePage'
 
@@ -27,7 +29,7 @@ module.exports = React.createClass
           <ListItem key={bucket._id} pad='medium' justify='between' align='center'>
             <Box direction='column' pad='none'>
               <strong>{bucket.name}</strong>
-              <span></span>
+              <span>{bucket.size}</span>
             </Box>
           </ListItem>
         }

@@ -26,3 +26,4 @@ fourseven:scss
 react-meteor-data
 accounts-base
 typ:accounts-ldap
+session

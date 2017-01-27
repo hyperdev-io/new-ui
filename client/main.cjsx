@@ -13,17 +13,22 @@ Wrapper = React.createClass
 
 WrappedWrapper = createContainer (props) ->
 
-  ddp = DDP.connect 'http://localhost:3000'
+  ddp = DDP.connect 'http://www.dashboard.vib.ictu'
   Meteor.remoteConnection = ddp
   Accounts.connection = ddp
   eventEmitter = new EventEmitter
+
+  storeEventDataInSession = (eventName, sessVar) ->
+    eventEmitter.addListener eventName, (data) ->
+      console.log eventName, sessVar, data
+      Session.set sessVar, data
+
+  storeEventDataInSession 'app name selected', 'selectedAppName'
+  storeEventDataInSession 'app search entered', 'appSearchValue'
+
   eventEmitter.addListener 'stop instance', (instanceName) ->
     ddp.call 'stopInstance', instanceName
     console.log 'stop instance received for ', instanceName
-
-  eventEmitter.addListener 'app name selected', (appName) ->
-    console.log 'app name selected', appName
-    Session.set 'selectedAppName', appName
 
   emit: (evt, data) -> eventEmitter.emit evt, data
   collections:
@@ -34,6 +39,7 @@ WrappedWrapper = createContainer (props) ->
     allApps: -> ddp.subscribe 'applicationDefs'
   state:
     selectedAppName: -> Session.get 'selectedAppName'
+    appSearchValue: -> Session.get 'appSearchValue'
 
 , Wrapper
 

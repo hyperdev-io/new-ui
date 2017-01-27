@@ -4,6 +4,7 @@ React = require 'react'
 App     = require '../ui/App.cjsx'
 Page    = require '../ui/Page.cjsx'
 AppsPage            = require '../ui/pages/meteor/AppsPage.coffee'
+StoragePage         = require '../ui/pages/meteor/StoragePage.coffee'
 InstancesPage       = require '../ui/pages/meteor/InstancesPage.coffee'
 InstanceDetailPage  = require '../ui/pages/meteor/InstanceDetailPage.coffee'
 
@@ -17,5 +18,6 @@ module.exports = (props) ->
         <IndexRoute component={InstancesPage} App={props} />
       </Route>
       <Route path="instances/:name" component={InstanceDetailPage} App={props} />
+      <Route path="storage" component={StoragePage} App={props} />
     </Route>
   </Router>

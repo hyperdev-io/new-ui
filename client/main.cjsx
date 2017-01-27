@@ -34,9 +34,11 @@ WrappedWrapper = createContainer (props) ->
   collections:
     Instances: new Mongo.Collection 'instances', connection: ddp
     Apps: new Mongo.Collection 'applicationDefs', connection: ddp
+    StorageBuckets: new Mongo.Collection 'storageBuckets', connection: ddp
   subscribe:
     allInstances: -> ddp.subscribe 'instances'
     allApps: -> ddp.subscribe 'applicationDefs'
+    allStorageBuckets: -> ddp.subscribe 'storage'
   state:
     selectedAppName: -> Session.get 'selectedAppName'
     appSearchValue: -> Session.get 'appSearchValue'

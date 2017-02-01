@@ -40,7 +40,7 @@ module.exports = React.createClass
           size='small'
           units={used.suffix}
           max={used.value + free.value}
-          series={[{"label": "Used", "value": used.value, "colorIndex": "neutral-3"}, {"label": "Free", "value": free.value, "colorIndex": "neutral-4-a"}]} />
+          series={[{"label": "Used", "value": used.value, "colorIndex": "neutral-3"}, {"label": "Free", "value": free.value, "colorIndex": "neutral-4"}]} />
 
 
       </Box>

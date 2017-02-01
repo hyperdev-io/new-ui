@@ -19,9 +19,12 @@ module.exports = createContainer (props) ->
   # bucketSearchValue: bucketSearchValue
   # appNameSelected: (name) -> App.emit 'app name selected', name
   # appsSearchEntered: (value) -> App.emit 'app search entered', value
-  console.table DataStores.find().fetch()
+  ds = DataStores.findOne()
+  console.table [ds]
   console.table StorageBuckets.find(searchObj, sort: name: 1).fetch()
-  buckets: StorageBuckets.find(searchObj, sort: name: 1).fetch().map (bucket) ->
-    _.extend bucket,
-      size: pretty bucket.size
+  buckets: StorageBuckets.find(searchObj, sort: name: 1).fetch()
+  dataStore:
+    total: dsTotal = parseInt (ds?.total or 0)
+    used: dsUsed = parseInt (ds?.used or 0)
+    free: dsTotal - dsUsed
 , require '../StoragePage.cjsx'

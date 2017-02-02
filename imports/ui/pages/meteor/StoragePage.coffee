@@ -20,8 +20,7 @@ module.exports = createContainer (props) ->
   # appNameSelected: (name) -> App.emit 'app name selected', name
   # appsSearchEntered: (value) -> App.emit 'app search entered', value
   ds = DataStores.findOne()
-  console.table [ds]
-  console.table StorageBuckets.find(searchObj, sort: name: 1).fetch()
+
   buckets: StorageBuckets.find(searchObj, sort: name: 1).fetch()
   dataStore:
     total: dsTotal = parseInt (ds?.total or 0)

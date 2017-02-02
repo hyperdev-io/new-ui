@@ -13,7 +13,7 @@ Wrapper = React.createClass
 
 WrappedWrapper = createContainer (props) ->
 
-  ddp = DDP.connect 'http://www.dashboard.vib.ictu'
+  ddp = DDP.connect Meteor.settings.public.ddpServer
   Meteor.remoteConnection = ddp
   Accounts.connection = ddp
   eventEmitter = new EventEmitter

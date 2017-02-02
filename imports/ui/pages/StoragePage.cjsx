@@ -24,11 +24,11 @@ module.exports = React.createClass
     exponent = filesize ds.total, output: 'exponent'
     used = filesize(ds.used, {output: "object", exponent: exponent})
     free = filesize(ds.free, {output: "object", exponent: exponent})
+    usedVal = Math.round used.value
+    freeVal = Math.round free.value
+    total = Math.round used.value + free.value
     splitFlex = if @props.selectedAppName then 'right' else 'left'
 
-    console.log 'filesize!', (filesize 103872987136, {output: "object"})
-    # data = [{"label": "First", "value": 40, "colorIndex": "graph-1"}, {"label": "Second", "value": 30, "colorIndex": "accent-2"}, {"label": "Third", "value": 20, "colorIndex": "unset"}, {"label": "bla", "value": 23, "colorIndex": "graph-1"}]
-    data = @props.buckets.map (b) -> label: b.name, value: filesize(b.size, exponent:exponent, output: 'object').value, colorIndex: 'graph-1'
     <Article>
       <Header fixed=true pad='medium'>
         <Title responsive=true truncate=true>Storage Buckets</Title>
@@ -39,8 +39,8 @@ module.exports = React.createClass
           type='circle'
           size='small'
           units={used.suffix}
-          max={used.value + free.value}
-          series={[{"label": "Used", "value": used.value, "colorIndex": "neutral-3"}, {"label": "Free", "value": free.value, "colorIndex": "neutral-4"}]} />
+          max={total}
+          series={[{"label": "Used", "value": usedVal, "colorIndex": "neutral-3"}, {"label": "Free", "value": freeVal, "colorIndex": "unset"}]} />
 
 
       </Box>
@@ -49,7 +49,7 @@ module.exports = React.createClass
           <ListItem key={bucket._id} pad='medium' justify='between' align='center'>
             <Box direction='column' pad='none'>
               <strong>{bucket.name}</strong>
-              <span>{filesize bucket.size}</span>
+              <span>{filesize bucket.size or 0}</span>
             </Box>
           </ListItem>
         }

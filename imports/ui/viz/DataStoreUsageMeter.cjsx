@@ -21,8 +21,6 @@ module.exports = React.createClass
       dataPoint 'Free', (Math.round free.value), 'unset'
     ]
 
-    console.log 'series', series
-
     <AnnotatedMeter legend={true}
       type='circle'
       size='small'

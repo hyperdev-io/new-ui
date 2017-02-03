@@ -4,9 +4,10 @@ React = require 'react'
 App     = require '../ui/App.cjsx'
 Page    = require '../ui/Page.cjsx'
 AppsPage            = require '../ui/pages/meteor/AppsPage.coffee'
-StoragePage         = require '../ui/pages/meteor/StoragePage.coffee'
+AppsDetailPage  = require '../ui/pages/meteor/AppsDetailPage.coffee'
 InstancesPage       = require '../ui/pages/meteor/InstancesPage.coffee'
 InstanceDetailPage  = require '../ui/pages/meteor/InstanceDetailPage.coffee'
+StoragePage         = require '../ui/pages/meteor/StoragePage.coffee'
 
 
 module.exports = (props) ->
@@ -14,7 +15,7 @@ module.exports = (props) ->
   <Router history={browserHistory} >
     <Route path="/" component={App}>
       <Route path="apps" component={AppsPage} App={props} />
-      <Route path="apps/:name/:version" component={AppsPage} App={props} />
+      <Route path="apps/:name/:version" component={AppsDetailPage} App={props} />
       <Route path="instances" component={Page} title='Instances'>
         <IndexRoute component={InstancesPage} App={props} />
       </Route>

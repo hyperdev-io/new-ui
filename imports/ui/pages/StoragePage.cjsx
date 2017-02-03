@@ -16,9 +16,9 @@ module.exports = React.createClass
     <Split flex='left' priority='left'>
       <Article>
           <Header fixed=true pad='medium' justify='between'>
-            <Box justify='left' direction='row'>
+            <Box justify='start' direction='row'>
               <Title responsive=true truncate=true>Storage Buckets</Title>
-              <Search onDOMChange={@userSearch} placeHolder='Search...' flex=true inline=true iconAlign='start' size='medium' />
+              <Search onDOMChange={@userSearch} placeHolder='Search...' inline=true iconAlign='start' size='medium' />
             </Box>
             <DataStoreUsageMeter used={ds.used} free={ds.free} />
           </Header>

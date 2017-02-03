@@ -3,6 +3,7 @@ React               = require 'react'
 { Session }         = require 'meteor/session'
 { createContainer } = require 'meteor/react-meteor-data'
 { render }          = require 'react-dom'
+{ browserHistory }  = require 'react-router'
 { EventEmitter }    = require 'fbemitter'
 routes              = require '../imports/startup/routes.cjsx'
 
@@ -18,17 +19,18 @@ WrappedWrapper = createContainer (props) ->
   Accounts.connection = ddp
   eventEmitter = new EventEmitter
 
-  storeEventDataInSession = (eventName, sessVar) ->
+  storeDataInSession = (sessVar) -> (data) ->
+    console.log 'Session.set', sessVar, data
+    Session.set sessVar, data
+
+  onEvent = (eventName, callbacks...) ->
     eventEmitter.addListener eventName, (data) ->
-      console.log eventName, sessVar, data
-      Session.set sessVar, data
+      console.log "Event '#{eventName}' happened", data
+      cb data for cb in callbacks
 
-  storeEventDataInSession 'app name selected', 'selectedAppName'
-  storeEventDataInSession 'app search entered', 'appSearchValue'
-
-  eventEmitter.addListener 'stop instance', (instanceName) ->
-    ddp.call 'stopInstance', instanceName
-    console.log 'stop instance received for ', instanceName
+  onEvent 'app name selected', storeDataInSession('selectedAppName'), (app) -> browserHistory.push("/apps/#{app.name}/#{app.version}")
+  onEvent 'app search entered', storeDataInSession('appSearchValue')
+  onEvent 'stop instance', (instanceName) -> ddp.call 'stopInstance', instanceName
 
   emit: (evt, data) -> eventEmitter.emit evt, data
   collections:

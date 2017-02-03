@@ -1,7 +1,7 @@
 { Meteor }          = require 'meteor/meteor'
 React               = require 'react'
 
-{ Article, Box, Header, Heading, Search, Title, Box, Split, Sidebar, Paragraph } = require 'grommet'
+{ Article, Box, Header, Heading, Search, Title, Box, Split, Sidebar, Paragraph, Icons } = require 'grommet'
 
 DataStoreUsageMeter = require '../viz/DataStoreUsageMeter.cjsx'
 DataBucketsList     = require '../lists/DataBucketsList.cjsx'
@@ -15,21 +15,27 @@ module.exports = React.createClass
 
     <Split flex='left' priority='left'>
       <Article>
-          <Header fixed=true pad='medium'>
-            <Title responsive=true truncate=true>Storage Buckets</Title>
-            <Search onDOMChange={@userSearch} placeHolder='Search...' inline=true fill=true size='medium' />
+          <Header fixed=true pad='medium' justify='between'>
+            <Box justify='left' direction='row'>
+              <Title responsive=true truncate=true>Storage Buckets</Title>
+              <Search onDOMChange={@userSearch} placeHolder='Search...' flex=true inline=true iconAlign='start' size='medium' />
+            </Box>
+            <DataStoreUsageMeter used={ds.used} free={ds.free} />
           </Header>
+          <Box align='center'></Box>
           <DataBucketsList buckets={@props.buckets} />
       </Article>
       <Sidebar size='medium' colorIndex='light-2' direction='column'>
         <Box align='center' justify='center' direction='column'>
           <Header pad='medium' size='large' direction='column'>
-            <Title>Data Store</Title>
+            <Title><Icons.Base.Info /></Title>
             <Paragraph align='center'>
-              Overall storage capacity for the storage buckets.
+              Storage buckets hold the data of the instances.
+              Buckets can be copied and deleted.
+              This page lists all storage buckets in your data store.
             </Paragraph>
           </Header>
-          <DataStoreUsageMeter used={ds.used} free={ds.free} />
+
         </Box>
       </Sidebar>
     </Split>

@@ -31,6 +31,8 @@ WrappedWrapper = createContainer (props) ->
   onEvent 'app name selected', storeDataInSession('selectedAppName'), (app) -> browserHistory.push("/apps/#{app.name}/#{app.version}")
   onEvent 'app search entered', storeDataInSession('appSearchValue')
   onEvent 'stop instance', (instanceName) -> ddp.call 'stopInstance', instanceName
+  onEvent 'remove app', (app) -> console.log 'remove app', app
+  onEvent 'start app', (app) -> console.log 'start app', app
 
   emit: (evt, data) -> eventEmitter.emit evt, data
   collections:

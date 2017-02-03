@@ -1,8 +1,5 @@
 React         = require 'react'
-DetailPage    = require '../DetailPage.cjsx'
-
 { Menu, Button, Icons, Layer, Form, Header, Heading, FormFields, Paragraph, Footer, Button } = require 'grommet'
-
 
 module.exports = React.createClass
   displayName: 'InstanceControls'
@@ -28,7 +25,6 @@ module.exports = React.createClass
       <Menu pad='medium'>
         <Button onClick={@showCloseLayer} align='start' plain=true label='Stop' icon={<Icons.Base.Power />}></Button>
         <Button onClick={@onClick 'show instance logs'} align='start' plain=true label='Logs' icon={<Icons.Base.Notes />}></Button>
-        <Button onClick={@onClick 'delete instance'} align='start' plain=true label='Remove' icon={<Icons.Base.Trash />}></Button>
       </Menu>
       <Layer onClose={@hideCloseLayer} align='right' closer={true} hidden={not @state.showStopInstanceDialog}>
        <Form compact=true>

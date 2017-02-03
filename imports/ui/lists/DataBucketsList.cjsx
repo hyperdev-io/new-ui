@@ -1,5 +1,6 @@
 React               = require 'react'
 filesize            = require 'filesize'
+moment              = require 'moment'
 {Box, List, ListItem } = require 'grommet'
 
 
@@ -16,6 +17,9 @@ module.exports = React.createClass
           <Box direction='column' pad='none'>
             <strong>{bucket.name}</strong>
             <span>{filesize bucket.size or 0}</span>
+          </Box>
+          <Box direction='row' pad='none'>
+            <span>Created {moment(bucket.created).fromNow()}</span>
           </Box>
         </ListItem>
       }

@@ -13,7 +13,7 @@ module.exports = React.createClass
     <Article>
       <Header fixed=true pad='medium'>
         <Title responsive=true truncate=true>Apps</Title>
-        <Search onDOMChange={@onSearch} placeHolder='Search...' inline=true fill=true size='medium' />
+        <Search value={@props.appSearchValue} onDOMChange={@onSearch} placeHolder='Search...' inline=true fill=true size='medium' />
       </Header>
       <AppsList apps={@props.apps} onAppNameSelected={@props.onAppNameSelected} />
     </Article>

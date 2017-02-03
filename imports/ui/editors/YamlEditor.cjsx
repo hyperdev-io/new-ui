@@ -10,12 +10,11 @@ module.exports = React.createClass
   displayName: 'YamlEditor'
 
   onChange: (code) ->
-    console.log 'onChange', code
+    session = @refs.ace.editor.session
     try
       jsyaml.load code
-      console.log @refs.ace.editor.getSession()
+      session.setAnnotations []
     catch error
-      session = @refs.ace.editor.session
       line = if error.mark.line == session.doc.getAllLines().length then error.mark.line - 1 else error.mark.line
       session.setAnnotations [
         row: line

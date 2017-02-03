@@ -14,6 +14,7 @@ module.exports = (props) ->
   <Router history={browserHistory} >
     <Route path="/" component={App}>
       <Route path="apps" component={AppsPage} App={props} />
+      <Route path="apps/:name/:version" component={AppsPage} App={props} />
       <Route path="instances" component={Page} title='Instances'>
         <IndexRoute component={InstancesPage} App={props} />
       </Route>

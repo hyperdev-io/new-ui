@@ -19,23 +19,28 @@ module.exports = React.createClass
 
   renderNoData: -> <span />
 
-  onChange: (code) -> console.log 'onChange', code
+  onComposeChange: (yamlobj, code) -> @setState dockerCompose: code
+  onBigboatChange: (yamlobj, code) -> @setState bigboatCompose: code
+  onSaveApp: -> @props.onSaveApp @state.dockerCompose, @state.bigboatCompose
 
   renderWithData: ->
-    console.log @props.app
     <Split flex='left' priority='left'>
       <DetailPage title={@props.title} >
         <Tabs style={marginBottom:0} responsive={false}>
           <Tab title='Docker Compose'>
-            <YamlEditor code={@props.dockerCompose} />
+            <YamlEditor code={@state.dockerCompose or @props.dockerCompose} onChange={@onComposeChange} />
           </Tab>
           <Tab title='BigBoat Compose'>
-            <YamlEditor code={@props.bigboatCompose} />
+            <YamlEditor code={@state.bigboatCompose or @props.bigboatCompose} onChange={@onBigboatChange} />
           </Tab>
         </Tabs>
       </DetailPage>
       <Sidebar size='medium' colorIndex='light-2' direction='column'>
         <Header pad='medium' size='large' />
-        <AppControls onRemoveApp={@props.onRemoveApp} onStartApp={@props.onStartApp} name={@props.title} />
+        <AppControls
+          onSaveApp={@onSaveApp}
+          onRemoveApp={@props.onRemoveApp}
+          onStartApp={@props.onStartApp}
+          name={@props.title} />
       </Sidebar>
     </Split>

@@ -22,22 +22,28 @@ module.exports = React.createClass
   onComposeChange: (yamlobj, code) -> @setState dockerCompose: code
   onBigboatChange: (yamlobj, code) -> @setState bigboatCompose: code
   onSaveApp: -> @props.onSaveApp @state.dockerCompose, @state.bigboatCompose
+  isSaveButtonDisabled: ->
+    sdc = @state.dockerCompose
+    sbc = @state.bigboatCompose
+    (sdc is @props.dockerCompose or not sdc?) and
+    (sbc is @props.bigboatCompose or not sbc?)
 
   renderWithData: ->
     <Split flex='left' priority='left'>
       <DetailPage title={@props.title} >
         <Tabs style={marginBottom:0} responsive={false}>
           <Tab title='Docker Compose'>
-            <YamlEditor code={@state.dockerCompose or @props.dockerCompose} onChange={@onComposeChange} />
+            <YamlEditor name='dockerCompose' code={@state.dockerCompose or @props.dockerCompose} onChange={@onComposeChange} />
           </Tab>
           <Tab title='BigBoat Compose'>
-            <YamlEditor code={@state.bigboatCompose or @props.bigboatCompose} onChange={@onBigboatChange} />
+            <YamlEditor name='bigboatCompose' code={@state.bigboatCompose or @props.bigboatCompose} onChange={@onBigboatChange} />
           </Tab>
         </Tabs>
       </DetailPage>
       <Sidebar size='medium' colorIndex='light-2' direction='column'>
         <Header pad='medium' size='large' />
         <AppControls
+          saveButtonDisabled={@isSaveButtonDisabled()}
           onSaveApp={@onSaveApp}
           onRemoveApp={@props.onRemoveApp}
           onStartApp={@props.onStartApp}

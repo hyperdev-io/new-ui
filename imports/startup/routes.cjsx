@@ -13,7 +13,7 @@ StoragePage         = require '../ui/pages/meteor/StoragePage.coffee'
 module.exports = (props) ->
 
   <Router history={browserHistory} >
-    <Route path="/" component={App}>
+    <Route path="/" component={App} App={props}>
       <Route path="apps" component={AppsPage} App={props} />
       <Route path="apps/:name/:version" component={AppsDetailPage} App={props} />
       <Route path="instances" component={Page} title='Instances'>

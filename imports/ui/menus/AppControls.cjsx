@@ -1,6 +1,6 @@
 React         = require 'react'
 
-{ Menu, Button, Icons, Layer, Form, Header, Heading, FormFields, Paragraph, Footer, Button } = require 'grommet'
+{ Box, Menu, Button, Icons, Layer, Form, Header, Heading, FormFields, Paragraph, Footer, Button } = require 'grommet'
 
 
 module.exports = React.createClass
@@ -22,8 +22,10 @@ module.exports = React.createClass
   render: ->
     <span>
       <Menu pad='medium'>
-        <Button onClick={@props.onStartApp} align='start' plain=true label='Start' icon={<Icons.Base.Play />}></Button>
+        <Button onClick={@props.onSaveApp} align='start' plain=true label='Save' icon={<Icons.Base.Save />}></Button>
         <Button onClick={@showRemoveLayer} align='start' plain=true label='Remove' icon={<Icons.Base.Trash />}></Button>
+        <Box pad='medium'></Box>
+        <Button onClick={@props.onStartApp} align='start' plain=true label='Start' icon={<Icons.Base.Play />}></Button>
       </Menu>
       <Layer onClose={@hideRemoveLayer} align='right' closer={true} hidden={not @state.showRemoveAppOverlay}>
        <Form compact=true>

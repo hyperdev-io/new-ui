@@ -32,7 +32,8 @@ WrappedWrapper = createContainer (props) ->
   onEvent 'app search entered', storeDataInSession('appSearchValue')
   onEvent 'stop instance', (instanceName) -> ddp.call 'stopInstance', instanceName
   onEvent 'save app', (app, dockerCompose, bigboatCompose) ->
-    console.log 'save app', app, dockerCompose, bigboatCompose
+    ddp.call 'saveApp', app.name, app.version, {raw: dockerCompose}, {raw: bigboatCompose}, (err) ->
+      eventEmitter.emit 'show error message', err if err
   onEvent 'remove app', (app) -> ddp.call 'deleteApp', app.name, app.version, (err) ->
     eventEmitter.emit 'show error message', err if err
     eventEmitter.emit 'app removed', app unless err

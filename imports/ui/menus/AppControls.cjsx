@@ -20,9 +20,10 @@ module.exports = React.createClass
     @setState showRemoveAppOverlay: false
 
   render: ->
+    saveButtonHandler = if @props.saveButtonDisabled then null else @props.onSaveApp
     <span>
       <Menu pad='medium'>
-        <Button onClick={@props.onSaveApp} align='start' plain=true label='Save' icon={<Icons.Base.Save />}></Button>
+        <Button onClick={saveButtonHandler} align='start' plain=true label='Save' icon={<Icons.Base.Save />}></Button>
         <Button onClick={@showRemoveLayer} align='start' plain=true label='Remove' icon={<Icons.Base.Trash />}></Button>
         <Box pad='medium'></Box>
         <Button onClick={@props.onStartApp} align='start' plain=true label='Start' icon={<Icons.Base.Play />}></Button>

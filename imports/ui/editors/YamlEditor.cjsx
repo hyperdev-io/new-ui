@@ -9,10 +9,14 @@ require 'brace/theme/github'
 module.exports = React.createClass
   displayName: 'YamlEditor'
 
+  shouldComponentUpdate: (nextProps, nextState) ->
+    @props.code isnt nextProps.code
+
   onChange: (code) ->
     session = @refs.ace.editor.session
     try
-      jsyaml.load code
+      yamlobj = jsyaml.load code
+      @props.onChange yamlobj, code
       session.setAnnotations []
     catch error
       line = if error.mark.line == session.doc.getAllLines().length then error.mark.line - 1 else error.mark.line

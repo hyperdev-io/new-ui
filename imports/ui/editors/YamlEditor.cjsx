@@ -23,10 +23,6 @@ module.exports = React.createClass
         type: 'error'
       ]
 
-
-  componentDidMount: ->
-    console.log @refs.ace
-
   render: ->
     <Box>
       <AceEditor

@@ -8,8 +8,12 @@ YamlEditor  = require '../editors/YamlEditor.cjsx'
 module.exports = React.createClass
   displayName: 'AppsDetailPage'
 
+  getInitialState: ->
+    dockerCompose: @props.dockerCompose
+    bigboatCompose: @props.bigboatCompose
+
   render: ->
-    if @props.app
+    if @props.dockerCompose
       @renderWithData()
     else @renderNoData()
 
@@ -23,10 +27,10 @@ module.exports = React.createClass
       <DetailPage title={@props.title} >
         <Tabs style={marginBottom:0} responsive={false}>
           <Tab title='Docker Compose'>
-            <YamlEditor code={@props.app.dockerCompose} />
+            <YamlEditor code={@props.dockerCompose} />
           </Tab>
           <Tab title='BigBoat Compose'>
-            <YamlEditor code={@props.app.bigboatCompose} />
+            <YamlEditor code={@props.bigboatCompose} />
           </Tab>
         </Tabs>
       </DetailPage>

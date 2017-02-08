@@ -10,8 +10,11 @@ module.exports = createContainer (props) ->
   name = props.params.name
   version = props.params.version
 
-  app: app = Apps.findOne name: name, version: version
+  app = Apps.findOne name: name, version: version
+
   title: "#{name}:#{version}"
+  dockerCompose: app?.dockerCompose
+  bigboatCompose: app?.bigboatCompose
   onRemoveApp: -> App.emit 'remove app', app
   onStartApp: -> App.emit 'start app', app
 

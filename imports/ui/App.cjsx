@@ -1,11 +1,12 @@
 { Meteor }          = require 'meteor/meteor'
 React               = require 'react'
 { Link }            = require 'react-router'
+{ createContainer } = require 'meteor/react-meteor-data'
 
 G     = require 'grommet'
 console.log 'grommet', G
 
-module.exports = App = React.createClass
+App = React.createClass
   displayName: 'App'
 
   getInitialState: ->
@@ -14,7 +15,11 @@ module.exports = App = React.createClass
   switchSideBar: ->
     @setState priority: (if @state.priority is 'right' then 'left' else 'right')
 
+  onErrorToastClose: -> @props.route.App.emit 'clear error message'
+  onInfoToastClose: -> @props.route.App.emit 'clear info message'
+
   render: ->
+    console.log 'wie', @props.route.App.state.globalErrorMessage()
     <G.App centered=false>
       <G.Split flex='right' priority={@state.priority}>
         <G.Sidebar colorIndex='neutral-1'>
@@ -40,4 +45,19 @@ module.exports = App = React.createClass
         </G.Sidebar>
         {@props.children}
       </G.Split>
+      {if errorMessage = @props.errorMessage
+        <G.Toast status='critical' onClose={@onErrorToastClose}>
+          {errorMessage}
+        </G.Toast>
+      }
+      {if infoMessage = @props.infoMessage
+        <G.Toast status='ok' onClose={@onInfoToastClose}>
+          {infoMessage}
+        </G.Toast>
+      }
     </G.App>
+
+module.exports = createContainer (props) ->
+  errorMessage: props.route.App.state.globalErrorMessage()
+  infoMessage: props.route.App.state.globalInfoMessage()
+, App

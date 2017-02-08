@@ -15,7 +15,8 @@ module.exports = createContainer (props) ->
   title: "#{name}:#{version}"
   dockerCompose: app?.dockerCompose
   bigboatCompose: app?.bigboatCompose
-  onSaveApp: (dockerCompose, bigboatCompose)-> App.emit 'save app', app, dockerCompose, bigboatCompose
+  onSaveApp: (dockerCompose, bigboatCompose)->
+    App.emit 'save app', app, (dockerCompose or app.dockerCompose), (bigboatCompose or app.bigboatCompose)
   onRemoveApp: -> App.emit 'remove app', app
   onStartApp: -> App.emit 'start app', app
 

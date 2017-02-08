@@ -25,13 +25,14 @@ WrappedWrapper = createContainer (props) ->
     Session.set sessVar, data
 
   onEvent = (eventName, callbacks...) ->
-    eventEmitter.addListener eventName, (data) ->
-      console.log "Event '#{eventName}' happened", data
-      cb data for cb in callbacks
+    eventEmitter.addListener eventName, -> console.log "Event '#{eventName}' happened"
+    eventEmitter.addListener eventName, cb for cb in callbacks
 
   onEvent 'app name selected', storeDataInSession('selectedAppName'), (app) -> browserHistory.push("/apps/#{app.name}/#{app.version}")
   onEvent 'app search entered', storeDataInSession('appSearchValue')
   onEvent 'stop instance', (instanceName) -> ddp.call 'stopInstance', instanceName
+  onEvent 'save app', (app, dockerCompose, bigboatCompose) ->
+    console.log 'save app', app, dockerCompose, bigboatCompose
   onEvent 'remove app', (app) -> ddp.call 'deleteApp', app.name, app.version, (err) ->
     eventEmitter.emit 'show error message', err if err
     eventEmitter.emit 'app removed', app unless err
@@ -45,7 +46,7 @@ WrappedWrapper = createContainer (props) ->
   onEvent 'show info message', (message) -> Session.set 'globalInfoMessage', message
   onEvent 'clear info message', -> Session.set 'globalInfoMessage', null
 
-  emit: (evt, data) -> eventEmitter.emit evt, data
+  emit: (evt, data...) -> eventEmitter.emit.apply eventEmitter, [evt].concat data
   collections:
     Instances: new Mongo.Collection 'instances', connection: ddp
     Apps: new Mongo.Collection 'applicationDefs', connection: ddp

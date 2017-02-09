@@ -33,6 +33,7 @@ module.exports = React.createClass
         <Header pad={vertical: 'medium'}><Heading>Remove</Heading></Header>
         <FormFields>
           <Paragraph>Are you sure you want to remove <strong>{@props.name}</strong>?</Paragraph>
+          <Paragraph>This action is irreversable.</Paragraph>
         </FormFields>
         <Footer pad={vertical:'medium'} justify='between' align='center'>
           <Button onClick={@removeApp} secondary=true label='Yes, remove it' />

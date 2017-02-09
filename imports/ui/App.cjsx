@@ -4,6 +4,7 @@ React               = require 'react'
 { createContainer } = require 'meteor/react-meteor-data'
 
 G     = require 'grommet'
+{ Button, Icons } = G
 console.log 'grommet', G
 
 App = React.createClass
@@ -35,12 +36,9 @@ App = React.createClass
             <G.Anchor path='/appstore'>App Store</G.Anchor>
           </G.Menu>
           <G.Footer pad={horizontal: 'medium', vertical: 'small'} align='center' direction='row'>
-            <G.Menu icon={<G.Icons.Base.User />} size='small' dropAlign={bottom: 'bottom'} colorIndex='neutral-1-a'>
-              <G.Anchor>Events</G.Anchor>
-              <G.Anchor>Configuration</G.Anchor>
-              <G.Anchor>Docs</G.Anchor>
-              <G.Anchor>Log out</G.Anchor>
-            </G.Menu>
+            <Button align='start' plain=true icon={<Icons.Base.Login />}></Button>
+            <Button align='start' plain=true icon={<Icons.Base.Configure />}></Button>
+            <Button align='start' plain=true icon={<Icons.Base.Document />}></Button>
           </G.Footer>
         </G.Sidebar>
         {@props.children}

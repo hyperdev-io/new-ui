@@ -18,7 +18,22 @@ WrappedWrapper = createContainer (props) ->
   ddp = DDP.connect Meteor.settings.public.ddpServer
   Meteor.remoteConnection = ddp
   Accounts.connection = ddp
+  Meteor.users = new Mongo.Collection 'users',  connection: ddp
+  Accounts.users = Meteor.users
   eventEmitter = new EventEmitter
+
+  Tracker.autorun ->
+    token = sessionStorage.getItem('_storedLoginToken')
+    if token
+      Meteor.loginWithToken token, (err) ->
+        console.log('loginWithToken ',token) unless err
+        console.log('loginWithTokenError ',err) if err
+
+  Tracker.autorun ->
+    user = Meteor.user()
+    if user
+      console.log('set token', Accounts._storedLoginToken())
+      sessionStorage.setItem('_storedLoginToken', Accounts._storedLoginToken());
 
   storeDataInSession = (sessVar) -> (data) ->
     console.log 'Session.set', sessVar, data
@@ -47,22 +62,27 @@ WrappedWrapper = createContainer (props) ->
   onEvent 'show info message', (message) -> Session.set 'globalInfoMessage', message
   onEvent 'clear info message', -> Session.set 'globalInfoMessage', null
 
+
   emit: (evt, data...) -> eventEmitter.emit.apply eventEmitter, [evt].concat data
   collections:
     Instances: new Mongo.Collection 'instances', connection: ddp
     Apps: new Mongo.Collection 'applicationDefs', connection: ddp
     StorageBuckets: new Mongo.Collection 'storageBuckets', connection: ddp
     DataStores: new Mongo.Collection 'datastores',  connection: ddp
+    Users: Meteor.users
   subscribe:
     allInstances: -> ddp.subscribe 'instances'
     allApps: -> ddp.subscribe 'applicationDefs'
     allStorageBuckets: -> ddp.subscribe 'storage'
     allDataStores: -> ddp.subscribe 'datastores'
+    allUsers: -> ddp.subscribe 'allUsers'
   state:
     selectedAppName: -> Session.get 'selectedAppName'
     appSearchValue: -> Session.get 'appSearchValue'
     globalErrorMessage: -> Session.get 'globalErrorMessage'
     globalInfoMessage: -> Session.get 'globalInfoMessage'
+    isLoggedIn: -> Meteor.userId()?
+    user: -> Meteor.user()
 
 , Wrapper
 

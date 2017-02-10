@@ -7,7 +7,7 @@ module.exports  = React.createClass
   render: ->
     <G.Article>
       <G.Header fixed=true pad='medium'>
-        <G.Title responsive=true flex='grow'>{@props.route.title}</G.Title>
+        <G.Title responsive=true flex='grow'>{@props.title or @props.route.title}</G.Title>
       </G.Header>
 
       {@props.children}

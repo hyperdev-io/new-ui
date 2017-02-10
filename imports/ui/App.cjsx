@@ -20,7 +20,6 @@ App = React.createClass
   onInfoToastClose: -> @props.route.App.emit 'clear info message'
 
   render: ->
-    console.log 'wie', @props.route.App.state.globalErrorMessage()
     <G.App centered=false>
       <G.Split flex='right' priority={@state.priority}>
         <G.Sidebar colorIndex='neutral-1'>
@@ -36,7 +35,11 @@ App = React.createClass
             <G.Anchor path='/appstore'>App Store</G.Anchor>
           </G.Menu>
           <G.Footer pad={horizontal: 'medium', vertical: 'small'} align='center' direction='row'>
-            <Button align='start' plain=true icon={<Icons.Base.Login />}></Button>
+            {if @props.isLoggedIn
+              <Button align='start' plain=true path='/login' icon={<Icons.Base.Logout />}></Button>
+            else
+              <Button align='start' plain=true path='/login' icon={<Icons.Base.Login />}></Button>
+            }
             <Button align='start' plain=true icon={<Icons.Base.Configure />}></Button>
             <Button align='start' plain=true icon={<Icons.Base.Document />}></Button>
           </G.Footer>
@@ -58,4 +61,5 @@ App = React.createClass
 module.exports = createContainer (props) ->
   errorMessage: props.route.App.state.globalErrorMessage()
   infoMessage: props.route.App.state.globalInfoMessage()
+  isLoggedIn: props.route.App.state.isLoggedIn()
 , App

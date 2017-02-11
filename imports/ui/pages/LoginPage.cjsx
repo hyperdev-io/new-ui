@@ -3,7 +3,7 @@ Page  = require '../Page.cjsx'
 { LoginForm, Box, Headline }     = require 'grommet'
 
 module.exports  = React.createClass
-  displayName: 'Page'
+  displayName: 'LoginPage'
 
   onSubmit: (credentials) ->
     @props.onLogin credentials.username, credentials.password

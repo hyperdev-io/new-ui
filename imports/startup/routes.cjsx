@@ -9,6 +9,7 @@ InstancesPage       = require '../ui/pages/meteor/InstancesPage.coffee'
 InstanceDetailPage  = require '../ui/pages/meteor/InstanceDetailPage.coffee'
 StoragePage         = require '../ui/pages/meteor/StoragePage.coffee'
 LoginPage           = require '../ui/pages/meteor/LoginPage.coffee'
+NewInstancePage     = require '../ui/pages/meteor/NewInstancePage.coffee'
 
 module.exports = (props) ->
 
@@ -21,6 +22,7 @@ module.exports = (props) ->
       <Route path="instances" component={Page} title='Instances'>
         <IndexRoute component={InstancesPage} App={props} />
       </Route>
+      <Route path="instance/new/:name/:version" component={NewInstancePage} App={props} />
       <Route path="instances/:name" component={InstanceDetailPage} App={props} />
       <Route path="storage" component={StoragePage} App={props} />
     </Route>

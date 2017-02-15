@@ -23,6 +23,7 @@ module.exports = (props) ->
         <IndexRoute component={InstancesPage} App={props} />
       </Route>
       <Route path="instance/new/:name/:version" component={NewInstancePage} App={props} />
+      <Route path="instance/new" component={NewInstancePage} App={props} />
       <Route path="instances/:name" component={InstanceDetailPage} App={props} />
       <Route path="storage" component={StoragePage} App={props} />
     </Route>

@@ -6,8 +6,12 @@ _     = require 'lodash'
 module.exports  = React.createClass
   displayName: 'NewInstancePage'
 
+  getAppNameFromProps: ->
+    if name = @props.selectedAppName and version = @props.selectedAppVersion
+      "#{name} (#{version})"
+
   getInitialState: ->
-    app: ''
+    app: @getAppNameFromProps() or ''
     name: ''
 
   onAppSelectChange: (evt) ->

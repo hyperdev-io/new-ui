@@ -55,7 +55,7 @@ WrappedWrapper = createContainer (props) ->
   onEvent 'app removed', (app) ->
     eventEmitter.emit 'show info message', "App #{app.name}:#{app.version} is deleted."
     browserHistory.push '/apps'
-  onEvent 'start app', (app) -> console.log 'start app', app
+  onEvent 'start app', (app) -> browserHistory.push("/instance/new/#{app.name}/#{app.version}")
 
   onEvent 'show error message', (message) -> Session.set 'globalErrorMessage', ErrorMapper message
   onEvent 'clear error message', -> Session.set 'globalErrorMessage', null

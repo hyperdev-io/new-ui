@@ -4,6 +4,7 @@ React               = require 'react'
 { createContainer } = require 'meteor/react-meteor-data'
 { render }          = require 'react-dom'
 { browserHistory }  = require 'react-router'
+{ createStore }     = require 'redux'
 { EventEmitter }    = require 'fbemitter'
 _                   = require 'lodash'
 routes              = require '../imports/startup/routes.cjsx'
@@ -57,6 +58,7 @@ WrappedWrapper = createContainer (props) ->
     eventEmitter.emit 'show info message', "App #{app.name}:#{app.version} is deleted."
     browserHistory.push '/apps'
   onEvent 'start app', (app) -> browserHistory.push("/instance/new/#{app.name}/#{app.version}")
+  onEvent 'NewIntancePage::app selected', (name, version) -> browserHistory.push("/instance/new/#{name}/#{version}")
   onEvent 'NewInstancePage::state changed', (name, version, pstate) ->
     state = _.merge (Session.get('NewInstancePageState') or {}), pstate
     query = _.toPairs(state).map(([key, val]) -> "#{key}=#{val}").join "&"
@@ -93,5 +95,35 @@ WrappedWrapper = createContainer (props) ->
 
 , Wrapper
 
+counter = (state = {}, action) ->
+  switch action.type
+    when 'USER_CHANGED' then Object.assign {}, state, user: action.user
+    when 'APPS' then Object.assign {}, state, apps: action.apps
+    else state
+
+init =
+  globalErrorMessage: null
+
+store = createStore counter, init, window.__REDUX_DEVTOOLS_EXTENSION__?()
+
+
 Meteor.startup ->
-  render <WrappedWrapper />, document.getElementById 'render-target'
+  ddp = DDP.connect Meteor.settings.public.ddpServer
+  Meteor.remoteConnection = ddp
+  Accounts.connection = ddp
+  Meteor.users = new Mongo.Collection 'users',  connection: ddp
+  Accounts.users = Meteor.users
+
+  Apps = new Mongo.Collection 'applicationDefs', connection: ddp
+  ddp.subscribe 'applicationDefs'
+
+  Tracker.autorun ->
+    store.dispatch type: 'USER_CHANGED', user: Meteor.user()
+
+  Tracker.autorun ->
+    apps = Apps.find({}, sort: name: 1, version: 1).fetch()
+    console.log 'apps', apps
+    store.dispatch type: 'APPS', apps: apps
+
+  # render <WrappedWrapper />, document.getElementById 'render-target'
+  render routes(store, {}), document.getElementById 'render-target'

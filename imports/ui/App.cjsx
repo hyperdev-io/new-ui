@@ -1,7 +1,8 @@
 { Meteor }          = require 'meteor/meteor'
 React               = require 'react'
 { Link }            = require 'react-router'
-{ createContainer } = require 'meteor/react-meteor-data'
+# { createContainer } = require 'meteor/react-meteor-data'
+{ connect }        = require 'react-redux'
 
 G     = require 'grommet'
 { Button, Icons } = G
@@ -58,8 +59,15 @@ App = React.createClass
       }
     </G.App>
 
-module.exports = createContainer (props) ->
-  errorMessage: props.route.App.state.globalErrorMessage()
-  infoMessage: props.route.App.state.globalInfoMessage()
-  isLoggedIn: props.route.App.state.isLoggedIn()
-, App
+mapStateToProps = (state) ->
+  errorMessage: null
+  infoMessage: null
+  isLoggedIn: state.user?
+
+module.exports = connect(mapStateToProps) App
+
+# module.exports = createContainer (props) ->
+#   errorMessage: props..globalErrorMessage()
+#   infoMessage: props.route.App.state.globalInfoMessage()
+#   isLoggedIn: props.route.App.state.isLoggedIn()
+# , App

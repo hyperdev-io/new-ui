@@ -1,37 +1,47 @@
 React = require 'react'
 Page  = require '../Page.cjsx'
 _     = require 'lodash'
-{ Box, Heading, Header, Form, FormFields, FormField, TextInput, Select }     = require 'grommet'
+{ Box, Heading, Header, Form, FormFields, FormField, TextInput, Select, CheckBox }     = require 'grommet'
 
 module.exports  = React.createClass
   displayName: 'NewInstancePage'
+
+  getAppParams: ->
+    params = @props.selectedApp.dockerCompose?.match /(?:\{\{)([\d|\w|_|-]*?)(?=\}\})/g
+    console.log params
+    if params?.length
+      _.uniq(params.map (p) -> p.replace('{{', '').trim())
+    else
+      []
 
   getAppNameFromProps: ->
     if name = @props.selectedAppName and version = @props.selectedAppVersion
       "#{name} (#{version})"
 
-  getInitialState: ->
-    app: @getAppNameFromProps() or ''
-    name: ''
-
   onAppSelectChange: (evt) ->
-    console.log evt
-    @setState app: evt.value
+    @props.onAppSelected evt.value.name, evt.value.version
+
+  onBucketSelected: (evt) ->
+    @props.onStateChanged bucket: evt.option
 
   onAppSelectSearch: (evt) ->
     searchValue = evt.target.value
-    @setState appOptions: _.filter @props.apps, (app) -> (app.name.match(searchValue) or app.version.match(searchValue))
+    @props.onStateChanged appsearch: evt.target.value
 
   onNameChange: (evt,a,v) ->
-    @setState name: evt.target.value
+    @props.onStateChanged name: evt.target.value
 
   appToOptionValue: (app) ->
     value: "#{app.name} (#{app.version})"
     id: app._id
+    name: app.name
+    version: app.version
     label: <Box direction='row' justify='between'><span>{app.name}</span><span className='secondary'>{app.version}</span></Box>
 
+  getAppOptions: ->
+    _.filter @props.apps, (app) => (app.name.match(@props.appsearch) or app.version.match(@props.appsearch))
+
   render: ->
-    console.log @props.apps
     <Box align='center' pad='medium'>
       <Form compact=false fill=false>
         <Header>
@@ -40,18 +50,49 @@ module.exports  = React.createClass
           </Box>
         </Header>
         <FormFields>
-          <FormField label='Application definition' htmlFor='app' size='medium'>
-            <Select placeHolder='Search'
-              inline={false}
-              multiple={false}
-              onSearch={@onAppSelectSearch}
-              options={(@state.appOptions or @props.apps).map @appToOptionValue}
-              value={@state.app}
-              onChange={@onAppSelectChange} />
-          </FormField>
-          <FormField label='Instance name' htmlFor='name' size='medium'>
-            <TextInput ref='name' placeHolder='A unique name to identify this instance' value={@state.name} onDOMChange={@onNameChange} />
-          </FormField>
+          <fieldset>
+            <FormField label='Application definition' htmlFor='app' size='medium'>
+              <Select placeHolder='Search'
+                inline={false}
+                multiple={false}
+                onSearch={@onAppSelectSearch}
+                options={(@getAppOptions() or @props.apps).map @appToOptionValue}
+                value={"#{@props.selectedAppName} (#{@props.selectedAppVersion})"}
+                onChange={@onAppSelectChange} />
+            </FormField>
+            <FormField label='Instance name' htmlFor='name' size='medium'>
+              <TextInput ref='name' placeHolder='A unique name to identify this instance' value={@props.name} onDOMChange={@onNameChange} />
+            </FormField>
+          </fieldset>
+          {if @props.selectedApp
+            params = @getAppParams()
+            <fieldset>
+              {if params.length
+                <Box direction='row' justify='between'>
+                  <Heading tag='h3'>App parameters</Heading>
+                </Box>
+              }
+
+              {params.map (param) ->
+                <FormField key={param} label={param} htmlFor={param} size='medium'>
+                  <TextInput  />
+                </FormField>
+              }
+            </fieldset>
+          }
+
+          <fieldset>
+            <Box direction='row' justify='between'>
+              {
+                heading = <Heading style={paddingTop:10} tag='h3'>Persisted Storage</Heading>
+                <CheckBox label={heading} toggle={true} defaultChecked />
+              }
+            </Box>
+
+            <FormField label='Storage bucket' size='medium' >
+              <Select onSearch={-> console.log 'search'} value={@props.bucket or @props.name} onChange={@onBucketSelected} options={@props.buckets}/>
+            </FormField>
+          </fieldset>
         </FormFields>
       </Form>
     </Box>

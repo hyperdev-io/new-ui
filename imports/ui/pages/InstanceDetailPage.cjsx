@@ -3,6 +3,8 @@ React         = require 'react'
 _             = require 'lodash'
 DetailPage    = require '../DetailPage.cjsx'
 Helpers       = require '../Helpers.coffee'
+{PrismCode}   = require 'react-prism'
+ansi_up       = require('ansi_up')
 
 { Header, Split, Sidebar, Notification, Section, List, ListItem, Heading, Menu, Button, Icons } = require 'grommet'
 
@@ -37,6 +39,17 @@ module.exports = React.createClass
             {li 'Application version', @props.instance.app.version}
             {li 'Storage bucket', @props.instance.storageBucket}
           </List>
+        </Section>
+
+        <Section pad='medium'>
+          <pre>
+          <PrismCode className="language-bash">
+            {x = @props.instance.logs?.startup?.join('')
+            console.log x
+            x
+            }
+          </PrismCode>
+          </pre>
         </Section>
 
         {_.map @props.instance.services, (service, name) ->

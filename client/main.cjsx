@@ -5,6 +5,7 @@ React               = require 'react'
 { render }          = require 'react-dom'
 { browserHistory }  = require 'react-router'
 { EventEmitter }    = require 'fbemitter'
+_                   = require 'lodash'
 routes              = require '../imports/startup/routes.cjsx'
 ErrorMapper         = require '../imports/ErrorMapper.coffee'
 
@@ -56,6 +57,12 @@ WrappedWrapper = createContainer (props) ->
     eventEmitter.emit 'show info message', "App #{app.name}:#{app.version} is deleted."
     browserHistory.push '/apps'
   onEvent 'start app', (app) -> browserHistory.push("/instance/new/#{app.name}/#{app.version}")
+  onEvent 'NewInstancePage::state changed', (name, version, pstate) ->
+    state = _.merge (Session.get('NewInstancePageState') or {}), pstate
+    query = _.toPairs(state).map(([key, val]) -> "#{key}=#{val}").join "&"
+    Session.set 'NewInstancePageState', state
+    browserHistory.push("/instance/new/#{name}/#{version}?#{query}")
+
 
   onEvent 'show error message', (message) -> Session.set 'globalErrorMessage', ErrorMapper message
   onEvent 'clear error message', -> Session.set 'globalErrorMessage', null

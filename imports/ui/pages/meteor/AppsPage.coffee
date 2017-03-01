@@ -1,15 +1,16 @@
 _ = require 'lodash'
 { connect }        = require 'react-redux'
+{ appSearchChanged, appSelected } = require '/imports/actions.coffee'
 
 mapStateToProps = (state) ->
   apps: state.apps
   appTags: []
   selectedAppName: null
-  appSearchValue: ''
+  appSearchValue: state.app_search or ''
 
 mapDispatchToProps = (dispatch) ->
-  onAppNameSelected: (name) -> App.emit 'app name selected', name
-  onAppSearchEntered: (value) -> App.emit 'app search entered', value
+  onAppNameSelected: (app) -> dispatch appSelected app.name, app.version
+  onAppSearchEntered: (value) -> dispatch appSearchChanged value
 
 module.exports = connect(mapStateToProps, mapDispatchToProps) require '../AppsPage.cjsx'
 

@@ -1,5 +1,6 @@
 React = require 'react'
 { Router, Route, IndexRoute, browserHistory } = require 'react-router';
+{ syncHistoryWithStore } = require 'react-router-redux'
 
 App     = require '../ui/App.cjsx'
 Page    = require '../ui/Page.cjsx'
@@ -14,8 +15,11 @@ NewInstancePage     = require '../ui/pages/meteor/NewInstancePage.coffee'
 { Provider }        = require 'react-redux'
 
 module.exports = (store, props) ->
+
+  history = syncHistoryWithStore(browserHistory, store, selectLocationState: (s)->s)
+
   <Provider store={store}>
-    <Router history={browserHistory} >
+    <Router history={history} >
       <Route path="/" component={App} App={props}>
         <IndexRoute component={LoginPage} App={props} />
         <Route path="login" component={LoginPage} App={props} />

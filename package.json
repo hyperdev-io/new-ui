@@ -2,7 +2,9 @@
   "name": "test",
   "private": true,
   "scripts": {
-    "start": "meteor run"
+    "start": "meteor run",
+    "test": "mocha --compilers coffee:coffee-script/register ./**/*.test.coffee",
+    "watchTest": "mocha --compilers coffee:coffee-script/register --watch-extensions test.coffee --watch ./**/*.test.coffee"
   },
   "dependencies": {
     "ansi_up": "^1.3.0",
@@ -29,6 +31,10 @@
     "redux": "^3.6.0"
   },
   "devDependencies": {
-    "redux-devtools": "^3.3.2"
+    "chai": "^3.5.0",
+    "coffee-script": "^1.12.4",
+    "mocha": "^3.2.0",
+    "redux-devtools": "^3.3.2",
+    "sinon": "^1.17.7"
   }
 }

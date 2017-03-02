@@ -4,7 +4,7 @@ React               = require 'react'
 { createContainer } = require 'meteor/react-meteor-data'
 { render }          = require 'react-dom'
 { browserHistory }  = require 'react-router'
-{ createStore, combineReducers, applyMiddleware, compose } = require 'redux'
+{ createStore, combineReducers, compose } = require 'redux'
 { routerReducer } = require 'react-router-redux'
 { EventEmitter }    = require 'fbemitter'
 _                   = require 'lodash'
@@ -96,44 +96,11 @@ ErrorMapper         = require '../imports/ErrorMapper.coffee'
 #
 # , Wrapper
 
-merge = (state, stateDiff) -> Object.assign {}, state, stateDiff
-
-myReducer = (state = {}, action) ->
-  switch action.type
-    when 'APP_SEARCH_CHANGED' then merge state, app_search: action.value
-    else state
-
 init = {}
 
-collectionsReducer = (state = {user: null, apps: [], buckets: []}, action) ->
-  switch action.type
-    when 'COLLECTIONS/USER' then merge state, user: action.user
-    when 'COLLECTIONS/APPS' then merge state, apps: action.apps
-    when 'COLLECTIONS/INSTANCES' then merge state, instances: action.instances
-    when 'COLLECTIONS/BUCKETS' then merge state, buckets: action.buckets
-    when 'COLLECTIONS/DATASTORE' then merge state, dataStore: action.dataStore
-    else state
-
-navigationMiddleware = ({ getState, dispatch }) -> (next) -> (action) ->
-  switch action.type
-    when 'APP_SELECTED' then browserHistory.push "/apps/#{action.value.name}/#{action.value.version}"
-    else next action
-
 composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-reducers = combineReducers
-  myReducer: myReducer
-  collections: collectionsReducer
-  router: routerReducer
-store = createStore reducers, init, composeEnhancers applyMiddleware(navigationMiddleware)
-
-
-# url = null
-# store.subscribe ->
-#   state = store.getState()
-#   console.log 'old url vs new url', url, state.url
-#   if state.url and url != state.url
-#     url = state.url
-#     browserHistory.push state.url
+reducers = combineReducers (Object.assign (require '/imports/redux/reducers/index.coffee'), router: routerReducer)
+store = createStore reducers, init, composeEnhancers (require '/imports/redux/middleware/index.coffee')
 
 
 Meteor.startup ->

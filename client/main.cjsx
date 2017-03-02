@@ -96,29 +96,35 @@ ErrorMapper         = require '../imports/ErrorMapper.coffee'
 #
 # , Wrapper
 
+merge = (state, stateDiff) -> Object.assign {}, state, stateDiff
+
 myReducer = (state = {}, action) ->
-  console.log 'action', action
-  console.log 'myReducer state', state
-  state = routerReducer state, action
-  x = switch action.type
-    when 'USER_CHANGED' then Object.assign {}, state, user: action.user
-    when 'APPS' then Object.assign {}, state, apps: action.apps
-    when 'APP_SEARCH_CHANGED' then Object.assign {}, state, app_search: action.value
-    # when 'APP_SELECTED' then browserHistory.push "/apps/#{action.value.name}/#{action.value.version}"
+  switch action.type
+    when 'APP_SEARCH_CHANGED' then merge state, app_search: action.value
+    else state
 
-  if x then x else state
+init = {}
 
-init =
-  globalErrorMessage: null
+collectionsReducer = (state = {user: null, apps: [], buckets: []}, action) ->
+  switch action.type
+    when 'COLLECTIONS/USER' then merge state, user: action.user
+    when 'COLLECTIONS/APPS' then merge state, apps: action.apps
+    when 'COLLECTIONS/INSTANCES' then merge state, instances: action.instances
+    when 'COLLECTIONS/BUCKETS' then merge state, buckets: action.buckets
+    when 'COLLECTIONS/DATASTORE' then merge state, dataStore: action.dataStore
+    else state
 
 navigationMiddleware = ({ getState, dispatch }) -> (next) -> (action) ->
-  console.log 'middleware::will dispatch', action
   switch action.type
     when 'APP_SELECTED' then browserHistory.push "/apps/#{action.value.name}/#{action.value.version}"
     else next action
 
 composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-store = createStore myReducer, init, composeEnhancers applyMiddleware(navigationMiddleware)
+reducers = combineReducers
+  myReducer: myReducer
+  collections: collectionsReducer
+  router: routerReducer
+store = createStore reducers, init, composeEnhancers applyMiddleware(navigationMiddleware)
 
 
 # url = null
@@ -138,15 +144,34 @@ Meteor.startup ->
   Accounts.users = Meteor.users
 
   Apps = new Mongo.Collection 'applicationDefs', connection: ddp
+  Instances = new Mongo.Collection 'instances', connection: ddp
+  StorageBuckets = new Mongo.Collection 'storageBuckets', connection: ddp
+  DataStores = new Mongo.Collection 'datastores',  connection: ddp
+  #     Users: Meteor.users
   ddp.subscribe 'applicationDefs'
+  ddp.subscribe 'instances'
+  ddp.subscribe 'storage'
+  ddp.subscribe 'datastores'
 
   Tracker.autorun ->
-    store.dispatch type: 'USER_CHANGED', user: Meteor.user()
+    store.dispatch type: 'COLLECTIONS/USER', user: Meteor.user()
 
   Tracker.autorun ->
     apps = Apps.find({}, sort: name: 1, version: 1).fetch()
-    console.log 'apps', apps
-    store.dispatch type: 'APPS', apps: apps
+    store.dispatch type: 'COLLECTIONS/APPS', apps: apps
+
+  Tracker.autorun ->
+    instances = Instances.find({}, sort: name: 1).fetch()
+    store.dispatch type: 'COLLECTIONS/INSTANCES', instances: instances
+
+  Tracker.autorun ->
+    buckets = StorageBuckets.find({}, sort: name: 1).fetch()
+    store.dispatch type: 'COLLECTIONS/BUCKETS', buckets: buckets
+
+  Tracker.autorun ->
+    dataStore = DataStores.findOne()
+    store.dispatch type: 'COLLECTIONS/DATASTORE', dataStore: dataStore
+
 
   # render <WrappedWrapper />, document.getElementById 'render-target'
   render routes(store, {}), document.getElementById 'render-target'

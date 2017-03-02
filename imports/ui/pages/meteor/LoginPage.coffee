@@ -1,9 +1,9 @@
 { connect }        = require 'react-redux'
 
 mapStateToProps = (state) ->
-  console.log 'state', state
-  isLoggedIn: state.user?
-  userFirstname: state.user?.profile.firstname
+  user = state.collections.user
+  isLoggedIn: user?
+  userFirstname: user?.profile.firstname
 
 mapDispatchToProps = (dispatch) ->
   onLogin: (username, password) ->

@@ -5,11 +5,15 @@ React               = require 'react'
 
 DataStoreUsageMeter = require '../viz/DataStoreUsageMeter.cjsx'
 DataBucketsList     = require '../lists/DataBucketsList.cjsx'
+Loading             = require '../Loading.cjsx'
 
 module.exports = React.createClass
   displayName: 'StoragePage'
 
   render: ->
+    <Loading isLoading={@props.isLoading} render={@renderWithData} />
+
+  renderWithData: ->
     ds = @props.dataStore
     splitFlex = if @props.selectedAppName then 'right' else 'left'
 

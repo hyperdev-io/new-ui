@@ -3,7 +3,7 @@ _ = require 'lodash'
 { appSearchChanged, appSelected } = require '/imports/actions.coffee'
 
 mapStateToProps = (state) ->
-  apps: state.apps
+  apps: state.collections.apps
   appTags: []
   selectedAppName: null
   appSearchValue: state.app_search or ''

@@ -2,12 +2,11 @@ _           = require 'lodash'
 { connect } = require 'react-redux'
 
 mapStateToProps = (state, { params }) ->
-  console.log 'state!@!@', state
-  app = _.find state.apps, {name: params.name, version: params.version}
-  console.log 'app', app
-  title: "#{app.name}:#{app.version}"
-  dockerCompose: app.dockerCompose
-  bigboatCompose: app.bigboatCompose
+  app = _.find state.collections.apps, {name: params.name, version: params.version}
+  title: "#{app?.name}:#{app?.version}"
+  dockerCompose: app?.dockerCompose
+  bigboatCompose: app?.bigboatCompose
+  isLoading: not app?
 
 mapDispatchToProps = (dispatch) ->
   onSaveApp: (dockerCompose, bigboatCompose)->

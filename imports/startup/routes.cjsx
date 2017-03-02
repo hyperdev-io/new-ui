@@ -16,7 +16,7 @@ NewInstancePage     = require '../ui/pages/meteor/NewInstancePage.coffee'
 
 module.exports = (store, props) ->
 
-  history = syncHistoryWithStore(browserHistory, store, selectLocationState: (s)->s)
+  history = syncHistoryWithStore(browserHistory, store, selectLocationState: (s)->s.router)
 
   <Provider store={store}>
     <Router history={history} >

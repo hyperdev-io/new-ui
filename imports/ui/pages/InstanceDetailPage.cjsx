@@ -6,9 +6,10 @@ Helpers       = require '../Helpers.coffee'
 {PrismCode}   = require 'react-prism'
 ansi_up       = require('ansi_up')
 
-{ Header, Split, Sidebar, Notification, Section, List, ListItem, Heading, Menu, Button, Icons } = require 'grommet'
+{ Header, Split, Sidebar, Notification, Section, List, ListItem, Heading, Menu, Button, Icon } = require 'grommet'
 
 InstanceControls = require '../menus/InstanceControls.cjsx'
+Loading          = require '../Loading.cjsx'
 
 li = (name, val) ->
   <ListItem justify='between'>
@@ -20,11 +21,7 @@ module.exports = React.createClass
   displayName: 'InstanceDetailPage'
 
   render: ->
-    if @props.instance
-      @renderWithData()
-    else @renderNoData()
-
-  renderNoData: -> <span />
+    <Loading isLoading={@props.isLoading} render={@renderWithData} />
 
   renderWithData: ->
     instanceHelper = Helpers.withInstance @props.instance

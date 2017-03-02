@@ -4,6 +4,7 @@ DetailPage    = require '../DetailPage.cjsx'
 { Header, Box, Split, Sidebar, Tabs, Tab } = require 'grommet'
 AppControls = require '../menus/AppControls.cjsx'
 YamlEditor  = require '../editors/YamlEditor.cjsx'
+Loading     = require '../Loading.cjsx'
 
 module.exports = React.createClass
   displayName: 'AppsDetailPage'
@@ -13,11 +14,7 @@ module.exports = React.createClass
     bigboatCompose: @props.bigboatCompose
 
   render: ->
-    if @props.dockerCompose
-      @renderWithData()
-    else @renderNoData()
-
-  renderNoData: -> <span />
+    <Loading isLoading={@props.isLoading} render={@renderWithData} />
 
   onComposeChange: (yamlobj, code) -> @setState dockerCompose: code
   onBigboatChange: (yamlobj, code) -> @setState bigboatCompose: code

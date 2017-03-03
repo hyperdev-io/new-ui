@@ -1,6 +1,6 @@
 #!/bin/sh
 
-npm test &>/dev/null
+npm test > /dev/null 2>&1
 RESULT=$?
 
 if [ $RESULT -ne 0 ]; then

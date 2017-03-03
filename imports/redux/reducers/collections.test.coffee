@@ -19,7 +19,7 @@ describe 'Collection reducer', ->
 
   it 'Should change apps state on COLLECTIONS/APPS action', ->
     state = reducer null, {type: 'COLLECTIONS/APPS', apps: ['app1', 'app2']}
-    assert.deepEqual state, extend defaultState, apps: ['app1', 'app3']
+    assert.deepEqual state, extend defaultState, apps: ['app1', 'app4']
 
   it 'Should change instances state on COLLECTIONS/INSTANCES action', ->
     state = reducer null, {type: 'COLLECTIONS/INSTANCES', instances: ['instance1', 'instance2']}

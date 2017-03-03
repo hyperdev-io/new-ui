@@ -17,9 +17,6 @@ App = React.createClass
   switchSideBar: ->
     @setState priority: (if @state.priority is 'right' then 'left' else 'right')
 
-  onErrorToastClose: -> @props.route.App.emit 'clear error message'
-  onInfoToastClose: -> @props.route.App.emit 'clear info message'
-
   render: ->
     <G.App centered=false>
       <G.Split flex='right' priority={@state.priority}>
@@ -48,7 +45,7 @@ App = React.createClass
         {@props.children}
       </G.Split>
       {if errorMessage = @props.errorMessage
-        <G.Toast status='critical' onClose={@onErrorToastClose}>
+        <G.Toast status='critical' onClose={@props.onErrorToastClose}>
           {errorMessage}
         </G.Toast>
       }
@@ -59,12 +56,17 @@ App = React.createClass
       }
     </G.App>
 
+{userErrorAcknowledged} = require '/imports/redux/actions/errors.coffee'
+
 mapStateToProps = (state) ->
-  errorMessage: null
+  errorMessage: state.error?.message
   infoMessage: null
   isLoggedIn: state.user?
 
-module.exports = connect(mapStateToProps) App
+mapDispatchToProps = (dispatch) ->
+  onErrorToastClose: -> dispatch userErrorAcknowledged()
+
+module.exports = connect(mapStateToProps, mapDispatchToProps) App
 
 # module.exports = createContainer (props) ->
 #   errorMessage: props..globalErrorMessage()

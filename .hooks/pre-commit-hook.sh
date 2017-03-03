@@ -1,11 +1,12 @@
 #!/bin/sh
 
-npm test
+npm test &>/dev/null
 RESULT=$?
 
 if [ $RESULT -ne 0 ]; then
   echo ""
   echo "There are test failures, aborting commit.."
+  echo "Please exucute tests with: npm test"
   echo ""
   exit 1
 else

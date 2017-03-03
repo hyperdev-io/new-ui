@@ -8,7 +8,7 @@ describe 'Collection reducer', ->
   it 'should return initial state on first unhandled action', ->
     state = reducer null, {type: 'UNHANDLED_ACTION'}
     assert.deepEqual state, defaultState
-    
+
   it 'should return unchanged state on an unhandled action', ->
     state = reducer {some: 'state'}, {type: 'UNHANDLED_ACTION'}
     assert.deepEqual state, some: 'state'
@@ -19,7 +19,7 @@ describe 'Collection reducer', ->
 
   it 'Should change apps state on COLLECTIONS/APPS action', ->
     state = reducer null, {type: 'COLLECTIONS/APPS', apps: ['app1', 'app2']}
-    assert.deepEqual state, extend defaultState, apps: ['app1', 'app2']
+    assert.deepEqual state, extend defaultState, apps: ['app1', 'app3']
 
   it 'Should change instances state on COLLECTIONS/INSTANCES action', ->
     state = reducer null, {type: 'COLLECTIONS/INSTANCES', instances: ['instance1', 'instance2']}

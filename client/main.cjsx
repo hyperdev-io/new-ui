@@ -96,19 +96,20 @@ ErrorMapper         = require '../imports/ErrorMapper.coffee'
 #
 # , Wrapper
 
-init = {}
-
-composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-reducers = combineReducers (Object.assign (require '/imports/redux/reducers/index.coffee'), router: routerReducer)
-store = createStore reducers, init, composeEnhancers (require '/imports/redux/middleware/index.coffee')
-
 
 Meteor.startup ->
+
   ddp = DDP.connect Meteor.settings.public.ddpServer
   Meteor.remoteConnection = ddp
   Accounts.connection = ddp
   Meteor.users = new Mongo.Collection 'users',  connection: ddp
   Accounts.users = Meteor.users
+
+  init = {}
+
+  composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+  reducers = combineReducers (Object.assign (require '/imports/redux/reducers/index.coffee'), router: routerReducer)
+  store = createStore reducers, init, composeEnhancers ((require '/imports/redux/middleware/index.coffee') ddp)
 
   Apps = new Mongo.Collection 'applicationDefs', connection: ddp
   Instances = new Mongo.Collection 'instances', connection: ddp

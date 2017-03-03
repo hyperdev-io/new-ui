@@ -12,10 +12,16 @@ describe 'Navigation middleware', ->
     assert.equal value, 'some return value'
     assert.equal next.calledOnce, true, 'Next middleware not called'
 
-  it 'should push a url to the browser history on APP_SELECTED action', ->
+  browserHistoryTest = (sourceAction, targetBrowserUrl) ->
     next = sinon.spy()
     browserHistoryMock = sinon.mock browserHistory = {push: ->}
-    browserHistoryMock.expects('push').withExactArgs '/apps/appname/version'
-    value = nav(browserHistory)(getState:null, dispatch: null)(next) {type: 'APP_SELECTED', value: {name: 'appname', version: 'version'}}
+    browserHistoryMock.expects('push').withExactArgs targetBrowserUrl
+    value = nav(browserHistory)(getState:null, dispatch: null)(next) sourceAction
     assert.equal next.notCalled, true, 'Next middleware should not be called'
     browserHistoryMock.verify()
+
+  it 'should push a url to the browser history on APP_SELECTED action', ->
+    browserHistoryTest {type: 'APP_SELECTED', value: {name: 'appname', version: 'version'}}, '/apps/appname/version'
+
+  it 'should push the appropriate url to the browser history on START_APP_REQUEST action', ->
+    browserHistoryTest {type: 'START_APP_REQUEST', app: {name: 'myapp', version: 'myversion'}}, '/instance/new/myapp/myversion'

@@ -1,5 +1,5 @@
 {
-  "name": "bigboat-dashboard-ui",
+  "name": "bigboat-dashboard-ui ",
   "private": true,
   "scripts": {
     "start": "meteor run",

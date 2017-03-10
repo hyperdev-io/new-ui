@@ -24,4 +24,11 @@ describe 'Navigation middleware', ->
     browserHistoryTest {type: 'APP_SELECTED', value: {name: 'appname', version: 'version'}}, '/apps/appname/version'
 
   it 'should push the appropriate url to the browser history on START_APP_REQUEST action', ->
-    browserHistoryTest {type: 'START_APP_REQUEST', app: {name: 'myapp', version: 'myversion'}}, '/instance/new/myapp/myversion'
+    browserHistoryTest {type: 'START_APP_REQUEST', app: {name: 'myapp', version: 'myversion'}}, '/instance/new/myapp/myversion?'
+
+  it 'should push the appropriate url to the browser history on START_APP_REQUEST action that contains query parameters', ->
+    action =
+      type: 'START_APP_REQUEST'
+      app: {name: 'myapp', version: 'myversion'}
+      params: {name: 'my-instance', bucket: 'my-storage-bucket'}
+    browserHistoryTest action, '/instance/new/myapp/myversion?name=my-instance&bucket=my-storage-bucket'

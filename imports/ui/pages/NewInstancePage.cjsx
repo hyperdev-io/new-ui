@@ -8,7 +8,6 @@ module.exports  = React.createClass
 
   getAppParams: ->
     params = @props.selectedApp.dockerCompose?.match /(?:\{\{)([\d|\w|_|-]*?)(?=\}\})/g
-    console.log params
     if params?.length
       _.uniq(params.map (p) -> p.replace('{{', '').trim())
     else

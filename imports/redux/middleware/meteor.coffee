@@ -25,9 +25,10 @@ module.exports = (ddp) -> ({ getState, dispatch }) ->
     apps = Apps.find({}, sort: name: 1, version: 1).fetch()
     dispatch type: 'COLLECTIONS/APPS', apps: apps
 
+  instanceDispatch = _.debounce dispatch, 500
   Tracker.autorun ->
     instances = Instances.find({}, sort: name: 1).fetch()
-    dispatch type: 'COLLECTIONS/INSTANCES', instances: instances
+    instanceDispatch type: 'COLLECTIONS/INSTANCES', instances: instances
 
   Tracker.autorun ->
     buckets = StorageBuckets.find({}, sort: name: 1).fetch()

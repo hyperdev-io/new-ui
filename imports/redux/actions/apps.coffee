@@ -10,3 +10,8 @@ module.exports =
   startAppRequest: (app) ->
     type: 'START_APP_REQUEST'
     app: app
+  appSelected: (name, version) ->
+    type: 'APP_SELECTED'
+    value:
+      name: name
+      version: version

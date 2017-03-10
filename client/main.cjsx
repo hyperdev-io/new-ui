@@ -111,35 +111,6 @@ Meteor.startup ->
   reducers = combineReducers (Object.assign (require '/imports/redux/reducers/index.coffee'), router: routerReducer)
   store = createStore reducers, init, composeEnhancers ((require '/imports/redux/middleware/index.coffee') ddp)
 
-  Apps = new Mongo.Collection 'applicationDefs', connection: ddp
-  Instances = new Mongo.Collection 'instances', connection: ddp
-  StorageBuckets = new Mongo.Collection 'storageBuckets', connection: ddp
-  DataStores = new Mongo.Collection 'datastores',  connection: ddp
-  #     Users: Meteor.users
-  ddp.subscribe 'applicationDefs'
-  ddp.subscribe 'instances'
-  ddp.subscribe 'storage'
-  ddp.subscribe 'datastores'
-
-  Tracker.autorun ->
-    store.dispatch type: 'COLLECTIONS/USER', user: Meteor.user()
-
-  Tracker.autorun ->
-    apps = Apps.find({}, sort: name: 1, version: 1).fetch()
-    store.dispatch type: 'COLLECTIONS/APPS', apps: apps
-
-  Tracker.autorun ->
-    instances = Instances.find({}, sort: name: 1).fetch()
-    store.dispatch type: 'COLLECTIONS/INSTANCES', instances: instances
-
-  Tracker.autorun ->
-    buckets = StorageBuckets.find({}, sort: name: 1).fetch()
-    store.dispatch type: 'COLLECTIONS/BUCKETS', buckets: buckets
-
-  Tracker.autorun ->
-    dataStore = DataStores.findOne()
-    store.dispatch type: 'COLLECTIONS/DATASTORE', dataStore: dataStore
-
 
   # render <WrappedWrapper />, document.getElementById 'render-target'
   render routes(store, {}), document.getElementById 'render-target'

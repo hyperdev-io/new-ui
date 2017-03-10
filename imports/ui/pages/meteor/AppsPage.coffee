@@ -1,12 +1,12 @@
 _ = require 'lodash'
-{ connect }        = require 'react-redux'
-{ appSearchChanged, appSelected } = require '/imports/actions.coffee'
+{ connect }           = require 'react-redux'
+{ appSelected }       = require '/imports/redux/actions/apps.coffee'
+{ appSearchChanged }  = require '/imports/redux/actions/search.coffee'
 
 mapStateToProps = (state) ->
-  apps: state.collections.apps
-  appTags: []
-  selectedAppName: null
-  appSearchValue: state.app_search or ''
+  searchVal = state.search?.app_search or ''
+  apps: _.filter state.collections.apps, (app) -> app.name?.match(searchVal) or app.version?.match(searchVal)
+  appSearchValue: searchVal
 
 mapDispatchToProps = (dispatch) ->
   onAppNameSelected: (app) -> dispatch appSelected app.name, app.version

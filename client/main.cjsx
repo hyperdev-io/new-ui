@@ -111,6 +111,4 @@ Meteor.startup ->
   reducers = combineReducers (Object.assign (require '/imports/redux/reducers/index.coffee'), router: routerReducer)
   store = createStore reducers, init, composeEnhancers ((require '/imports/redux/middleware/index.coffee') ddp)
 
-
-  # render <WrappedWrapper />, document.getElementById 'render-target'
   render routes(store, {}), document.getElementById 'render-target'

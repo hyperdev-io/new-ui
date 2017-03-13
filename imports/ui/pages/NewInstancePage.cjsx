@@ -30,6 +30,10 @@ module.exports  = React.createClass
   onNameChange: (evt,a,v) ->
     @props.onStateChanged name: evt.target.value
 
+  onParamChanged: (name) -> (evt) =>
+    obj = {}; obj["param_#{name}"] = evt.target.value
+    @props.onStateChanged obj
+
   appToOptionValue: (app) ->
     value: "#{app.name} (#{app.version})"
     id: app._id
@@ -72,9 +76,9 @@ module.exports  = React.createClass
                 </Box>
               }
 
-              {params.map (param) ->
+              {params.map (param) =>
                 <FormField key={param} label={param} htmlFor={param} size='medium'>
-                  <TextInput  />
+                  <TextInput onDOMChange={@onParamChanged(param)} />
                 </FormField>
               }
             </fieldset>

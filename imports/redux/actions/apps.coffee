@@ -4,11 +4,17 @@ module.exports =
     app: app
     dockerCompose: dockerCompose
     bigboatCompose: bigboatCompose
+  startAppRequest: (appName, version, instanceName) ->
+    type: 'START_APP_REQUEST'
+    app:
+      name: appName
+      version: version
+    instanceName: instanceName
   removeAppRequest: (app) ->
     type: 'REMOVE_APP_REQUEST'
     app: app
-  startAppRequest: (app) ->
-    type: 'START_APP_REQUEST'
+  startAppFormRequest: (app) ->
+    type: 'START_APP_FORM_REQUEST'
     app: app
   appSelected: (name, version) ->
     type: 'APP_SELECTED'

@@ -16,6 +16,6 @@ replaceOnLocationMatch = (browserHistory, locationMatch, url) ->
 module.exports = (browserHistory) -> ({ getState, dispatch }) -> (next) -> (action) ->
   switch action.type
     when 'APP_SELECTED' then browserHistory.push "/apps/#{action.value.name}/#{action.value.version}"
-    when 'START_APP_REQUEST' then replaceOnLocationMatch browserHistory, "^/instance/new", generateNewInstanceUrl action
+    when 'START_APP_FORM_REQUEST' then replaceOnLocationMatch browserHistory, "^/instance/new", generateNewInstanceUrl action
     when 'NewInstancePageCloseRequest' then browserHistory.push "/apps/#{action.app.name}/#{action.app.version}"
     else next action

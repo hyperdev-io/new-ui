@@ -23,21 +23,21 @@ describe 'Navigation middleware', ->
   it 'should push a url to the browser history on APP_SELECTED action', ->
     browserHistoryTest {type: 'APP_SELECTED', value: {name: 'appname', version: 'version'}}, '/apps/appname/version'
 
-  it 'should push the appropriate url to the browser history on START_APP_REQUEST action', ->
-    browserHistoryTest {type: 'START_APP_REQUEST', app: {name: 'myapp', version: 'myversion'}}, '/instance/new/myapp/myversion?'
+  it 'should push the appropriate url to the browser history on START_APP_FORM_REQUEST action', ->
+    browserHistoryTest {type: 'START_APP_FORM_REQUEST', app: {name: 'myapp', version: 'myversion'}}, '/instance/new/myapp/myversion?'
 
 
-  it 'should push the appropriate url to the browser history on START_APP_REQUEST action that contains query parameters', ->
+  it 'should push the appropriate url to the browser history on START_APP_FORM_REQUEST action that contains query parameters', ->
     action =
-      type: 'START_APP_REQUEST'
+      type: 'START_APP_FORM_REQUEST'
       app: {name: 'myapp', version: 'myversion'}
       params: {name: 'my-instance', bucket: 'my-storage-bucket', params_param1: 'value1'}
     browserHistoryTest action, '/instance/new/myapp/myversion?name=my-instance&bucket=my-storage-bucket&params_param1=value1'
 
-  it 'should PUSH the url to the browser history on START_APP_REQUEST when the current url doesnt match `^/instance/new`', ->
-    action = type: 'START_APP_REQUEST', app: {name: 'myapp', version: 'myversion'}
+  it 'should PUSH the url to the browser history on START_APP_FORM_REQUEST when the current url doesnt match `^/instance/new`', ->
+    action = type: 'START_APP_FORM_REQUEST', app: {name: 'myapp', version: 'myversion'}
     browserHistoryTest action, '/instance/new/myapp/myversion?', 'push'
 
-  it 'should REPLACE the url in the browser history on START_APP_REQUEST when the current url matches `^/instance/new`', ->
-    action = type: 'START_APP_REQUEST', app: {name: 'myapp', version: 'myversion'}
+  it 'should REPLACE the url in the browser history on START_APP_FORM_REQUEST when the current url matches `^/instance/new`', ->
+    action = type: 'START_APP_FORM_REQUEST', app: {name: 'myapp', version: 'myversion'}
     browserHistoryTest action, '/instance/new/myapp/myversion?', 'push', (-> pathname: '/insance/new/myapp/myversion?name=newInstance')

@@ -40,10 +40,17 @@ module.exports = (ddp) -> ({ getState, dispatch }) ->
 
   (next) -> (action) ->
 
+    dispatchErrIfAny = (err) -> dispatch userError err if err
+
     saveApp = (app, dockerCompose, bigboatCompose) ->
-      ddp.call 'saveApp', app.name, app.version, {raw: dockerCompose}, {raw: bigboatCompose}, (err) ->
-        dispatch userError err if err
+      ddp.call 'saveApp', app.name, app.version, {raw: dockerCompose}, {raw: bigboatCompose}, dispatchErrIfAny
+
+    startApp = (app, version, instanceName) ->
+      #startApp: (app, version, instance, parameters = {}, options = {}) ->
+      ddp.call 'startApp', app, version, instanceName, dispatchErrIfAny
+
 
     switch action.type
       when 'SAVE_APP_REQUEST' then saveApp action.app, action.dockerCompose, action.bigboatCompose
+      when 'START_APP_REQUEST' then startApp action.app.name, action.app.version, action.instanceName
       else next action

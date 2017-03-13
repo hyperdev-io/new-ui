@@ -1,6 +1,6 @@
 _           = require 'lodash'
 { connect } = require 'react-redux'
-{saveAppRequest, removeAppRequest, startAppRequest} = require '/imports/redux/actions/apps.coffee'
+{saveAppRequest, removeAppRequest, startAppFormRequest} = require '/imports/redux/actions/apps.coffee'
 
 mapStateToProps = (state, { params }) ->
   app = _.find state.collections.apps, {name: params.name, version: params.version}
@@ -14,7 +14,7 @@ mapDispatchToProps = (dispatch) ->
   onSaveApp: (app, dockerCompose, bigboatCompose)->
     dispatch saveAppRequest app, dockerCompose, bigboatCompose
   onRemoveApp: (app) -> dispatch removeAppRequest app
-  onStartApp: (app) -> dispatch startAppRequest app
+  onStartApp: (app) -> dispatch startAppFormRequest app
 
 
 mergeProps = (stateProps, dispatchProps, ownProps) ->

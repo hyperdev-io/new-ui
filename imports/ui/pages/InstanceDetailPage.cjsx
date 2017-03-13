@@ -42,9 +42,6 @@ module.exports = React.createClass
           <pre>
           <PrismCode className="language-bash">
             {@props.instance.logs?.startup?.join('')}
-            console.log x
-            x
-            }
           </PrismCode>
           </pre>
         </Section>
@@ -65,6 +62,6 @@ module.exports = React.createClass
       </DetailPage>
       <Sidebar size='medium' colorIndex='light-2' direction='column'>
         <Header pad='medium' size='large' />
-        <InstanceControls instanceName={@props.instance.name} emit={@props.emit} />
+        <InstanceControls instanceName={@props.instance.name} onStopInstance={@props.onStopInstance}/>
       </Sidebar>
     </Split>

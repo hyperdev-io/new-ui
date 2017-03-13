@@ -7,4 +7,7 @@ mapStateToProps = (state, { params }) ->
   instance: instance
   isLoading: not instance?
 
-module.exports = connect(mapStateToProps) require '../InstanceDetailPage.cjsx'
+mapDispatchToProps = (dispatch) ->
+    onStopInstance: -> console.log 'stopInstance'
+
+module.exports = connect(mapStateToProps, mapDispatchToProps) require '../InstanceDetailPage.cjsx'

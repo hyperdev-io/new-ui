@@ -41,7 +41,7 @@ module.exports = React.createClass
         <Section pad='medium'>
           <pre>
           <PrismCode className="language-bash">
-            {x = @props.instance.logs?.startup?.join('')
+            {@props.instance.logs?.startup?.join('')}
             console.log x
             x
             }

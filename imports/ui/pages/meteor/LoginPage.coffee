@@ -1,4 +1,5 @@
 { connect }        = require 'react-redux'
+{ loginRequest }   = require '/imports/redux/actions/auth.coffee'
 
 mapStateToProps = (state) ->
   user = state.collections.user
@@ -6,7 +7,6 @@ mapStateToProps = (state) ->
   userFirstname: user?.profile.firstname
 
 mapDispatchToProps = (dispatch) ->
-  onLogin: (username, password) ->
-    Meteor.loginWithLDAP username, password, searchBeforeBind: {'uid': username}
+  onLogin: (username, password) -> dispatch loginRequest username, password
 
 module.exports = connect(mapStateToProps, mapDispatchToProps) require '../LoginPage.cjsx'

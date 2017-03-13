@@ -2,7 +2,7 @@
 # Redux middleware that implements actions as Meteor side-effects
 #
 
-{userError} = require '../actions/errors.coffee'
+{ userError } = require '../actions/errors.coffee'
 
 module.exports = (ddp) -> ({ getState, dispatch }) ->
 
@@ -53,4 +53,5 @@ module.exports = (ddp) -> ({ getState, dispatch }) ->
     switch action.type
       when 'SAVE_APP_REQUEST' then saveApp action.app, action.dockerCompose, action.bigboatCompose
       when 'START_APP_REQUEST' then startApp action.app.name, action.app.version, action.instanceName
+      when 'LoginRequest' then Meteor.loginWithLDAP action.username, action.password, searchBeforeBind: {'uid': action.username}, dispatchErrIfAny
       else next action

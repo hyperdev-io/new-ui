@@ -1,5 +1,6 @@
 _           = require 'lodash'
-{ connect }        = require 'react-redux'
+{ connect } = require 'react-redux'
+{ stopInstanceRequest } = require '/imports/redux/actions/instance.coffee'
 
 mapStateToProps = (state, { params }) ->
   instance = _.find state.collections.instances, {name: params.name}
@@ -8,6 +9,10 @@ mapStateToProps = (state, { params }) ->
   isLoading: not instance?
 
 mapDispatchToProps = (dispatch) ->
-    onStopInstance: -> console.log 'stopInstance'
+  onStopInstance: (instanceName) -> dispatch stopInstanceRequest instanceName
 
-module.exports = connect(mapStateToProps, mapDispatchToProps) require '../InstanceDetailPage.cjsx'
+mergeProps = (stateProps, dispatchProps, ownProps) ->
+  Object.assign {}, stateProps, dispatchProps, ownProps,
+    onStopInstance: -> dispatchProps.onStopInstance stateProps.instance.name
+
+module.exports = connect(mapStateToProps, mapDispatchToProps, mergeProps) require '../InstanceDetailPage.cjsx'

@@ -1,5 +1,6 @@
 _           = require 'lodash'
 { connect } = require 'react-redux'
+{ newInstancePageCloseRequest } = require '/imports/redux/actions/newInstance.coffee'
 
 mapStateToProps = (state, { params, location }) ->
   query = location.query
@@ -18,6 +19,7 @@ mapStateToProps = (state, { params, location }) ->
 mapDispatchToProps = (dispatch) ->
   onStateChanged: (state) ->
     dispatch Object.assign (type: 'START_APP_REQUEST'), state
+  onClose: (name, version) -> dispatch newInstancePageCloseRequest name, version
 
 mergeProps = (stateProps, dispatchProps, ownProps) ->
   state =
@@ -34,6 +36,7 @@ mergeProps = (stateProps, dispatchProps, ownProps) ->
       dispatchProps.onStateChanged Object.assign {}, state, params: (Object.assign {}, state.params, stateDiff)
     onAppSelected: (name, version) ->
       dispatchProps.onStateChanged Object.assign {}, state, app: {name: name, version:version}
+    onClose: -> dispatchProps.onClose state.app.name, state.app.version
     onStartInstance: ->
       console.log 'state', state
 

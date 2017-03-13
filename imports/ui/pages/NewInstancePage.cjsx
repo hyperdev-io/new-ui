@@ -1,7 +1,7 @@
 React = require 'react'
 Page  = require '../Page.cjsx'
 _     = require 'lodash'
-{ Box, Button, Heading, Header, Footer, Form, FormFields, FormField, TextInput, Select, CheckBox } = require 'grommet'
+{ Box, Button, Heading, Header, Footer, Form, FormFields, FormField, TextInput, Select, CheckBox, Anchor, Icons } = require 'grommet'
 
 module.exports  = React.createClass
   displayName: 'NewInstancePage'
@@ -48,13 +48,11 @@ module.exports  = React.createClass
     @props.onStartInstance()
 
   render: ->
-    console.log 'render', @props
     <Box align='center' pad='medium'>
       <Form compact=false fill=false>
-        <Header>
-          <Box align='center' pad='large' alignContent='center'>
-            <Heading tag='h2' strong=true>New Instance</Heading>
-          </Box>
+        <Header size='large' pad='none' justify='between'>
+          <Heading tag='h2' margin='none' strong=true>New Instance</Heading>
+          <Anchor icon={<Icons.Base.Close />} onClick={@props.onClose} />
         </Header>
         <FormFields>
           <fieldset>

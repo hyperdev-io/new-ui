@@ -1,7 +1,7 @@
 React = require 'react'
 Page  = require '../Page.cjsx'
 _     = require 'lodash'
-{ Box, Heading, Header, Form, FormFields, FormField, TextInput, Select, CheckBox }     = require 'grommet'
+{ Box, Button, Heading, Header, Footer, Form, FormFields, FormField, TextInput, Select, CheckBox } = require 'grommet'
 
 module.exports  = React.createClass
   displayName: 'NewInstancePage'
@@ -44,7 +44,11 @@ module.exports  = React.createClass
   getAppOptions: ->
     _.filter @props.apps, (app) => (app.name.match(@props.appsearch) or app.version.match(@props.appsearch))
 
+  startInstance: (evt) ->
+    @props.onStartInstance()
+
   render: ->
+    console.log 'render', @props
     <Box align='center' pad='medium'>
       <Form compact=false fill=false>
         <Header>
@@ -63,8 +67,8 @@ module.exports  = React.createClass
                 value={"#{@props.selectedAppName} (#{@props.selectedAppVersion})"}
                 onChange={@onAppSelectChange} />
             </FormField>
-            <FormField label='Instance name' htmlFor='name' size='medium'>
-              <TextInput ref='name' placeHolder='A unique name to identify this instance' value={@props.name} onDOMChange={@onNameChange} />
+            <FormField label='Instance name' htmlFor='name' size='medium' error="">
+              <TextInput placeHolder='A unique name to identify this instance' value={@props.name} onDOMChange={@onNameChange} />
             </FormField>
           </fieldset>
           {if @props.selectedApp
@@ -78,7 +82,7 @@ module.exports  = React.createClass
 
               {params.map (param) =>
                 <FormField key={param} label={param} htmlFor={param} size='medium'>
-                  <TextInput onDOMChange={@onParamChanged(param)} />
+                  <TextInput value={@props.appParams?["param_#{param}"]} onDOMChange={@onParamChanged(param)} />
                 </FormField>
               }
             </fieldset>
@@ -97,5 +101,9 @@ module.exports  = React.createClass
             </FormField>
           </fieldset>
         </FormFields>
+
+        <Footer pad={vertical: 'medium'}>
+          <Button type="button" primary=true label="Start Instance" onClick={@startInstance} />
+        </Footer>
       </Form>
     </Box>

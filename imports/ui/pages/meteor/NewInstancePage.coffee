@@ -13,6 +13,7 @@ mapStateToProps = (state, { params, location }) ->
   selectedApp: _.find state.collections.apps, (name: selectedAppName, version: selectedAppVersion)
   selectedAppName: selectedAppName
   selectedAppVersion: selectedAppVersion
+  appParams: _.fromPairs(_.filter _.toPairs(query), ([key]) -> key.match "^param_")
 
 mapDispatchToProps = (dispatch) ->
   onStateChanged: (state) ->
@@ -23,7 +24,7 @@ mergeProps = (stateProps, dispatchProps, ownProps) ->
     app:
       name: stateProps.selectedAppName
       version: stateProps.selectedAppVersion
-    params:
+    params: Object.assign {}, stateProps.appParams,
       name: stateProps.name
       bucket: stateProps.bucket
       appsearch: stateProps.appsearch
@@ -33,6 +34,8 @@ mergeProps = (stateProps, dispatchProps, ownProps) ->
       dispatchProps.onStateChanged Object.assign {}, state, params: (Object.assign {}, state.params, stateDiff)
     onAppSelected: (name, version) ->
       dispatchProps.onStateChanged Object.assign {}, state, app: {name: name, version:version}
+    onStartInstance: ->
+      console.log 'state', state
 
 module.exports = connect(mapStateToProps, mapDispatchToProps, mergeProps) require '../NewInstancePage.cjsx'
 

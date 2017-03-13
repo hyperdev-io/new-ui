@@ -49,9 +49,15 @@ module.exports = (ddp) -> ({ getState, dispatch }) ->
       #startApp: (app, version, instance, parameters = {}, options = {}) ->
       ddp.call 'startApp', app, version, instanceName, dispatchErrIfAny
 
+    stopInstance = (instanceName) ->
+      ddp.call 'stopInstance', instanceName, dispatchErrIfAny
+
+    login = (username, password) ->
+      Meteor.loginWithLDAP username, password, searchBeforeBind: {'uid': username}, dispatchErrIfAny
 
     switch action.type
       when 'SAVE_APP_REQUEST' then saveApp action.app, action.dockerCompose, action.bigboatCompose
       when 'START_APP_REQUEST' then startApp action.app.name, action.app.version, action.instanceName
-      when 'LoginRequest' then Meteor.loginWithLDAP action.username, action.password, searchBeforeBind: {'uid': action.username}, dispatchErrIfAny
+      when 'LoginRequest' then login action.username, action.password
+      when 'StopInstanceRequest' then stopInstance action.instanceName
       else next action

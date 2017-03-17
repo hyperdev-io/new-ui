@@ -6,10 +6,18 @@ Helpers       = require '../Helpers.coffee'
 {PrismCode}   = require 'react-prism'
 ansi_up       = require('ansi_up')
 
-{ Header, Split, Sidebar, Notification, Section, List, ListItem, Heading, Menu, Button, Icon } = require 'grommet'
+{ Anchor, Header, Split, Sidebar, Notification, Section, List, ListItem, Heading, Menu, Button, Icons } = require 'grommet'
 
 InstanceControls = require '../menus/InstanceControls.cjsx'
 Loading          = require '../Loading.cjsx'
+
+avatarStyle =
+  width: 20
+  height: 20
+  borderRadius: 150
+  WebkitBorderRadius: 150
+  MozkitBorderRadius: 150
+  marginRight: 10
 
 li = (name, val) ->
   <ListItem justify='between'>
@@ -24,6 +32,18 @@ module.exports = React.createClass
     <Loading isLoading={@props.isLoading} render={@renderWithData} />
 
   renderWithData: ->
+    avatarAndName = =>
+      <span>
+        <img style={avatarStyle} src={@props.startedBy.gravatar} />
+        {@props.startedBy.fullname}
+      </span>
+
+    iconLink = (content) =>
+      <Anchor onClick={@props.onOpenAppPage} icon={<Icons.Base.Link style={width:20} />} label={<span style={fontSize:16, fontWeight:'normal'}>{content}</span>}/>
+
+    appWithLink = =>
+      iconLink "#{@props.instance.app.name}:#{@props.instance.app.version}"
+
     instanceHelper = Helpers.withInstance @props.instance
     <Split flex='left' priority='left'>
       <DetailPage title={@props.title} >
@@ -32,9 +52,9 @@ module.exports = React.createClass
 
         <Section pad='medium'>
           <List>
-            {li 'Application', "#{@props.instance.app.name}:#{@props.instance.app.version}"}
-            {li 'Storage bucket', @props.instance.storageBucket}
-            {li 'Started by', @props.instance.startedBy}
+            {li 'Application', appWithLink()}
+            {li 'Storage bucket', iconLink @props.instance.storageBucket}
+            {li 'Started by', avatarAndName()}
           </List>
         </Section>
 

@@ -105,6 +105,16 @@ Meteor.startup ->
   Meteor.users = new Mongo.Collection 'users',  connection: ddp
   Accounts.users = Meteor.users
 
+  Tracker.autorun ->
+    token = sessionStorage.getItem('_storedLoginToken')
+    if token
+      Meteor.loginWithToken token, (err) ->
+        console.log('loginWithTokenError ',err) if err
+
+  Tracker.autorun ->
+    user = Meteor.user()
+    sessionStorage.setItem('_storedLoginToken', Accounts._storedLoginToken()) if user
+
   init = {}
 
   composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose

@@ -1,6 +1,6 @@
 React         = require 'react'
-# G             = require 'grommet'
 _             = require 'lodash'
+moment        = require 'moment'
 DetailPage    = require '../DetailPage.cjsx'
 Helpers       = require '../Helpers.coffee'
 {PrismCode}   = require 'react-prism'
@@ -32,9 +32,9 @@ module.exports = React.createClass
 
         <Section pad='medium'>
           <List>
-            {li 'Application name', @props.instance.app.name}
-            {li 'Application version', @props.instance.app.version}
+            {li 'Application', "#{@props.instance.app.name}:#{@props.instance.app.version}"}
             {li 'Storage bucket', @props.instance.storageBucket}
+            {li 'Started by', @props.instance.startedBy}
           </List>
         </Section>
 
@@ -50,7 +50,7 @@ module.exports = React.createClass
           <Section key={name} pad='medium'>
             <Heading tag='h2'>{name}</Heading>
             <List>
-              {li 'Created', service.container?.created}
+              {li 'Created', moment(service.container?.created).fromNow()}
               {li 'State', service.state}
               {li 'FQDN', service.fqdn}
               {li 'Container name', service.container?.name}

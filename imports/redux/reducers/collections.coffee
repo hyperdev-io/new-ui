@@ -7,4 +7,5 @@ module.exports = (state = {user: null, apps: [], buckets: []}, action) ->
     when 'COLLECTIONS/INSTANCES' then merge state, instances: action.instances
     when 'COLLECTIONS/BUCKETS' then merge state, buckets: action.buckets
     when 'COLLECTIONS/DATASTORE' then merge state, dataStore: action.dataStore
+    when 'COLLECTIONS/USERS' then merge state, users: action.users
     else state

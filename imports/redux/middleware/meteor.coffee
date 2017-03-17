@@ -17,6 +17,10 @@ module.exports = (ddp) -> ({ getState, dispatch }) ->
   ddp.subscribe 'instances'
   ddp.subscribe 'storage'
   ddp.subscribe 'datastores'
+  ddp.subscribe 'allUsers'
+
+  Tracker.autorun ->
+    dispatch type: 'COLLECTIONS/USERS', users: Meteor.users.find().fetch()
 
   Tracker.autorun ->
     dispatch type: 'COLLECTIONS/USER', user: Meteor.user()

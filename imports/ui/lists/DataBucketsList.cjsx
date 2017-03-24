@@ -1,4 +1,5 @@
 React               = require 'react'
+_                   = require 'lodash'
 filesize            = require 'filesize'
 moment              = require 'moment'
 {Box, List, ListItem } = require 'grommet'
@@ -12,7 +13,7 @@ module.exports = React.createClass
 
   render: ->
     #Created {moment(bucket.created).fromNow()}
-    <List selectable=true onSelect={@listItemSelected}>
+    <List selectable=true onSelect={@listItemSelected} selected={_.findIndex @props.buckets, (b)=>b.name is @props.selectedBucket}>
       {@props.buckets.map (bucket) ->
         <ListItem key={bucket._id} pad='medium' justify='between' align='center'>
           <Box direction='column' pad='none'>

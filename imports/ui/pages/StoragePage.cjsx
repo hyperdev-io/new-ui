@@ -27,7 +27,7 @@ module.exports = React.createClass
             <DataStoreUsageMeter used={ds.used} free={ds.free} />
           </Header>
           <Box align='center'></Box>
-          <DataBucketsList buckets={@props.buckets} />
+          <DataBucketsList buckets={@props.buckets} selectedBucket={@props.selectedBucket}/>
       </Article>
       <Sidebar size='medium' colorIndex='light-2' direction='column'>
         <Box align='center' justify='center' direction='column'>

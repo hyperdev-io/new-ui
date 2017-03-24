@@ -18,4 +18,5 @@ module.exports = (browserHistory) -> ({ getState, dispatch }) -> (next) -> (acti
     when 'APP_SELECTED' then browserHistory.push "/apps/#{action.value.name}/#{action.value.version}"
     when 'START_APP_FORM_REQUEST' then replaceOnLocationMatch browserHistory, "^/instance/new", generateNewInstanceUrl action
     when 'NewInstancePageCloseRequest' then browserHistory.push "/apps/#{action.app.name}/#{action.app.version}"
+    when 'OpenBucketPageRequest' then browserHistory.push "/storage/#{action.name}"
     else next action

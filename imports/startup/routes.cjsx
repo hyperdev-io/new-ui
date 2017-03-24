@@ -20,18 +20,18 @@ module.exports = (store, props) ->
 
   <Provider store={store}>
     <Router history={history} >
-      <Route path="/" component={App} App={props}>
-        <IndexRoute component={LoginPage} App={props} />
-        <Route path="login" component={LoginPage} App={props} />
-        <Route path="apps" component={AppsPage} App={props} />
-        <Route path="apps/:name/:version" component={AppsDetailPage} App={props} />
+      <Route path="/" component={App}>
+        <IndexRoute component={LoginPage} />
+        <Route path="login" component={LoginPage} />
+        <Route path="apps" component={AppsPage} />
+        <Route path="apps/:name/:version" component={AppsDetailPage} />
         <Route path="instances" component={Page} title='Instances'>
-          <IndexRoute component={InstancesPage} App={props} />
+          <IndexRoute component={InstancesPage} />
         </Route>
-        <Route path="instance/new/:name/:version" component={NewInstancePage} App={props} />
-        <Route path="instance/new" component={NewInstancePage} App={props} />
-        <Route path="instances/:name" component={InstanceDetailPage} App={props} />
-        <Route path="storage" component={StoragePage} App={props}>
+        <Route path="instance/new/:name/:version" component={NewInstancePage} />
+        <Route path="instance/new" component={NewInstancePage} />
+        <Route path="instances/:name" component={InstanceDetailPage}/>
+        <Route path="storage" component={StoragePage}>
           <Route path=":name" />
         </Route>
       </Route>

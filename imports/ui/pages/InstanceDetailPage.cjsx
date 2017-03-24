@@ -10,6 +10,7 @@ ansi_up       = require('ansi_up')
 
 InstanceControls = require '../menus/InstanceControls.cjsx'
 Loading          = require '../Loading.cjsx'
+{ Terminal }     = require '../Terminal.jsx'
 
 avatarStyle =
   width: 20
@@ -38,11 +39,11 @@ module.exports = React.createClass
         {@props.startedBy.fullname}
       </span>
 
-    iconLink = (content) =>
-      <Anchor onClick={@props.onOpenAppPage} icon={<Icons.Base.Link style={width:20} />} label={<span style={fontSize:16, fontWeight:'normal'}>{content}</span>}/>
+    iconLink = (content, onClickHandler) =>
+      <Anchor onClick={onClickHandler} icon={<Icons.Base.Link style={width:20} />} label={<span style={fontSize:16, fontWeight:'normal'}>{content}</span>}/>
 
     appWithLink = =>
-      iconLink "#{@props.instance.app.name}:#{@props.instance.app.version}"
+      iconLink "#{@props.instance.app.name}:#{@props.instance.app.version}", @props.onOpenAppPage
 
     instanceHelper = Helpers.withInstance @props.instance
     <Split flex='left' priority='left'>
@@ -53,18 +54,25 @@ module.exports = React.createClass
         <Section pad='medium'>
           <List>
             {li 'Application', appWithLink()}
-            {li 'Storage bucket', iconLink @props.instance.storageBucket}
+            {li 'Storage bucket', iconLink @props.instance.storageBucket, @props.onOpenBucketPage}
             {li 'Started by', avatarAndName()}
           </List>
         </Section>
 
-        <Section pad='medium'>
-          <pre>
-          <PrismCode className="language-bash">
-            {@props.instance.logs?.startup?.join('')}
-          </PrismCode>
-          </pre>
-        </Section>
+        <div className='terminal-wrapper'>
+          <Terminal>
+            <kbd>docker-compose up</kbd>
+            <pre>
+              {@props.instance.logs?.startup?.join('')}
+            </pre>
+          </Terminal>
+        </div>
+
+        {unless @props.instance?.services
+          <div style={textAlign:'center', padding: 40}>
+            <h3>Service information will be displayed here as soon as the instance starts...</h3>
+          </div>
+        }
 
         {_.map @props.instance.services, (service, name) ->
           <Section key={name} pad='medium'>

@@ -3,6 +3,7 @@ _           = require 'lodash'
 md5         = require 'md5'
 { stopInstanceRequest } = require '/imports/redux/actions/instance.coffee'
 { appSelected } = require '/imports/redux/actions/apps.coffee'
+{ openBucketPageRequest } = require '/imports/redux/actions/buckets.coffee'
 
 mapStateToProps = (state, { params }) ->
   instance = _.find state.collections.instances, {name: params.name}
@@ -19,10 +20,12 @@ mapStateToProps = (state, { params }) ->
 mapDispatchToProps = (dispatch) ->
   onStopInstance: (instanceName) -> dispatch stopInstanceRequest instanceName
   onOpenAppPage: (name, version)-> dispatch appSelected name, version
+  onOpenBucketPage: (name) -> dispatch openBucketPageRequest name
 
 mergeProps = (stateProps, dispatchProps, ownProps) ->
   Object.assign {}, stateProps, dispatchProps, ownProps,
     onStopInstance: -> dispatchProps.onStopInstance stateProps.instance.name
     onOpenAppPage: -> dispatchProps.onOpenAppPage stateProps.instance?.app?.name, stateProps.instance?.app?.version
+    onOpenBucketPage: -> dispatchProps.onOpenBucketPage stateProps.instance?.storageBucket
 
 module.exports = connect(mapStateToProps, mapDispatchToProps, mergeProps) require '../InstanceDetailPage.cjsx'

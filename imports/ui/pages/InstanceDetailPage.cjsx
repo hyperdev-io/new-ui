@@ -6,7 +6,7 @@ Helpers       = require '../Helpers.coffee'
 {PrismCode}   = require 'react-prism'
 ansi_up       = require('ansi_up')
 
-{ Anchor, Header, Split, Sidebar, Notification, Section, List, ListItem, Heading, Menu, Button, Icons } = require 'grommet'
+{ Anchor, Box, Header, Split, Sidebar, Notification, Section, List, ListItem, Heading, Menu, Button, Icons } = require 'grommet'
 
 InstanceControls = require '../menus/InstanceControls.cjsx'
 Loading          = require '../Loading.cjsx'
@@ -45,6 +45,20 @@ module.exports = React.createClass
     appWithLink = =>
       iconLink "#{@props.instance.app.name}:#{@props.instance.app.version}", @props.onOpenAppPage
 
+    renderStatus = (s) ->
+      status = if (stat = s.health?.status) is 'unknown' then 'waiting for container to become healthy' else stat
+      <span>
+        {s.state} {if status then "(#{status})"}
+      </span>
+
+    renderNetwork = (net) ->
+      if net
+        ip = if net.ip? then ", ip: #{net.ip}" else ''
+        status = if (stat = net.health?.status) is 'unknown' then 'waiting for container to become healthy' else stat
+        <span>
+          {net.state} ({status}{ip})
+        </span>
+
     instanceHelper = Helpers.withInstance @props.instance
     <Split flex='left' priority='left'>
       <DetailPage title={@props.title} >
@@ -54,7 +68,9 @@ module.exports = React.createClass
         <Section pad='medium'>
           <List>
             {li 'Application', appWithLink()}
-            {li 'Storage bucket', iconLink @props.instance.storageBucket, @props.onOpenBucketPage}
+            {if bucket = @props.instance.storageBucket
+              li 'Storage bucket', iconLink bucket, @props.onOpenBucketPage
+            }
             {li 'Started by', avatarAndName()}
           </List>
         </Section>
@@ -69,9 +85,9 @@ module.exports = React.createClass
         </div>
 
         {unless @props.instance?.services
-          <div style={textAlign:'center', padding: 40}>
+          <Box alignContent='center' pad='large' align='center'>
             <h3>Service information will be displayed here as soon as the instance starts...</h3>
-          </div>
+          </Box>
         }
 
         {_.map @props.instance.services, (service, name) ->
@@ -79,11 +95,15 @@ module.exports = React.createClass
             <Heading tag='h2'>{name}</Heading>
             <List>
               {li 'Created', moment(service.container?.created).fromNow()}
-              {li 'State', service.state}
+              {li 'State', renderStatus service}
               {li 'FQDN', service.fqdn}
               {li 'Container name', service.container?.name}
               {li 'Ports', service.ports}
-              {li 'Network', service.aux?.net?.state}
+              {li 'Network', renderNetwork service.aux?.net}
+              {if service.aux.ssh
+                console.log 'ssh', service.aux.ssh
+                li 'SSH', renderStatus service.aux.ssh
+              }
             </List>
           </Section>
         }

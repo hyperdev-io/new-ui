@@ -29,6 +29,15 @@ li = (name, val) ->
 module.exports = React.createClass
   displayName: 'InstanceDetailPage'
 
+  copyToClipboard: (data) -> ->
+    element = document.createElement('textarea');
+    element.value = data;
+    document.body.appendChild(element);
+    element.focus();
+    element.setSelectionRange(0, element.value.length);
+    document.execCommand('copy');
+    document.body.removeChild(element);
+
   render: ->
     <Loading isLoading={@props.isLoading} render={@renderWithData} />
 
@@ -39,8 +48,8 @@ module.exports = React.createClass
         {@props.startedBy.fullname}
       </span>
 
-    iconLink = (content, onClickHandler) =>
-      <Anchor onClick={onClickHandler} icon={<Icons.Base.Link style={width:20} />} label={<span style={fontSize:16, fontWeight:'normal'}>{content}</span>}/>
+    iconLink = (content, onClickHandler, icon=Icons.Base.Link) ->
+      <Anchor onClick={onClickHandler} icon={<icon style={width:20} />} label={<span style={fontSize:16, fontWeight:'normal'}>{content}</span>}/>
 
     appWithLink = =>
       iconLink "#{@props.instance.app.name}:#{@props.instance.app.version}", @props.onOpenAppPage
@@ -58,6 +67,9 @@ module.exports = React.createClass
         <span>
           {net.state} ({status}{ip})
         </span>
+
+    renderSsh = (ssh) =>
+      iconLink "ssh #{ssh.fqdn}", (@copyToClipboard "ssh #{ssh.fqdn}"), Icons.Base.Copy
 
     instanceHelper = Helpers.withInstance @props.instance
     <Split flex='left' priority='left'>
@@ -101,8 +113,7 @@ module.exports = React.createClass
               {li 'Ports', service.ports}
               {li 'Network', renderNetwork service.aux?.net}
               {if service.aux.ssh
-                console.log 'ssh', service.aux.ssh
-                li 'SSH', renderStatus service.aux.ssh
+                li 'SSH', renderSsh service.aux.ssh
               }
             </List>
           </Section>

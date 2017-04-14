@@ -93,6 +93,11 @@ module.exports = React.createClass
             <pre>
               {@props.instance.logs?.startup?.join('')}
             </pre>
+            {if @props.instance?.state is 'running'
+              <pre>
+                done. instance running
+              </pre>
+            }
           </Terminal>
         </div>
 

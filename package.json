@@ -1,5 +1,7 @@
 {
   "name": "bigboat-dashboard-ui ",
+  "version": "0.0.1",
+  "description": "A UI fro the BigBoat Docker ecosystem.",
   "private": true,
   "scripts": {
     "start": "meteor run",

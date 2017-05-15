@@ -1,0 +1,35 @@
+machine:
+  services:
+    - docker
+
+dependencies:
+  override:
+    - npm i --production
+    - mkdir ./target
+    - docker run --rm -it -v $PWD:/w -w /w --entrypoint meteor -m 3G jeroenpeeters/meteord:1.4.3.1 --allow-superuser build ./target --directory --server-only --architecture os.linux.x86_64
+    - cp Dockerfile ./target/Dockerfile
+    - docker build -t ictu/docker-dashboard-ui ./target
+
+test:
+  override:
+    - echo "no tests!"
+
+deployment:
+  tags:
+    tag: /^[0-9]+\.[0-9]+\.[0-9]+$/
+    commands:
+      - docker tag ictu/docker-dashboard-ui ictu/docker-dashboard-ui:${CIRCLE_TAG}
+      - MAJOR_VERSION=${CIRCLE_TAG/.*}; docker tag ictu/docker-dashboard-ui:${CIRCLE_TAG} ictu/docker-dashboard-ui:${MAJOR_VERSION}
+      - MINOR_VERSION=${CIRCLE_TAG%.*}; docker tag ictu/docker-dashboard-ui:${CIRCLE_TAG} ictu/docker-dashboard-ui:${MINOR_VERSION}
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - docker push ictu/docker-dashboard-ui
+      - docker push ictu/docker-dashboard-ui:${CIRCLE_TAG}
+      - docker push ictu/docker-dashboard-ui:${MINOR_VERSION}
+      - docker push ictu/docker-dashboard-ui:${MAJOR_VERSION}
+
+  features:
+    branch: /^feature.*$/
+    commands:
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - docker tag ictu/docker-dashboard-ui:latest ictu/docker-dashboard-ui:${CIRCLE_BRANCH}
+      - docker push ictu/docker-dashboard-ui:${CIRCLE_BRANCH}

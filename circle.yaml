@@ -12,7 +12,7 @@ dependencies:
 
 test:
   override:
-    - echo "no tests!"
+    - npm test
 
 deployment:
   tags:

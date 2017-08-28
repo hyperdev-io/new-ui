@@ -22,7 +22,7 @@ module.exports = React.createClass
     ]
 
     <AnnotatedMeter legend={true}
-      type='bar'
+      type='circle'
       size='small'
       legend=false
       units={used.suffix}

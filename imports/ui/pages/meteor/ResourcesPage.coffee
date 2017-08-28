@@ -2,14 +2,12 @@ _ = require 'lodash'
 pretty            = require 'prettysize'
 { connect }       = require 'react-redux'
 
+sortByState = (services = []) ->
+  _.sortBy services, ['isUp']
+
 mapStateToProps = (state, {params}) ->
-  ds = state.collections.dataStore
-  buckets: buckets = state.collections.buckets
-  dataStore:
-    total: dsTotal = parseInt (ds?.total or 0)
-    used: dsUsed = parseInt (ds?.used or 0)
-    free: dsTotal - dsUsed
-  isLoading: not buckets?
-  selectedBucket: params.name
+
+  services: services = sortByState state.collections.services
+  isLoading: not services?
 
 module.exports = connect(mapStateToProps) require '../ResourcesPage.cjsx'

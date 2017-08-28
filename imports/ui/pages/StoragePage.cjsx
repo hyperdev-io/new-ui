@@ -24,7 +24,6 @@ module.exports = React.createClass
               <Title responsive=true truncate=true>Storage Buckets</Title>
               <Search onDOMChange={@userSearch} placeHolder='Search...' inline=true iconAlign='start' size='medium' />
             </Box>
-            <DataStoreUsageMeter used={ds.used} free={ds.free} />
           </Header>
           <Box align='center'></Box>
           <DataBucketsList buckets={@props.buckets} selectedBucket={@props.selectedBucket}/>
@@ -32,12 +31,14 @@ module.exports = React.createClass
       <Sidebar size='medium' colorIndex='light-2' direction='column'>
         <Box align='center' justify='center' direction='column'>
           <Header pad='medium' size='large' direction='column'>
-            <Title><Icons.Base.Info /></Title>
-            <Paragraph align='center'>
-              Storage buckets hold the data of the instances.
-              Buckets can be copied and deleted.
+            <Title><Icons.Base.Info /> Info</Title>
+            <Paragraph align='left'>
               This page lists all storage buckets in your data store.
+              A storage bucket contains the actual data of an instance.
+              Storage buckets can be copied and deleted. When an instance is
+              stopped the data bucket remains until it is deleted by a user.
             </Paragraph>
+            <DataStoreUsageMeter used={ds.used} free={ds.free} />
           </Header>
 
         </Box>

@@ -65,10 +65,12 @@ module.exports = (ddp) -> ({ getState, dispatch }) ->
 
     login = (username, password) ->
       Meteor.loginWithLDAP username, password, searchBeforeBind: {'uid': username}, dispatchErrIfAny
+    logout = -> Meteor.logout()
 
     switch action.type
       when 'SAVE_APP_REQUEST' then saveApp action.app, action.dockerCompose, action.bigboatCompose
       when 'START_APP_REQUEST' then startApp action.app.name, action.app.version, action.instanceName
+      when 'USER_LOGOUT_REQUEST' then logout()
       when 'LoginRequest' then login action.username, action.password
       when 'StopInstanceRequest' then stopInstance action.instanceName
       else next action

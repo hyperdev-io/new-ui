@@ -35,7 +35,7 @@ App = React.createClass
           </G.Menu>
           <G.Footer pad={horizontal: 'medium', vertical: 'small'} align='center' direction='row'>
             {if @props.isLoggedIn
-              <Button align='start' plain=true path='/login' icon={<Icons.Base.Logout />}></Button>
+              <Button align='start' plain=true onClick={@props.onLogout} icon={<Icons.Base.Logout />}></Button>
             else
               <Button align='start' plain=true path='/login' icon={<Icons.Base.Login />}></Button>
             }
@@ -58,14 +58,16 @@ App = React.createClass
     </G.App>
 
 {userErrorAcknowledged} = require '/imports/redux/actions/errors.coffee'
+{logout} = require '/imports/redux/actions/user.coffee'
 
 mapStateToProps = (state) ->
   errorMessage: state.error?.message
   infoMessage: null
-  isLoggedIn: state.user?
+  isLoggedIn: state.collections.user?
 
 mapDispatchToProps = (dispatch) ->
   onErrorToastClose: -> dispatch userErrorAcknowledged()
+  onLogout: -> dispatch logout()
 
 module.exports = connect(mapStateToProps, mapDispatchToProps) App
 

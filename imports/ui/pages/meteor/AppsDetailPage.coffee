@@ -2,13 +2,35 @@ _           = require 'lodash'
 { connect } = require 'react-redux'
 {saveAppRequest, removeAppRequest, startAppFormRequest} = require '/imports/redux/actions/apps.coffee'
 
+appTemplate =
+  name: 'MyNewApp'
+  version: '1.0'
+  dockerCompose: """
+  version: '2.0'
+  services:
+    www:
+      image: nginx
+  """
+  bigboatCompose:"""
+  name: MyNewApp
+  version: '1.0'
+  """
+
 mapStateToProps = (state, { params }) ->
-  app = _.find state.collections.apps, {name: params.name, version: params.version}
+  if params.name and params.version
+    app = _.find state.collections.apps, {name: params.name, version: params.version}
+    title = "#{app?.name}:#{app?.version}"
+    isNewApp = false
+  else
+    app = appTemplate
+    title = 'New App'
+    isNewApp = true
   app: app
-  title: "#{app?.name}:#{app?.version}"
+  title: title
   dockerCompose: app?.dockerCompose
   bigboatCompose: app?.bigboatCompose
   isLoading: not app?
+  isNewApp: isNewApp
 
 mapDispatchToProps = (dispatch) ->
   onSaveApp: (app, dockerCompose, bigboatCompose)->

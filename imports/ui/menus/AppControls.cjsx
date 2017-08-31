@@ -21,12 +21,14 @@ module.exports = React.createClass
 
   render: ->
     saveButtonHandler = if @props.saveButtonDisabled then null else @props.onSaveApp
+    removeButtonHandler = if @props.removeButtonDisabled then null else @showRemoveLayer
+    startButtonHandler = if @props.startButtonDisabled then null else @props.onStartApp
     <span>
       <Menu pad='medium'>
         <Button onClick={saveButtonHandler} align='start' plain=true label='Save' icon={<Icons.Base.Save />}></Button>
-        <Button onClick={@showRemoveLayer} align='start' plain=true label='Remove' icon={<Icons.Base.Trash />}></Button>
+        <Button onClick={removeButtonHandler} align='start' plain=true label='Remove' icon={<Icons.Base.Trash />}></Button>
         <Box pad='medium'></Box>
-        <Button onClick={@props.onStartApp} align='start' plain=true label='Start' icon={<Icons.Base.Play />}></Button>
+        <Button onClick={startButtonHandler} align='start' plain=true label='Start' icon={<Icons.Base.Play />}></Button>
       </Menu>
       <Layer onClose={@hideRemoveLayer} align='right' closer={true} hidden={not @state.showRemoveAppOverlay}>
        <Form compact=true>

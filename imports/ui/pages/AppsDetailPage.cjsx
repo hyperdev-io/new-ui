@@ -41,6 +41,8 @@ module.exports = React.createClass
         <Header pad='medium' size='large' />
         <AppControls
           saveButtonDisabled={@isSaveButtonDisabled()}
+          removeButtonDisabled={@props.isNewApp}
+          startButtonDisabled={@props.isNewApp}
           onSaveApp={@onSaveApp}
           onRemoveApp={@props.onRemoveApp}
           onStartApp={@props.onStartApp}

@@ -25,6 +25,7 @@ module.exports = (store, props) ->
         <IndexRoute component={LoginPage} />
         <Route path="login" component={LoginPage} />
         <Route path="apps" component={AppsPage} />
+        <Route path="apps/new" component={AppsDetailPage} />
         <Route path="apps/:name/:version" component={AppsDetailPage} />
         <Route path="instances" component={Page} title='Instances'>
           <IndexRoute component={InstancesPage} />

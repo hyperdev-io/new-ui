@@ -1,7 +1,7 @@
 { Meteor }          = require 'meteor/meteor'
 React               = require 'react'
 AppsList = require '../lists/AppsList.cjsx'
-{ Article, Box, Header, Heading, Search, Title, Split, Sidebar, Paragraph, Icons} = require 'grommet'
+{ Article, Button, Header, Heading, Search, Title, Split, Sidebar, Paragraph, Icons, Menu} = require 'grommet'
 
 module.exports = React.createClass
   displayName: 'AppsPage'
@@ -19,16 +19,10 @@ module.exports = React.createClass
         <AppsList apps={@props.apps} onAppNameSelected={@props.onAppNameSelected} />
       </Article>
       <Sidebar size='medium' colorIndex='light-2' direction='column'>
-        <Box align='center' justify='center' direction='column'>
-          <Header pad='medium' size='large' direction='column'>
-            <Title><Icons.Base.Info /> Info</Title>
-            <Paragraph align='left'>
-              This page lists all storage buckets in your data store.
-              A storage bucket contains the actual data of an instance.
-              Storage buckets can be copied and deleted. When an instance is
-              stopped the data bucket remains until it is deleted by a user.
-            </Paragraph>
-          </Header>
-        </Box>
+        <Header pad='medium' size='large' direction='column'>
+        </Header>
+        <Menu pad='medium'>
+          <Button onClick={@props.onNewAppClicked} align='start' plain=true label='New App' icon={<Icons.Base.New />}></Button>
+        </Menu>
       </Sidebar>
     </Split>

@@ -3,6 +3,7 @@
 #
 
 { userError } = require '../actions/errors.coffee'
+{ goToAppsPage } = require '../actions/navigation.coffee'
 
 module.exports = (ddp) -> ({ getState, dispatch }) ->
 
@@ -52,13 +53,20 @@ module.exports = (ddp) -> ({ getState, dispatch }) ->
   (next) -> (action) ->
 
     dispatchErrIfAny = (err) -> dispatch userError err if err
+    removeAppErrorHandler = (err) ->
+      dispatch goToAppsPage() unless err
+      dispatchErrIfAny err
 
     saveApp = (app, dockerCompose, bigboatCompose) ->
       ddp.call 'saveApp', app.name, app.version, {raw: dockerCompose}, {raw: bigboatCompose}, dispatchErrIfAny
+    removeApp = (app) ->
+      ddp.call 'deleteApp', app.name, app.version, removeAppErrorHandler
+
 
     startApp = (app, version, instanceName) ->
       #startApp: (app, version, instance, parameters = {}, options = {}) ->
       ddp.call 'startApp', app, version, instanceName, dispatchErrIfAny
+
 
     stopInstance = (instanceName) ->
       ddp.call 'stopInstance', instanceName, dispatchErrIfAny
@@ -69,6 +77,7 @@ module.exports = (ddp) -> ({ getState, dispatch }) ->
 
     switch action.type
       when 'SAVE_APP_REQUEST' then saveApp action.app, action.dockerCompose, action.bigboatCompose
+      when 'REMOVE_APP_REQUEST' then removeApp action.app
       when 'START_APP_REQUEST' then startApp action.app.name, action.app.version, action.instanceName
       when 'USER_LOGOUT_REQUEST' then logout()
       when 'LoginRequest' then login action.username, action.password

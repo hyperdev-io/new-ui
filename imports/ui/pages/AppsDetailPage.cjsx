@@ -16,9 +16,14 @@ module.exports = React.createClass
   render: ->
     <Loading isLoading={@props.isLoading} render={@renderWithData} />
 
-  onComposeChange: (yamlobj, code) -> @setState dockerCompose: code
-  onBigboatChange: (yamlobj, code) -> @setState bigboatCompose: code
-  onSaveApp: -> @props.onSaveApp @state.dockerCompose, @state.bigboatCompose
+  onComposeChange: (yamlobj, code) ->
+    @setState dockerCompose: code
+  onBigboatChange: (yamlobj, code) ->
+    console.log yamlobj
+    @setState bigboatCompose: code
+    @setState name: yamlobj.name
+    @setState version: yamlobj.version
+  onSaveApp: -> @props.onSaveApp @state.dockerCompose, @state.bigboatCompose, @state.name, @state.version
   isSaveButtonDisabled: ->
     sdc = @state.dockerCompose
     sbc = @state.bigboatCompose

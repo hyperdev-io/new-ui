@@ -1,6 +1,6 @@
 _           = require 'lodash'
 { connect } = require 'react-redux'
-{saveAppRequest, removeAppRequest, startAppFormRequest} = require '/imports/redux/actions/apps.coffee'
+{saveAppRequest, removeAppRequest, startAppFormRequest, appSelected} = require '/imports/redux/actions/apps.coffee'
 
 appTemplate =
   name: 'MyNewApp'
@@ -37,13 +37,17 @@ mapDispatchToProps = (dispatch) ->
     dispatch saveAppRequest app, dockerCompose, bigboatCompose
   onRemoveApp: (app) -> dispatch removeAppRequest app
   onStartApp: (app) -> dispatch startAppFormRequest app
+  onAppSelected: (app) -> dispatch appSelected app.name, app.version
 
 
 mergeProps = (stateProps, dispatchProps, ownProps) ->
   app = stateProps.app
   Object.assign {}, stateProps, dispatchProps, ownProps,
-    onSaveApp: (dockerCompose, bigboatCompose)->
+    onSaveApp: (dockerCompose, bigboatCompose, name, version)->
+      app.name = name or app.name
+      app.version = version or app.version
       dispatchProps.onSaveApp app, (dockerCompose or app.dockerCompose), (bigboatCompose or app.bigboatCompose)
+      dispatchProps.onAppSelected app if stateProps.isNewApp
     onRemoveApp: -> dispatchProps.onRemoveApp app
     onStartApp: -> dispatchProps.onStartApp app
 

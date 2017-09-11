@@ -1,7 +1,8 @@
 { applyMiddleware } = require 'redux'
 { browserHistory }  = require 'react-router'
-nav = require './navigation.coffee'
-meteor = require './meteor.coffee'
+navigation          = require './navigation.coffee'
+meteor              = require './meteor.coffee'
+notifications       = require './notifications.coffee'
 
 module.exports = (ddp) ->
-   applyMiddleware nav(browserHistory), meteor(ddp)
+   applyMiddleware notifications, navigation(browserHistory), meteor(ddp)

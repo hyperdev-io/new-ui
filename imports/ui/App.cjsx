@@ -2,7 +2,9 @@
 React               = require 'react'
 { Link }            = require 'react-router'
 # { createContainer } = require 'meteor/react-meteor-data'
-{ connect }        = require 'react-redux'
+Notifications       = require './Notifications.cjsx'
+{ connect }         = require 'react-redux'
+
 
 G     = require 'grommet'
 { Button, Icons } = G
@@ -55,6 +57,7 @@ App = React.createClass
           {infoMessage}
         </G.Toast>
       }
+      <Notifications />
     </G.App>
 
 {userErrorAcknowledged} = require '/imports/redux/actions/errors.coffee'

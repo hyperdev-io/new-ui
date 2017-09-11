@@ -2,8 +2,9 @@
 # Redux middleware that implements actions as Meteor side-effects
 #
 
-{ userError } = require '../actions/errors.coffee'
-{ goToAppsPage } = require '../actions/navigation.coffee'
+{ userError }             = require '../actions/errors.coffee'
+{ goToAppsPage }          = require '../actions/navigation.coffee'
+{ appSaved, appRemoved }  = require '../actions/apps.coffee'
 
 module.exports = (ddp) -> ({ getState, dispatch }) ->
 
@@ -53,19 +54,22 @@ module.exports = (ddp) -> ({ getState, dispatch }) ->
   (next) -> (action) ->
 
     dispatchErrIfAny = (err) -> dispatch userError err if err
-    removeAppErrorHandler = (err) ->
+    removeAppErrorHandler = (app) -> (err) ->
       dispatch goToAppsPage() unless err
+      dispatch appRemoved app unless err
       dispatchErrIfAny err
 
     saveApp = (app, dockerCompose, bigboatCompose) ->
-      ddp.call 'saveApp', app.name, app.version, {raw: dockerCompose}, {raw: bigboatCompose}, dispatchErrIfAny
+      ddp.call 'saveApp', app.name, app.version, {raw: dockerCompose}, {raw: bigboatCompose}, (err) ->
+        dispatchErrIfAny err
+        dispatch appSaved app unless err
     removeApp = (app) ->
-      ddp.call 'deleteApp', app.name, app.version, removeAppErrorHandler
+      ddp.call 'deleteApp', app.name, app.version, removeAppErrorHandler app
 
 
     startApp = (app, version, instanceName) ->
       #startApp: (app, version, instance, parameters = {}, options = {}) ->
-      ddp.call 'startApp', app, version, instanceName, dispatchErrIfAny
+      ddp.call 'startApp', app, version, instanceName, (err) -> dispatchErrIfAny err
 
 
     stopInstance = (instanceName) ->

@@ -8,6 +8,7 @@ React               = require 'react'
 { routerReducer } = require 'react-router-redux'
 { EventEmitter }    = require 'fbemitter'
 _                   = require 'lodash'
+reactNotify         = require 'react-notification-system-redux'
 routes              = require '../imports/startup/routes.cjsx'
 ErrorMapper         = require '../imports/ErrorMapper.coffee'
 
@@ -118,7 +119,7 @@ Meteor.startup ->
   init = {}
 
   composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-  reducers = combineReducers (Object.assign (require '/imports/redux/reducers/index.coffee'), router: routerReducer)
+  reducers = combineReducers (Object.assign (require '/imports/redux/reducers/index.coffee'), router: routerReducer, notifications: reactNotify.reducer)
   store = createStore reducers, init, composeEnhancers ((require '/imports/redux/middleware/index.coffee') ddp)
 
   render routes(store, {}), document.getElementById 'render-target'

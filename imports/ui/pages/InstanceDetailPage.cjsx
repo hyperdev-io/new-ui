@@ -6,7 +6,7 @@ Helpers       = require '../Helpers.coffee'
 {PrismCode}   = require 'react-prism'
 ansi_up       = require('ansi_up')
 
-{ Anchor, Box, Header, Split, Sidebar, Notification, Section, List, ListItem, Heading, Menu, Button, Icons } = require 'grommet'
+{ Anchor, Box, Header, Split, Sidebar, Notification, Section, List, ListItem, Heading, Menu, Button, Icons, Paragraph } = require 'grommet'
 
 InstanceControls = require '../menus/InstanceControls.cjsx'
 Loading          = require '../Loading.cjsx'
@@ -39,7 +39,20 @@ module.exports = React.createClass
     document.body.removeChild(element);
 
   render: ->
-    <Loading isLoading={@props.isLoading} render={@renderWithData} />
+    if @props.notFound
+      <Box align='center' textAlign='center' alignContent='center' direction='column' full={true} justify='center'>
+        <Box width=150>
+          <h1>Instance not found...</h1>
+          <Paragraph size='large'>Probably this instance was just terminated. Anyhow, it doesn&#39;t exist anymore.</Paragraph>
+          <Box align='center' colorIndex='light-3' pad='medium'>
+            <Button
+              label='Take me to the instances'
+              primary={true}
+              path='/instances' />
+          </Box>
+        </Box>
+      </Box>
+    else @renderWithData()
 
   renderWithData: ->
     avatarAndName = =>

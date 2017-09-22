@@ -10,7 +10,7 @@ mapStateToProps = (state, { params }) ->
   startByUser = _.find state.collections.users, {_id: instance?.startedBy}
   title: instance?.name
   instance: instance
-  isLoading: not instance?
+  notFound: not instance?
   startedBy:
     fullname: "#{startByUser?.profile?.firstname} #{startByUser?.profile?.lastname}"
     email: startByUser?.profile?.email

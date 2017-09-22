@@ -30,6 +30,8 @@ module.exports = React.createClass
       </Article>
       <Sidebar size='medium' colorIndex='light-2' direction='column'>
         <Box align='center' justify='center' direction='column'>
+
+          <div style={boxShadhow: '0 4px 8px 0 rgba(0,0,0,0.2);', margin:20, backgroundColor: 'white'}>
           <Header pad='medium' size='large' direction='column'>
             <Title><Icons.Base.Info /> Info</Title>
             <Paragraph align='left'>
@@ -38,8 +40,12 @@ module.exports = React.createClass
               Storage buckets can be copied and deleted. When an instance is
               stopped the data bucket remains until it is deleted by a user.
             </Paragraph>
-            <DataStoreUsageMeter used={ds.used} free={ds.free} />
           </Header>
+          </div>
+
+          <Box flex={true} align='center' justify='center' direction='column' style={boxShadhow: '0 4px 8px 0 rgba(0,0,0,0.2);', margin:20, backgroundColor: 'white'}>
+          <DataStoreUsageMeter used={ds.used} free={ds.free} />
+          </Box>
 
         </Box>
       </Sidebar>

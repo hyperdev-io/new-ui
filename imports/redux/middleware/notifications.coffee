@@ -10,14 +10,11 @@ notification = (title, message) ->
   message: message
   position: 'tr'
   autoDismiss: 5
-  # action:
-  #   label: 'Thanks!'
 
 appSavedNotification = (app) -> notification 'App successfully saved!', "App #{app.name}:#{app.version} is saved."
 appRemovedNotification = (app) -> notification 'App successfully removed!', "App #{app.name}:#{app.version} is removed."
 
 module.exports = ({ getState, dispatch }) -> (next) -> (action) ->
-  console.log action.type
   switch action.type
     when 'APP_SAVED' then dispatch success appSavedNotification action.app
     when 'APP_REMOVED' then dispatch warning appRemovedNotification action.app

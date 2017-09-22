@@ -5,9 +5,9 @@
 { userError }             = require '../actions/errors.coffee'
 { goToAppsPage }          = require '../actions/navigation.coffee'
 { appSaved, appRemoved }  = require '../actions/apps.coffee'
+notifications             = require '../actions/notifications.coffee'
 
 module.exports = (ddp) -> ({ getState, dispatch }) ->
-
   console.log 'init meteor middleware'
 
   Apps = new Mongo.Collection 'applicationDefs', connection: ddp
@@ -35,9 +35,19 @@ module.exports = (ddp) -> ({ getState, dispatch }) ->
     dispatch type: 'COLLECTIONS/APPS', apps: apps
 
   instanceDispatch = _.debounce dispatch, 500
+  instances = Instances.find({}, sort: name: 1)
+  instances.observe
+    added: (instance) ->
+      dispatch notifications.instanceStartedNotification instance if instance.state is 'created'
+    removed: (instance) ->
+      dispatch notifications.instanceStoppedNotification instance
+    changed: (doc, oldDoc) ->
+      return if doc.state is oldDoc.state
+      dispatch notifications.instanceStartedNotification doc if doc.state is 'created'
+      dispatch notifications.instanceRunningNotification doc if doc.state is 'running'
+      dispatch notifications.instanceStoppingNotification doc if doc.state is 'stopping'
   Tracker.autorun ->
-    instances = Instances.find({}, sort: name: 1).fetch()
-    instanceDispatch type: 'COLLECTIONS/INSTANCES', instances: instances
+    instanceDispatch type: 'COLLECTIONS/INSTANCES', instances: instances.fetch()
 
   Tracker.autorun ->
     buckets = StorageBuckets.find({}, sort: name: 1).fetch()
@@ -73,6 +83,7 @@ module.exports = (ddp) -> ({ getState, dispatch }) ->
 
 
     stopInstance = (instanceName) ->
+      dispatch notifications.instanceStopRequestedNotification instanceName
       ddp.call 'stopInstance', instanceName, dispatchErrIfAny
 
     login = (username, password) ->

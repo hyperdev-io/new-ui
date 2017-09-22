@@ -98,6 +98,10 @@ module.exports = React.createClass
                 done. instance running
               </pre>
             }
+            {<kbd>docker-compose down</kbd> if @props.instance.logs?.teardown?}
+            <pre>
+              {@props.instance.logs?.teardown?.join('')}
+            </pre>
           </Terminal>
         </div>
 

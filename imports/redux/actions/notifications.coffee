@@ -18,3 +18,8 @@ module.exports =
     success notification 'Instance is starting!', "Instance #{instance.name} is starting."
   instanceStoppedNotification: (instance) ->
     warning notification 'Instance has stopped!', "Instance #{instance.name} has been successfully stopped."
+
+  appSavedNotification: (app) ->
+    success notification 'App successfully saved!', "App #{app.name}:#{app.version} is saved."
+  appRemovedNotification: (app) ->
+    warning notification 'App successfully removed!', "App #{app.name}:#{app.version} is removed."

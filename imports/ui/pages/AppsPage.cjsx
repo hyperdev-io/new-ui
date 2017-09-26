@@ -2,6 +2,7 @@
 React               = require 'react'
 AppsList = require '../lists/AppsList.cjsx'
 { Article, Button, Box, Header, Heading, Search, Title, Split, Sidebar, Paragraph, Icons, Menu} = require 'grommet'
+FilterControl = require 'grommet-addons/components/FilterControl'
 
 module.exports = React.createClass
   displayName: 'AppsPage'
@@ -15,6 +16,7 @@ module.exports = React.createClass
         <Header fixed=true pad='medium'>
           <Title responsive=true truncate=true>Apps</Title>
           <Search value={@props.appSearchValue} onDOMChange={@onSearch} placeHolder='Search...' inline=true fill=true size='medium' />
+          <FilterControl unfilteredTotal={@props.results.total} filteredTotal={@props.results.filtered} onClick={@props.clearSearch} />
         </Header>
         <AppsList apps={@props.apps} onAppNameSelected={@props.onAppNameSelected} />
         {if @props.appSearchValue?.length > 0

@@ -1,7 +1,7 @@
 { Meteor }          = require 'meteor/meteor'
 React               = require 'react'
 AppsList = require '../lists/AppsList.cjsx'
-{ Article, Button, Header, Heading, Search, Title, Split, Sidebar, Paragraph, Icons, Menu} = require 'grommet'
+{ Article, Button, Box, Header, Heading, Search, Title, Split, Sidebar, Paragraph, Icons, Menu} = require 'grommet'
 
 module.exports = React.createClass
   displayName: 'AppsPage'
@@ -17,6 +17,11 @@ module.exports = React.createClass
           <Search value={@props.appSearchValue} onDOMChange={@onSearch} placeHolder='Search...' inline=true fill=true size='medium' />
         </Header>
         <AppsList apps={@props.apps} onAppNameSelected={@props.onAppNameSelected} />
+        {if @props.appSearchValue?.length > 0
+          <Box textAlign='center' pad='large'>
+            This list is filtered by <strong>&ldquo;{@props.appSearchValue}&rdquo;</strong>
+          </Box>
+        }
       </Article>
       <Sidebar size='medium' colorIndex='light-2' direction='column'>
         <Header pad='medium' size='large' direction='column'>

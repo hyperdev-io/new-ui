@@ -6,16 +6,15 @@ _ = require 'lodash'
 
 mapStateToProps = (state) ->
   searchVal = state.search?.app_search or ''
-  apps: apps = _.filter state.collections.apps, (app) -> app.name?.match(searchVal) or app.version?.match(searchVal)
   appSearchValue: searchVal
   results:
     total: state.collections.apps?.length or 0
-    filtered: apps.length
+    items: _.filter state.collections.apps, (app) -> app.name?.match(searchVal) or app.version?.match(searchVal)
 
 mapDispatchToProps = (dispatch) ->
   onAppNameSelected: (app) -> dispatch appSelected app.name, app.version
   onAppSearchEntered: (value) -> dispatch appSearchChanged value
   onNewAppClicked: -> dispatch goToNewAppPage()
-  clearSearch: -> dispatch appSearchChanged ''
+  onClearSearch: -> dispatch appSearchChanged ''
 
 module.exports = connect(mapStateToProps, mapDispatchToProps) require '../AppsPage.cjsx'

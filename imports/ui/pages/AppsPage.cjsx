@@ -23,6 +23,7 @@ module.exports = React.createClass
         results={@props.results}
         onSearch={@props.onAppSearchEntered}
         onClearSearch={@props.onClearSearch}
+        onListItemSelected={@props.onAppNameSelected}
         renderItem={@renderItem}/>
       <Sidebar size='medium' colorIndex='light-2' direction='column'>
         <Header pad='medium' size='large' direction='column'>

@@ -2,7 +2,7 @@
 React               = require 'react'
 filesize            = require 'filesize'
 
-{ Box, Header, Heading, Search, Title, Box, Split, Sidebar, Paragraph, Icons, ListItem } = require 'grommet'
+{ Box, Button, Header, Heading, Search, Title, Box, Split, Sidebar, Paragraph, Icons, ListItem } = require 'grommet'
 
 DataStoreUsageMeter = require '../viz/DataStoreUsageMeter.cjsx'
 FilterableListPage  = require '../FilterableListPage.cjsx'
@@ -15,8 +15,10 @@ module.exports = React.createClass
       <Box direction='column' pad='none'>
         <span style={fontSize:20}>{bucket.name}</span>
       </Box>
-      <Box direction='row' pad='none'>
-        <span>{filesize bucket.size or 0}</span>
+      <Box direction='row' pad='none' align='center'>
+        <span style={paddingRight:20}>{filesize bucket.size or 0}</span>
+        <Button icon={<Icons.Base.Copy />} onClick={->console.log 'copy'} />
+        <Button icon={<Icons.Base.Trash />} onClick={->console.log 'remove'} />
       </Box>
     </ListItem>
 
@@ -34,12 +36,12 @@ module.exports = React.createClass
         onListItemSelected={@props.onAppNameSelected}
         renderItem={@renderBucket}/>
       <Sidebar size='medium' colorIndex='light-2' direction='column'>
-        <Box align='center' justify='center' direction='column'>
+        <Box align='left' direction='column'>
 
-          <div style={boxShadhow: '0 4px 8px 0 rgba(0,0,0,0.2)', margin:20, backgroundColor: 'white'}>
-          <Header pad='medium' size='large' direction='column'>
-            <Title><Icons.Base.Info /> Info</Title>
+          <div style={borderBottom: '1px solid dimgrey', margin:20}>
+          <Header pad='medium' align='left' size='large' direction='column'>
             <Paragraph align='start'>
+              <Icons.Base.Info style={float:'left', marginTop:10, marginRight:10} />
               This page lists all storage buckets in your data store.
               A storage bucket contains the actual data of an instance.
               Storage buckets can be copied and deleted. When an instance is
@@ -48,8 +50,8 @@ module.exports = React.createClass
           </Header>
           </div>
 
-          <Box flex={true} align='center' justify='center' direction='column' style={boxShadhow: '0 4px 8px 0 rgba(0,0,0,0.2)', margin:20, backgroundColor: 'white'}>
-          <DataStoreUsageMeter used={ds.used} free={ds.free} />
+          <Box flex={true} align='center' justify='center' direction='column'>
+            <DataStoreUsageMeter used={ds.used} free={ds.free} />
           </Box>
 
         </Box>

@@ -9,9 +9,10 @@ AppsDetailPage      = require '../ui/pages/meteor/AppsDetailPage.coffee'
 InstancesPage       = require '../ui/pages/meteor/InstancesPage.coffee'
 InstanceDetailPage  = require '../ui/pages/meteor/InstanceDetailPage.coffee'
 StoragePage         = require '../ui/pages/meteor/StoragePage.coffee'
-ResourcesPage         = require '../ui/pages/meteor/ResourcesPage.coffee'
+ResourcesPage       = require '../ui/pages/meteor/ResourcesPage.coffee'
 LoginPage           = require '../ui/pages/meteor/LoginPage.coffee'
 NewInstancePage     = require '../ui/pages/meteor/NewInstancePage.coffee'
+AppStorePage        = require '../ui/pages/meteor/AppStorePage.coffee'
 
 { Provider }        = require 'react-redux'
 
@@ -37,6 +38,7 @@ module.exports = (store, props) ->
           <Route path=":name" />
         </Route>
         <Route path="resources" component={ResourcesPage} />
+        <Route path="appstore" component={AppStorePage} />
       </Route>
     </Router>
   </Provider>

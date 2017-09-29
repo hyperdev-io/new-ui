@@ -7,9 +7,8 @@ _ = require 'lodash'
 mapStateToProps = (state) ->
   searchVal = state.search?.app_search or ''
   appSearchValue: searchVal
-  results:
-    total: state.collections.apps?.length or 0
-    items: _.filter state.collections.apps, (app) -> app.name?.match(searchVal) or app.version?.match(searchVal)
+  totalResults: state.collections.apps?.length or 0
+  items: _.filter state.collections.apps, (app) -> app.name?.match(searchVal) or app.version?.match(searchVal)
 
 mapDispatchToProps = (dispatch) ->
   onAppNameSelected: (app) -> dispatch appSelected app.name, app.version

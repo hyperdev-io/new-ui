@@ -3,7 +3,6 @@ React               = require 'react'
 FilterableListPage  = require '../FilterableListPage.cjsx'
 AppsList            = require '../lists/AppsList.cjsx'
 { Article, Button, Box, Header, Heading, Search, Title, Split, Sidebar, Paragraph, Icons, Menu, ListItem} = require 'grommet'
-FilterControl = require 'grommet-addons/components/FilterControl'
 
 module.exports = React.createClass
   displayName: 'AppsPage'
@@ -20,7 +19,8 @@ module.exports = React.createClass
     <Split flex='left' priority='left'>
       <FilterableListPage title='Apps'
         searchValue={@props.appSearchValue}
-        results={@props.results}
+        totalResults={@props.totalResults}
+        items={@props.items}
         onSearch={@props.onAppSearchEntered}
         onClearSearch={@props.onClearSearch}
         onListItemSelected={@props.onAppNameSelected}

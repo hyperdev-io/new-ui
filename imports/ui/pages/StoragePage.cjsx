@@ -17,8 +17,14 @@ module.exports = React.createClass
       </Box>
       <Box direction='row' pad='none' align='center'>
         <span style={paddingRight:20}>{filesize bucket.size or 0}</span>
-        <Button icon={<Icons.Base.Copy />} onClick={->console.log 'copy'} />
-        <Button icon={<Icons.Base.Trash />} onClick={->console.log 'remove'} />
+        {if not bucket.isLocked
+          <Box direction='row' pad='none'>
+            <Button icon={<Icons.Base.Copy />} onClick={->console.log 'copy'} />
+            <Button icon={<Icons.Base.Trash />} onClick={->console.log 'remove'} />
+          </Box>
+        else
+          <img src='/img/hourglass.svg' style={padding: '0px 35px'} />
+        }
       </Box>
     </ListItem>
 

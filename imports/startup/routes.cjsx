@@ -36,6 +36,7 @@ module.exports = (store, props) ->
         <Route path="instances/:name" component={InstanceDetailPage}/>
         <Route path="storage" component={StoragePage}>
           <Route path=":name" />
+          <Route path=":name/:type(copy|delete)" />
         </Route>
         <Route path="resources" component={ResourcesPage} />
         <Route path="appstore" component={AppStorePage} />

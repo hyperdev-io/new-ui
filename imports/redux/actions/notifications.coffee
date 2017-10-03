@@ -23,3 +23,6 @@ module.exports =
     success notification 'App successfully saved!', "App #{app.name}:#{app.version} is saved."
   appRemovedNotification: (app) ->
     warning notification 'App successfully removed!', "App #{app.name}:#{app.version} is removed."
+
+  copyBucketRequestedNotification: (from, to) ->
+    info notification 'Copy bucket requested', "The contents of #{from} will be copied to #{to}."

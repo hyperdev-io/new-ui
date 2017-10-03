@@ -89,6 +89,10 @@ module.exports = (ddp) -> ({ getState, dispatch }) ->
       dispatch notifications.instanceStopRequestedNotification instanceName
       ddp.call 'stopInstance', instanceName, dispatchErrIfAny
 
+    copyBucket = (from, to) ->
+      dispatch notifications.copyBucketRequestedNotification from, to
+      ddp.call 'storage/buckets/copy', from, to, dispatchErrIfAny
+
     login = (username, password) ->
       Meteor.loginWithLDAP username, password, searchBeforeBind: {'uid': username}, dispatchErrIfAny
     logout = -> Meteor.logout()
@@ -98,6 +102,7 @@ module.exports = (ddp) -> ({ getState, dispatch }) ->
       when 'REMOVE_APP_REQUEST' then removeApp action.app
       when 'START_APP_REQUEST' then startApp action.app.name, action.app.version, action.instanceName
       when 'USER_LOGOUT_REQUEST' then logout()
+      when 'CopyBucketRequest' then copyBucket action.fromBucket, action.toBucket
       when 'LoginRequest' then login action.username, action.password
       when 'StopInstanceRequest' then stopInstance action.instanceName
       else next action

@@ -6,11 +6,12 @@ Helpers       = require '../Helpers.coffee'
 {PrismCode}   = require 'react-prism'
 ansi_up       = require('ansi_up')
 
-{ Anchor, Box, Header, Split, Sidebar, Notification, Section, List, ListItem, Heading, Menu, Button, Icons, Paragraph } = require 'grommet'
+{ Anchor, Box, Header, Split, Sidebar, Notification, Section, List, ListItem, Heading, Menu, Button, Icons, Paragraph, Layer } = require 'grommet'
 
 InstanceControls = require '../menus/InstanceControls.cjsx'
 Loading          = require '../Loading.cjsx'
 { Terminal }     = require '../Terminal.jsx'
+LogsLayer        = require '../layers/LogsLayer.cjsx'
 
 avatarStyle =
   width: 20
@@ -84,6 +85,9 @@ module.exports = React.createClass
     renderSsh = (ssh) =>
       iconLink "ssh #{ssh.fqdn}", (@copyToClipboard "ssh #{ssh.fqdn}"), Icons.Base.Copy
 
+    renderLogsButton = (service, name) =>
+      <Button label='Logs' path="/instances/#{@props.instance.name}/#{name}/logs/#{service.container?.id}" />
+
     instanceHelper = Helpers.withInstance @props.instance
     <Split flex='left' priority='left'>
       <DetailPage title={@props.title} >
@@ -101,7 +105,7 @@ module.exports = React.createClass
         </Section>
 
         <div className='terminal-wrapper'>
-          <Terminal>
+          <Terminal outputStyle={height: 250}>
             <kbd>docker-compose up</kbd>
             <pre>
               {@props.instance.logs?.startup?.join('')}
@@ -134,12 +138,20 @@ module.exports = React.createClass
               {li 'Container name', service.container?.name}
               {li 'Ports', service.ports}
               {li 'Network', renderNetwork service.aux?.net}
-              {if service.aux.ssh
+              {if service.aux?.ssh
                 li 'SSH', renderSsh service.aux.ssh
               }
+              {li 'Logs', renderLogsButton service, name}
             </List>
           </Section>
         }
+        <LogsLayer
+          hidden={not @props.showLogs}
+          onClose={@props.onLogClose}
+          instanceName={@props.instance.name}
+          serviceName={@props.service}
+          log={@props.log}
+        />
       </DetailPage>
       <Sidebar size='medium' colorIndex='light-2' direction='column'>
         <Header pad='medium' size='large' />

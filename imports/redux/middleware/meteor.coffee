@@ -90,6 +90,11 @@ module.exports = (ddp) -> ({ getState, dispatch }) ->
       dispatch notifications.instanceStopRequestedNotification instanceName
       ddp.call 'stopInstance', instanceName, dispatchErrIfAny
 
+    getServiceLogs = (cid) ->
+      ddp.call 'getLog', cid, (err, result) ->
+        dispatchErrIfAny err
+        dispatch type: 'COLLECTIONS/LOG', log: result
+
     copyBucket = (from, to) ->
       dispatch notifications.copyBucketRequestedNotification from, to
       ddp.call 'storage/buckets/copy', from, to, dispatchErrIfAny
@@ -111,4 +116,5 @@ module.exports = (ddp) -> ({ getState, dispatch }) ->
       when 'DeleteBucketRequest' then deleteBucket action.bucket
       when 'LoginRequest' then login action.username, action.password
       when 'StopInstanceRequest' then stopInstance action.instanceName
+      when 'GetServiceLogsRequest' then getServiceLogs action.cid
       else next action

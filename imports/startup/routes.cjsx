@@ -1,4 +1,5 @@
 React = require 'react'
+_ = require 'lodash'
 { Router, Route, IndexRoute, browserHistory } = require 'react-router';
 { syncHistoryWithStore } = require 'react-router-redux'
 
@@ -14,11 +15,17 @@ LoginPage           = require '../ui/pages/meteor/LoginPage.coffee'
 NewInstancePage     = require '../ui/pages/meteor/NewInstancePage.coffee'
 AppStorePage        = require '../ui/pages/meteor/AppStorePage.coffee'
 
+{ getServiceLogsRequest } = require '/imports/redux/actions/instance.coffee'
+
 { Provider }        = require 'react-redux'
 
 module.exports = (store, props) ->
 
   history = syncHistoryWithStore(browserHistory, store, selectLocationState: (s)->s.router)
+
+  _onLogPageEnter = ({params}) ->
+    console.log '_onLogPageEnter', params
+    store.dispatch getServiceLogsRequest params.cid
 
   <Provider store={store}>
     <Router history={history} >
@@ -33,7 +40,9 @@ module.exports = (store, props) ->
         </Route>
         <Route path="instance/new/:name/:version" component={NewInstancePage} />
         <Route path="instance/new" component={NewInstancePage} />
-        <Route path="instances/:name" component={InstanceDetailPage}/>
+        <Route path="instances/:name" component={InstanceDetailPage}>
+          <Route path=":service/:type(logs)/:cid" onEnter={_onLogPageEnter} />
+        </Route>
         <Route path="storage" component={StoragePage}>
           <Route path=":name" />
           <Route path=":name/:type(copy|delete)" />

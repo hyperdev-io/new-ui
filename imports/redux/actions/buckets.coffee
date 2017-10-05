@@ -6,3 +6,6 @@ module.exports =
     type: 'CopyBucketRequest'
     fromBucket: fromBucket
     toBucket: toBucket
+  deleteBucketRequest: (bucket) ->
+    type: 'DeleteBucketRequest'
+    bucket: bucket

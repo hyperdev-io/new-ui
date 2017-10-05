@@ -26,3 +26,5 @@ module.exports =
 
   copyBucketRequestedNotification: (from, to) ->
     info notification 'Copy bucket requested', "The contents of #{from} will be copied to #{to}."
+  deleteBucketRequestedNotification: (bucket) ->
+    info notification 'Removal of bucket requested', "Data bucket #{bucket} will be removed."

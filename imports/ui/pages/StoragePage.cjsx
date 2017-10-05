@@ -7,6 +7,7 @@ _                     = require 'lodash'
 DataStoreUsageMeter = require '../viz/DataStoreUsageMeter.cjsx'
 FilterableListPage  = require '../FilterableListPage.cjsx'
 BucketCopyLayer     = require '../layers/BucketCopyLayer.cjsx'
+BucketRemoveLayer   = require '../layers/BucketRemoveLayer.cjsx'
 
 module.exports = React.createClass
   displayName: 'StoragePage'
@@ -71,4 +72,9 @@ module.exports = React.createClass
       selectedBucket={@props.selectedBucket}
       onClose={=> @props.onActionMenuClose @props.selectedBucket}
       onSubmit={@props.onCopy} />
+    <BucketRemoveLayer
+      hidden={not @props.isDelete}
+      selectedBucket={@props.selectedBucket}
+      onClose={=> @props.onActionMenuClose @props.selectedBucket}
+      onSubmit={@props.onDelete}/>
     </span>

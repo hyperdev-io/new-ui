@@ -3,7 +3,7 @@ pretty            = require 'prettysize'
 { connect }       = require 'react-redux'
 
 { bucketSearchChanged }  = require '/imports/redux/actions/search.coffee'
-{ openBucketPageRequest, copyBucketRequest } = require '/imports/redux/actions/buckets.coffee'
+{ openBucketPageRequest, copyBucketRequest, deleteBucketRequest } = require '/imports/redux/actions/buckets.coffee'
 
 mapStateToProps = (state, {params}) ->
   ds = state.collections.dataStore
@@ -15,6 +15,7 @@ mapStateToProps = (state, {params}) ->
     free: dsTotal - dsUsed
   selectedBucket: params.name
   isCopy: params.type is 'copy'
+  isDelete: params.type is 'delete'
   searchValue: searchVal
   totalResults: state.collections.buckets?.length or 0
   buckets: _.filter state.collections.buckets, (bucket) -> bucket.name?.match(searchVal)
@@ -26,5 +27,8 @@ mapDispatchToProps = (dispatch) ->
   onCopy: (fromBucket, toBucket) ->
     dispatch copyBucketRequest fromBucket, toBucket
     dispatch openBucketPageRequest toBucket
+  onDelete: (bucket) ->
+    dispatch deleteBucketRequest bucket
+    dispatch openBucketPageRequest bucket
 
 module.exports = connect(mapStateToProps,mapDispatchToProps) require '../StoragePage.cjsx'

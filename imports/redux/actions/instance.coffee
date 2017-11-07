@@ -2,6 +2,7 @@ module.exports =
   stopInstanceRequest: (instanceName) ->
     type: 'StopInstanceRequest'
     instanceName: instanceName
-  getServiceLogsRequest: (cid) ->
+  getServiceLogsRequest: (params) ->
     type: 'GetServiceLogsRequest'
-    cid: cid
+    instance: params.name
+    service: params.service

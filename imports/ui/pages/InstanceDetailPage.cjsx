@@ -86,7 +86,7 @@ module.exports = React.createClass
       iconLink "ssh #{ssh.fqdn}", (@copyToClipboard "ssh #{ssh.fqdn}"), Icons.Base.Copy
 
     renderLogsButton = (service, name) =>
-      <Button label='Logs' path="/instances/#{@props.instance.name}/#{name}/logs/#{service.container?.id}" />
+      <Button label='Logs' path="/instances/#{@props.instance.name}/#{name}/logs" />
 
     instanceHelper = Helpers.withInstance @props.instance
     <Split flex='left' priority='left'>

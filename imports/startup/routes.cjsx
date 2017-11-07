@@ -25,7 +25,7 @@ module.exports = (store, props) ->
 
   _onLogPageEnter = ({params}) ->
     console.log '_onLogPageEnter', params
-    store.dispatch getServiceLogsRequest params.cid
+    store.dispatch getServiceLogsRequest params
 
   <Provider store={store}>
     <Router history={history} >
@@ -41,7 +41,7 @@ module.exports = (store, props) ->
         <Route path="instance/new/:name/:version" component={NewInstancePage} />
         <Route path="instance/new" component={NewInstancePage} />
         <Route path="instances/:name" component={InstanceDetailPage}>
-          <Route path=":service/:type(logs)/:cid" onEnter={_onLogPageEnter} />
+          <Route path=":service/:type(logs)" onEnter={_onLogPageEnter} />
         </Route>
         <Route path="storage" component={StoragePage}>
           <Route path=":name" />

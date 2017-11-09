@@ -12,13 +12,8 @@
 
 .terminal-wrapper {
   width: 100%;
-  background: -webkit-radial-gradient(#3a3a3a, #1c1c1c);
-  background: -moz-radial-gradient(#3a3a3a, #1c1c1c);
-  background: -o-radial-gradient(#3a3a3a, #1c1c1c);
-  background: -ms-radial-gradient(#3a3a3a, #1c1c1c);
-  background: radial-gradient(#3a3a3a, #1c1c1c);
-  background-attachment: fixed;
-  padding:40px;
+  background: #fff;
+  padding:10px 40px;
 }
 .terminal {
   width: 100%;
@@ -67,7 +62,7 @@
 }
 /* Colors ***************/
 .terminal {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, .8);
 }
 .terminal header {
   background: -webkit-linear-gradient(270deg, #eaeaea 0%, #d2d2d2 100%);

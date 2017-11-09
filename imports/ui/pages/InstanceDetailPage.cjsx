@@ -105,7 +105,7 @@ module.exports = React.createClass
         </Section>
 
         <div className='terminal-wrapper'>
-          <Terminal outputStyle={height: 250}>
+          <Terminal outputStyle={minHeight: 100, maxHeight: 250}>
             <kbd>docker-compose up</kbd>
             <pre>
               {@props.instance.logs?.startup?.join('')}

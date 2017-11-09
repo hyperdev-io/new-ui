@@ -27,13 +27,6 @@ export const Terminal = class Terminal extends React.Component {
 
     return (
       <div className="terminal" style={this.props.style}>
-        <header>
-          <div className="terminal-button button-close"></div>
-          <div className="terminal-button button-minimize"></div>
-          <div className="terminal-button button-zoom"></div>
-          <div className="terminal-header">{this.props.title}</div>
-        </header>
-
         <div ref='terminal' className="terminal-output" style={this.props.outputStyle}>
           {lines}
         </div>

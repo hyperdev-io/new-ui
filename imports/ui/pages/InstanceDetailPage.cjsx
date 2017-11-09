@@ -89,8 +89,14 @@ module.exports = React.createClass
       <Button label='Logs' path="/instances/#{@props.instance.name}/#{name}/logs" />
 
     instanceHelper = Helpers.withInstance @props.instance
+
+    if @props.instanceLink
+      titleComponent = <Anchor reverse={true} href={@props.instanceLink} target='_blank'
+        icon={<Icons.Base.Link style={width:60, marginBottom:20} />}
+        label={<Heading tag='h1' style={display:'inline-block'} strong={true}>{@props.title}</Heading>} />
+
     <Split flex='left' priority='left'>
-      <DetailPage title={@props.title} >
+      <DetailPage title={titleComponent or @props.title} >
         <Notification pad='medium' status={instanceHelper.getStateValue()}
         message={instanceHelper.getStatusText()} />
 
@@ -128,9 +134,11 @@ module.exports = React.createClass
           </Box>
         }
 
-        {_.map @props.instance.services, (service, name) ->
+        {_.map @props.instance.services, (service, name) =>
           <Section key={name} pad='medium'>
-            <Heading tag='h2'>{name}</Heading>
+            <Anchor reverse={true} href={@props.serviceLinks[name]} target='_blank'
+              icon={<Icons.Base.Link style={width:20} />}
+              label={<span style={fontSize:26, fontWeight:'normal'}>{name}</span>} />
             <List>
               {li 'Created', moment(service.container?.created).fromNow()}
               {li 'State', renderStatus service}

@@ -8,10 +8,9 @@ module.exports = ({hidden, log, instanceName, serviceName, onClose}) ->
 
   <Layer flush={true} onClose={onClose} align='right' closer={true} hidden={hidden}>
     <Box pad='none' full={true} style={backgroundColor: 'black'}>
-      <Terminal outputStyle={height:'calc(100vh - 40px)'} title="Logs of #{instanceName}:#{serviceName}">
+      <Terminal outputStyle={height:'calc(100vh - 40px)'} title="Showing the last 1000 lines of the #{instanceName}:#{serviceName} logs">
         {log?.map (line) ->
-        #  console.log 'logline', line
-         <pre>{line.message}</pre>
+         <pre>{line}</pre>
         }
       </Terminal>
     </Box>

@@ -7,9 +7,6 @@ module.exports = React.createClass
   getInitialState: ->
     showStopInstanceDialog: false
 
-  onShowInstanceLogsClicked: ->
-    console.log 'show instance log'
-
   stopInstance: ->
     @setState showStopInstanceDialog: false
     @props.onStopInstance()
@@ -24,7 +21,6 @@ module.exports = React.createClass
     <span>
       <Menu pad='medium'>
         <Button onClick={@showCloseLayer} align='start' plain=true label='Stop' icon={<Icons.Base.Power />}></Button>
-        <Button onClick={@onShowInstanceLogsClicked} align='start' plain=true label='Logs' icon={<Icons.Base.Notes />}></Button>
       </Menu>
       <Layer onClose={@hideCloseLayer} align='right' closer={true} hidden={not @state.showStopInstanceDialog}>
        <Form compact=true>

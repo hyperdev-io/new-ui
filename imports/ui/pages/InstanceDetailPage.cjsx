@@ -85,9 +85,6 @@ module.exports = React.createClass
     renderSsh = (ssh) =>
       iconLink "ssh #{ssh.fqdn}", (@copyToClipboard "ssh #{ssh.fqdn}"), Icons.Base.Copy
 
-    renderLogsButton = (service, name) =>
-      <Button label='Logs' path="/instances/#{@props.instance.name}/#{name}/logs" />
-
     instanceHelper = Helpers.withInstance @props.instance
 
     if @props.instanceLink
@@ -136,20 +133,28 @@ module.exports = React.createClass
 
         {_.map @props.instance.services, (service, name) =>
           <Section key={name} pad='medium'>
-            <Anchor reverse={true} href={@props.serviceLinks[name]} target='_blank'
-              icon={<Icons.Base.Link style={width:20} />}
-              label={<span style={fontSize:26, fontWeight:'normal'}>{name}</span>} />
+            <Header style={minHeight:0, margin:"0px 20px 0px 0px"}>
+              <Anchor reverse={true} href={@props.serviceLinks[name]} target='_blank'
+                icon={<Icons.Base.Link style={width:20} />}
+                label={<span style={fontSize:26, fontWeight:'normal'}>{name}</span>} />
+
+              <Box flex={true} justify='end' direction='row'>
+                <Anchor reverse={true} target='_blank'
+                  path="/instances/#{@props.instance.name}/#{name}/logs"
+                  icon={<Icons.Base.DocumentTxt style={width:20} />}
+                  label={<span style={fontSize:20, fontWeight:'normal'}>Logs</span>} />
+              </Box>
+            </Header>
             <List>
               {li 'Created', moment(service.container?.created).fromNow()}
               {li 'State', renderStatus service}
               {li 'FQDN', service.fqdn}
               {li 'Container name', service.container?.name}
               {li 'Ports', service.ports}
-              {li 'Network', renderNetwork service.aux?.net}
+              {li 'Network', renderNetwork service.aux?.net if service.aux?.net}
               {if service.aux?.ssh
                 li 'SSH', renderSsh service.aux.ssh
               }
-              {li 'Logs', renderLogsButton service, name}
             </List>
           </Section>
         }

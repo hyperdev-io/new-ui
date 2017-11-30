@@ -158,13 +158,6 @@ module.exports = React.createClass
             </List>
           </Section>
         }
-        <LogsLayer
-          hidden={not @props.showLogs}
-          onClose={@props.onLogClose}
-          instanceName={@props.instance.name}
-          serviceName={@props.service}
-          log={@props.log}
-        />
       </DetailPage>
       <Sidebar size='medium' colorIndex='light-2' direction='column'>
         <Header pad='medium' size='large' />

@@ -9,6 +9,7 @@ AppsPage            = require '../ui/pages/meteor/AppsPage.coffee'
 AppsDetailPage      = require '../ui/pages/meteor/AppsDetailPage.coffee'
 InstancesPage       = require '../ui/pages/meteor/InstancesPage.coffee'
 InstanceDetailPage  = require '../ui/pages/meteor/InstanceDetailPage.coffee'
+ServiceLogPage      = require '../ui/pages/meteor/ServiceLogPage.coffee'
 StoragePage         = require '../ui/pages/meteor/StoragePage.coffee'
 ResourcesPage       = require '../ui/pages/meteor/ResourcesPage.coffee'
 LoginPage           = require '../ui/pages/meteor/LoginPage.coffee'
@@ -24,7 +25,6 @@ module.exports = (store, props) ->
   history = syncHistoryWithStore(browserHistory, store, selectLocationState: (s)->s.router)
 
   _onLogPageEnter = ({params}) ->
-    console.log '_onLogPageEnter', params
     store.dispatch getServiceLogsRequest params
 
   <Provider store={store}>
@@ -40,9 +40,8 @@ module.exports = (store, props) ->
         </Route>
         <Route path="instance/new/:name/:version" component={NewInstancePage} />
         <Route path="instance/new" component={NewInstancePage} />
-        <Route path="instances/:name" component={InstanceDetailPage}>
-          <Route path=":service/:type(logs)" onEnter={_onLogPageEnter} />
-        </Route>
+        <Route path="instances/:name" component={InstanceDetailPage} />
+        <Route path="instances/:name/:service/:type(logs)" onEnter={_onLogPageEnter} component={ServiceLogPage} />
         <Route path="storage" component={StoragePage}>
           <Route path=":name" />
           <Route path=":name/:type(copy|delete)" />

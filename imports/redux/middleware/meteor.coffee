@@ -11,13 +11,12 @@ module.exports = (ddp) -> ({ getState, dispatch }) ->
   console.log 'init meteor middleware'
 
   Apps = new Mongo.Collection 'applicationDefs', connection: ddp
-  Instances = new Mongo.Collection 'instances', connection: ddp
+  # Instances = new Mongo.Collection 'instances', connection: ddp
   StorageBuckets = new Mongo.Collection 'storageBuckets', connection: ddp
   DataStores = new Mongo.Collection 'datastores',  connection: ddp
   Services = new Mongo.Collection 'services',  connection: ddp
   AppStore = new Mongo.Collection 'appstore',  connection: ddp
   #     Users: Meteor.users
-  ddp.subscribe 'applicationDefs'
   ddp.subscribe 'instances'
   ddp.subscribe 'storage'
   ddp.subscribe 'datastores'
@@ -32,24 +31,20 @@ module.exports = (ddp) -> ({ getState, dispatch }) ->
   Tracker.autorun ->
     dispatch type: 'COLLECTIONS/USER', user: Meteor.user()
 
-  Tracker.autorun ->
-    apps = Apps.find({}, sort: name: 1, version: 1).fetch()
-    dispatch type: 'COLLECTIONS/APPS', apps: apps
-
-  instanceDispatch = _.debounce dispatch, 500
-  instances = Instances.find({}, sort: name: 1)
-  instances.observe
-    added: (instance) ->
-      dispatch notifications.instanceStartedNotification instance if instance.state is 'created'
-    removed: (instance) ->
-      dispatch notifications.instanceStoppedNotification instance
-    changed: (doc, oldDoc) ->
-      return if doc.state is oldDoc.state
-      dispatch notifications.instanceStartedNotification doc if doc.state is 'created'
-      dispatch notifications.instanceRunningNotification doc if doc.state is 'running'
-      dispatch notifications.instanceStoppingNotification doc if doc.state is 'stopping'
-  Tracker.autorun ->
-    instanceDispatch type: 'COLLECTIONS/INSTANCES', instances: instances.fetch()
+  # instanceDispatch = _.debounce dispatch, 500
+  # instances = Instances.find({}, sort: name: 1)
+  # instances.observe
+  #   added: (instance) ->
+  #     dispatch notifications.instanceStartedNotification instance if instance.state is 'created'
+  #   removed: (instance) ->
+  #     dispatch notifications.instanceStoppedNotification instance
+  #   changed: (doc, oldDoc) ->
+  #     return if doc.state is oldDoc.state
+  #     dispatch notifications.instanceStartedNotification doc if doc.state is 'created'
+  #     dispatch notifications.instanceRunningNotification doc if doc.state is 'running'
+  #     dispatch notifications.instanceStoppingNotification doc if doc.state is 'stopping'
+  # Tracker.autorun ->
+  #   instanceDispatch type: 'COLLECTIONS/INSTANCES', instances: instances.fetch()
 
   Tracker.autorun ->
     buckets = StorageBuckets.find({}, sort: name: 1).fetch()

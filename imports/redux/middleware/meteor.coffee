@@ -13,13 +13,13 @@ module.exports = (ddp) -> ({ getState, dispatch }) ->
   Apps = new Mongo.Collection 'applicationDefs', connection: ddp
   # Instances = new Mongo.Collection 'instances', connection: ddp
   # StorageBuckets = new Mongo.Collection 'storageBuckets', connection: ddp
-  DataStores = new Mongo.Collection 'datastores',  connection: ddp
+  # DataStores = new Mongo.Collection 'datastores',  connection: ddp
   Services = new Mongo.Collection 'services',  connection: ddp
   AppStore = new Mongo.Collection 'appstore',  connection: ddp
   #     Users: Meteor.users
-  ddp.subscribe 'instances'
-  ddp.subscribe 'storage'
-  ddp.subscribe 'datastores'
+  # ddp.subscribe 'instances'
+  # ddp.subscribe 'storage'
+  # ddp.subscribe 'datastores'
   ddp.subscribe 'allUsers'
   ddp.subscribe 'allUserInfo'
   ddp.subscribe 'services'
@@ -50,9 +50,9 @@ module.exports = (ddp) -> ({ getState, dispatch }) ->
   #   buckets = StorageBuckets.find({}, sort: name: 1).fetch()
   #   dispatch type: 'COLLECTIONS/BUCKETS', buckets: buckets
 
-  Tracker.autorun ->
-    dataStore = DataStores.findOne()
-    dispatch type: 'COLLECTIONS/DATASTORE', dataStore: dataStore
+  # Tracker.autorun ->
+  #   dataStore = DataStores.findOne()
+  #   dispatch type: 'COLLECTIONS/DATASTORE', dataStore: dataStore
 
   Tracker.autorun ->
     services = Services.find({}, sort: name: 1).fetch()

@@ -23,7 +23,7 @@ module.exports = ({instances}) ->
                 <G.Box>
                   <strong>{instance.name}</strong>
                   <G.Box direction='row'>
-                    <G.Icons.Status value={instanceHelper.getStateValue()} size='small' />
+                    <G.Icons.Status value={instanceHelper.getStateValue()} size='medium' style={marginTop:5, width: 15,height: 15}/>
                     <span className='secondary'>{instanceHelper.getStatusText()}</span>
                   </G.Box>
                 </G.Box>

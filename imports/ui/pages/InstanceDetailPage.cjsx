@@ -136,7 +136,7 @@ module.exports = React.createClass
             <Header style={minHeight:0, margin:"0px 20px 0px 0px"}>
               <Anchor reverse={true} href={@props.serviceLinks[name]} target='_blank'
                 icon={<Icons.Base.Link style={width:20} />}
-                label={<span style={fontSize:26, fontWeight:'normal'}>{name}</span>} />
+                label={<span style={fontSize:26, fontWeight:'normal'}>{service.name}</span>} />
 
               <Box flex={true} justify='end' direction='row'>
                 <Anchor reverse={true} target='_blank'

@@ -12,7 +12,7 @@ module.exports = (ddp) -> ({ getState, dispatch }) ->
 
   Apps = new Mongo.Collection 'applicationDefs', connection: ddp
   # Instances = new Mongo.Collection 'instances', connection: ddp
-  StorageBuckets = new Mongo.Collection 'storageBuckets', connection: ddp
+  # StorageBuckets = new Mongo.Collection 'storageBuckets', connection: ddp
   DataStores = new Mongo.Collection 'datastores',  connection: ddp
   Services = new Mongo.Collection 'services',  connection: ddp
   AppStore = new Mongo.Collection 'appstore',  connection: ddp
@@ -46,9 +46,9 @@ module.exports = (ddp) -> ({ getState, dispatch }) ->
   # Tracker.autorun ->
   #   instanceDispatch type: 'COLLECTIONS/INSTANCES', instances: instances.fetch()
 
-  Tracker.autorun ->
-    buckets = StorageBuckets.find({}, sort: name: 1).fetch()
-    dispatch type: 'COLLECTIONS/BUCKETS', buckets: buckets
+  # Tracker.autorun ->
+  #   buckets = StorageBuckets.find({}, sort: name: 1).fetch()
+  #   dispatch type: 'COLLECTIONS/BUCKETS', buckets: buckets
 
   Tracker.autorun ->
     dataStore = DataStores.findOne()

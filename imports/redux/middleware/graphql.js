@@ -63,11 +63,10 @@ module.exports = ({ getState, dispatch }) => {
       .then(data => dispatch(Object.assign({type: dispatchType}, f(data))))
       .catch(error => console.error(error));
   }
-  
-  
 
   fetchCollectionAndDispatch(appsQuery, 'COLLECTIONS/APPS', data => ({apps: data.data.apps.map(addId)}))
   fetchCollectionAndDispatch(instancesQuery, 'COLLECTIONS/INSTANCES', data => ({instances: data.data.instances.map(addId)}))
+  fetchCollectionAndDispatch(bucketsQuery, 'COLLECTIONS/BUCKETS', data => ({buckets: data.data.buckets.map(addId)}))
 
   return next => action => {
     next(action)

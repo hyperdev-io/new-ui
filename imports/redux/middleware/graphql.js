@@ -60,6 +60,17 @@ const dataStoresQuery = gql`
   }}
 `
 
+const resourcesQuery = gql`
+  {resources {
+    id
+    name
+    lastCheck
+    isUp
+    description
+    details
+  }}
+`
+
 const addId = x => Object.assign({_id: x.id}, x)
 
 module.exports = ({ getState, dispatch }) => {
@@ -79,6 +90,7 @@ module.exports = ({ getState, dispatch }) => {
   fetchCollectionAndDispatch(instancesQuery, 'COLLECTIONS/INSTANCES', data => ({instances: data.data.instances.map(addId)}))
   fetchCollectionAndDispatch(bucketsQuery, 'COLLECTIONS/BUCKETS', data => ({buckets: data.data.buckets.map(addId)}))
   fetchCollectionAndDispatch(dataStoresQuery, 'COLLECTIONS/DATASTORE', data => ({dataStore: data.data.datastores.map(addId)[0]}))
+  fetchCollectionAndDispatch(resourcesQuery, 'COLLECTIONS/SERVICES', data => ({services: data.data.resources.map(addId)}))
 
   return next => action => {
     next(action)

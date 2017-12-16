@@ -10,11 +10,11 @@ notifications             = require '../actions/notifications.coffee'
 module.exports = (ddp) -> ({ getState, dispatch }) ->
   console.log 'init meteor middleware'
 
-  Apps = new Mongo.Collection 'applicationDefs', connection: ddp
+  # Apps = new Mongo.Collection 'applicationDefs', connection: ddp
   # Instances = new Mongo.Collection 'instances', connection: ddp
   # StorageBuckets = new Mongo.Collection 'storageBuckets', connection: ddp
   # DataStores = new Mongo.Collection 'datastores',  connection: ddp
-  Services = new Mongo.Collection 'services',  connection: ddp
+  # Services = new Mongo.Collection 'services',  connection: ddp
   AppStore = new Mongo.Collection 'appstore',  connection: ddp
   #     Users: Meteor.users
   # ddp.subscribe 'instances'
@@ -22,7 +22,7 @@ module.exports = (ddp) -> ({ getState, dispatch }) ->
   # ddp.subscribe 'datastores'
   ddp.subscribe 'allUsers'
   ddp.subscribe 'allUserInfo'
-  ddp.subscribe 'services'
+  # ddp.subscribe 'services'
   ddp.subscribe 'appstore'
 
   Tracker.autorun ->
@@ -54,9 +54,9 @@ module.exports = (ddp) -> ({ getState, dispatch }) ->
   #   dataStore = DataStores.findOne()
   #   dispatch type: 'COLLECTIONS/DATASTORE', dataStore: dataStore
 
-  Tracker.autorun ->
-    services = Services.find({}, sort: name: 1).fetch()
-    dispatch type: 'COLLECTIONS/SERVICES', services: services
+  # Tracker.autorun ->
+  #   services = Services.find({}, sort: name: 1).fetch()
+  #   dispatch type: 'COLLECTIONS/SERVICES', services: services
 
   Tracker.autorun ->
     apps = AppStore.find({}, sort: name: 1).fetch()

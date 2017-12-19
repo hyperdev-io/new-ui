@@ -15,7 +15,7 @@ module.exports = (ddp) -> ({ getState, dispatch }) ->
   # StorageBuckets = new Mongo.Collection 'storageBuckets', connection: ddp
   # DataStores = new Mongo.Collection 'datastores',  connection: ddp
   # Services = new Mongo.Collection 'services',  connection: ddp
-  AppStore = new Mongo.Collection 'appstore',  connection: ddp
+  # AppStore = new Mongo.Collection 'appstore',  connection: ddp
   #     Users: Meteor.users
   # ddp.subscribe 'instances'
   # ddp.subscribe 'storage'
@@ -23,13 +23,13 @@ module.exports = (ddp) -> ({ getState, dispatch }) ->
   ddp.subscribe 'allUsers'
   ddp.subscribe 'allUserInfo'
   # ddp.subscribe 'services'
-  ddp.subscribe 'appstore'
+  # ddp.subscribe 'appstore'
 
   Tracker.autorun ->
     dispatch type: 'COLLECTIONS/USERS', users: Meteor.users.find().fetch()
 
-  Tracker.autorun ->
-    dispatch type: 'COLLECTIONS/USER', user: Meteor.user()
+  # Tracker.autorun ->
+  #   dispatch type: 'COLLECTIONS/USER', user: Meteor.user()
 
   # instanceDispatch = _.debounce dispatch, 500
   # instances = Instances.find({}, sort: name: 1)
@@ -59,8 +59,9 @@ module.exports = (ddp) -> ({ getState, dispatch }) ->
   #   dispatch type: 'COLLECTIONS/SERVICES', services: services
 
   Tracker.autorun ->
-    apps = AppStore.find({}, sort: name: 1).fetch()
-    dispatch type: 'COLLECTIONS/APPSTORE', apps: apps
+    # apps = AppStore.find({}, sort: name: 1).fetch()
+    # console.log 'AppstoreAps', apps
+    # dispatch type: 'COLLECTIONS/APPSTORE', apps: apps
 
   (next) -> (action) ->
 

@@ -71,12 +71,16 @@ const resourcesQuery = gql`
   }}
 `
 
+const appstoreAppsQuery = gql`
+  {appstoreApps}
+`
+
 const addId = x => Object.assign({_id: x.id}, x)
 
 module.exports = ({ getState, dispatch }) => {
   console.log('init graphql middleware')
   const client = new ApolloClient({
-    link: new HttpLink({ uri: 'http://localhost:3000/graphql' }),
+    link: new HttpLink({ uri: 'http://localhost:3010/graphql' }),
     cache: new InMemoryCache()
   });
 
@@ -91,6 +95,7 @@ module.exports = ({ getState, dispatch }) => {
   fetchCollectionAndDispatch(bucketsQuery, 'COLLECTIONS/BUCKETS', data => ({buckets: data.data.buckets.map(addId)}))
   fetchCollectionAndDispatch(dataStoresQuery, 'COLLECTIONS/DATASTORE', data => ({dataStore: data.data.datastores.map(addId)[0]}))
   fetchCollectionAndDispatch(resourcesQuery, 'COLLECTIONS/SERVICES', data => ({services: data.data.resources.map(addId)}))
+  fetchCollectionAndDispatch(appstoreAppsQuery, 'COLLECTIONS/APPSTORE', data => ({apps: data.data.appstoreApps.map(addId)}))
 
   return next => action => {
     next(action)

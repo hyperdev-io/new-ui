@@ -20,12 +20,12 @@ module.exports = ({ apps, totalResults, searchValue, onAppStoreSearchChanged, on
       <Section pad='none'>
         <Tiles selectable=true pad={horizontal:'small'} fill=false flush=false responsive=false>
         {groups?.map (apps) ->
-          { _id, name, version, pic} = apps?[apps?.length - 1]
+          { _id, name, version, image} = apps?[apps?.length - 1]
           appCount = if apps?.length > 1 then " + #{apps.length-1} more"
           <Tile key={_id} align='center' pad='small' direction='column' size={width: {min: 'small'}} onClick={null}>
             <div style={height:100}>
               <span style={height:'100%', display:'inline-block', verticalAlign:'middle'}></span>
-              <img style={maxHeight: 100, maxWidth: 150, verticalAlign:'middle'} src={pic} />
+              <img style={maxHeight: 100, maxWidth: 150, verticalAlign:'middle'} src={image} />
             </div>
             <Box align='center'>
               <strong>{name}</strong>

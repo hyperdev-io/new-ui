@@ -7,78 +7,34 @@ import { ApolloClient }     from 'apollo-client'
 import { HttpLink }         from 'apollo-link-http'
 import { InMemoryCache }    from 'apollo-cache-inmemory'
 
-const appsQuery = gql`
-  {apps {
-    id
-    name
-    version
-    dockerCompose
-    bigboatCompose
-    tags
-  }}
-`
+import { goToAppsPage }     from '../actions/navigation.coffee'
+import { userError }        from '../actions/errors.coffee'
+import {
+  appSavedNotification,
+  appRemovedNotification,
+} from '../actions/notifications.coffee'
 
-const instancesQuery = gql`
-  {instances {
-    id
-    name
-    agent {url}
-    app {name, version}
-    storageBucket
-    startedBy
-    state
-    desiredState
-    status
-    services {
-      name
-      fqdn
-      ip
-      state
-      errors
-      logs{n1000}
-      container{id, name, created, node}
-      ports
-    }
-  }}
-`
-const bucketsQuery = gql`
-  {buckets {
-    id
-    name
-    isLocked
-  }}
-`
+import {
+  appsQuery,
+  instancesQuery,
+  bucketsQuery,
+  dataStoresQuery,
+  resourcesQuery,
+  appstoreAppsQuery,
+} from './graphqlQueries'
 
-const dataStoresQuery = gql`
-  {datastores {
-    id
-    name
-    percentage
-    total
-    used
-    createdAt
-  }}
-`
-
-const resourcesQuery = gql`
-  {resources {
-    id
-    name
-    lastCheck
-    isUp
-    description
-    details
-  }}
-`
-
-const appstoreAppsQuery = gql`
-  {appstoreApps}
-`
+import {
+  createOrUpdateApp,
+  removeApp,
+} from './graphqlMutations'
 
 const addId = x => Object.assign({_id: x.id}, x)
 
 module.exports = ({ getState, dispatch }) => {
   console.log('init graphql middleware')
+
+  const dispatchErrIfAny = (err) => err ? dispatch(userError(err)) : null
+
   const client = new ApolloClient({
     link: new HttpLink({ uri: 'http://localhost:3010/graphql' }),
     cache: new InMemoryCache()
@@ -97,7 +53,27 @@ module.exports = ({ getState, dispatch }) => {
   fetchCollectionAndDispatch(resourcesQuery, 'COLLECTIONS/SERVICES', data => ({services: data.data.resources.map(addId)}))
   fetchCollectionAndDispatch(appstoreAppsQuery, 'COLLECTIONS/APPSTORE', data => ({apps: data.data.appstoreApps.map(addId)}))
 
+  const mutate = (mutation, variables, thenCb) => client.mutate({mutation, variables}).then(thenCb).catch(dispatchErrIfAny)
+
   return next => action => {
+    switch(action.type){
+      case 'SAVE_APP_REQUEST': {
+        mutate(createOrUpdateApp, {
+          name: action.app.name,
+          version: action.app.version,
+          dockerCompose: action.dockerCompose,
+          bigboatCompose: action.bigboatCompose
+        }, res => dispatch(appSavedNotification(res.data.createOrUpdateApp)))
+        break
+      }
+      case 'REMOVE_APP_REQUEST': {
+        mutate(removeApp, _.pick(action.app, 'name', 'version'), res => {
+          dispatch(goToAppsPage())
+          dispatch(appRemovedNotification(action.app))
+        })
+        break
+      }
+    }
     next(action)
   }
 }

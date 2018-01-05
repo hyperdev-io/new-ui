@@ -14,14 +14,6 @@ module.exports = (ddp) -> ({ getState, dispatch }) ->
 
     dispatchErrIfAny = (err) -> dispatch userError err if err
 
-    startApp = (app, version, instanceName) ->
-      #startApp: (app, version, instance, parameters = {}, options = {}) ->
-      ddp.call 'startApp', app, version, instanceName, (err) -> dispatchErrIfAny err
-
-    stopInstance = (instanceName) ->
-      dispatch notifications.instanceStopRequestedNotification instanceName
-      ddp.call 'stopInstance', instanceName, dispatchErrIfAny
-
     getServiceLogs = (params) ->
       ddp.call 'getLog', params, (err, result) ->
         console.log err, result
@@ -41,11 +33,9 @@ module.exports = (ddp) -> ({ getState, dispatch }) ->
     logout = -> Meteor.logout()
 
     switch action.type
-      when 'START_APP_REQUEST' then startApp action.app.name, action.app.version, action.instanceName
       when 'USER_LOGOUT_REQUEST' then logout()
       when 'CopyBucketRequest' then copyBucket action.fromBucket, action.toBucket
       when 'DeleteBucketRequest' then deleteBucket action.bucket
       when 'LoginRequest' then login action.username, action.password
-      when 'StopInstanceRequest' then stopInstance action.instanceName
       when 'GetServiceLogsRequest' then getServiceLogs action
       else next action

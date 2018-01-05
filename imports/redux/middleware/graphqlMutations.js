@@ -30,8 +30,28 @@ const removeApp = gql`
     $version: String!
   ) {removeApp(name:$name, version:$version)}
 `
+const startApp = gql`
+  mutation startInstance($name: String!, $appName: String!, $appVersion: String!, $parameters: JSON, $options: Options) {startInstance(
+    name: $name
+    appName: $appName
+    appVersion: $appVersion
+    parameters: $parameters
+    options: $options
+  ){
+    id
+  }}
+`
+const stopInstance = gql`
+  mutation stopInstance($name: String!){
+    stopInstance(name: $name) {
+      name
+    }
+  }
+`
 
 export {
     createOrUpdateApp,
     removeApp,
+    startApp,
+    stopInstance,
 }

@@ -12,6 +12,7 @@ import { userError }        from '../actions/errors.coffee'
 import {
   appSavedNotification,
   appRemovedNotification,
+  instanceStopRequestedNotification,
 } from '../actions/notifications.coffee'
 
 import {
@@ -26,6 +27,8 @@ import {
 import {
   createOrUpdateApp,
   removeApp,
+  startApp,
+  stopInstance,
 } from './graphqlMutations'
 
 const addId = x => Object.assign({_id: x.id}, x)
@@ -72,6 +75,27 @@ module.exports = ({ getState, dispatch }) => {
           dispatch(appRemovedNotification(action.app))
         })
         break
+      }
+      case 'START_APP_REQUEST': {
+        console.log('start App', action);
+        mutate(startApp, {
+          name: action.instanceName,
+          appName: action.app.name,
+          appVersion: action.app.version,
+          parameters: {},
+          options: {}
+        }, res => {
+          console.log('done');
+        })
+        break;
+      }
+      case 'StopInstanceRequest': {
+        mutate(stopInstance, {
+          name: action.instanceName
+        }, res => {
+          dispatch(instanceStopRequestedNotification(action.instanceName))
+        })
+        break;
       }
     }
     next(action)

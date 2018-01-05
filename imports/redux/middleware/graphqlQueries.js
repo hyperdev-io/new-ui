@@ -15,7 +15,6 @@ const instancesQuery = gql`
   {instances {
     id
     name
-    agent {url}
     app {name, version}
     storageBucket
     startedBy

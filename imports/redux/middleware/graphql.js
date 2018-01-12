@@ -6,6 +6,8 @@ import gql                  from 'graphql-tag'
 import { ApolloClient }     from 'apollo-client'
 import { HttpLink }         from 'apollo-link-http'
 import { InMemoryCache }    from 'apollo-cache-inmemory'
+import { WebSocketLink } from "apollo-link-ws";
+import { SubscriptionClient } from "subscriptions-transport-ws";
 
 import { goToAppsPage }     from '../actions/navigation.coffee'
 import { userError }        from '../actions/errors.coffee'
@@ -22,6 +24,8 @@ import {
   dataStoresQuery,
   resourcesQuery,
   appstoreAppsQuery,
+  instancesSubscription,
+  appsSubscription,
 } from './graphqlQueries'
 
 import {
@@ -39,14 +43,25 @@ module.exports = ({ getState, dispatch }) => {
   const dispatchErrIfAny = (err) => err ? dispatch(userError(err)) : null
 
   const client = new ApolloClient({
-    link: new HttpLink({ uri: 'http://localhost:3010/graphql' }),
+    link: new HttpLink({uri: 'http://localhost:3010/graphql'}),
+    cache: new InMemoryCache()
+  });
+  const wsclient = new ApolloClient({
+    link: new WebSocketLink({uri:'ws://localhost:3010/subscriptions', reconnect: true}),
     cache: new InMemoryCache()
   });
 
-  fetchCollectionAndDispatch = (query, dispatchType, f) => {
+  const fetchCollectionAndDispatch = (query, dispatchType, f) => {
     client.query({query})
       .then(data => dispatch(Object.assign({type: dispatchType}, f(data))))
       .catch(error => console.error(error));
+  }
+
+  const subscribeAndDispatch = (query, dispatchType, next) => {
+    wsclient.subscribe({
+      query,
+      variables: {}
+    }).subscribe({next: data => dispatch(Object.assign({type: dispatchType}, next(data))) })
   }
 
   fetchCollectionAndDispatch(appsQuery, 'COLLECTIONS/APPS', data => ({apps: data.data.apps.map(addId)}))
@@ -55,6 +70,9 @@ module.exports = ({ getState, dispatch }) => {
   fetchCollectionAndDispatch(dataStoresQuery, 'COLLECTIONS/DATASTORE', data => ({dataStore: data.data.datastores.map(addId)[0]}))
   fetchCollectionAndDispatch(resourcesQuery, 'COLLECTIONS/SERVICES', data => ({services: data.data.resources.map(addId)}))
   fetchCollectionAndDispatch(appstoreAppsQuery, 'COLLECTIONS/APPSTORE', data => ({apps: data.data.appstoreApps.map(addId)}))
+
+  subscribeAndDispatch(instancesSubscription, 'COLLECTIONS/INSTANCES', data => ({instances: data.data.instances.map(addId)}) )
+  subscribeAndDispatch(appsSubscription, 'COLLECTIONS/APPS', data => ({apps: data.data.apps.map(addId)}) )
 
   const mutate = (mutation, variables, thenCb) => client.mutate({mutation, variables}).then(thenCb).catch(dispatchErrIfAny)
 

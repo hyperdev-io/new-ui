@@ -13,6 +13,7 @@
     "apollo-cache-inmemory": "^1.1.1",
     "apollo-client": "^2.0.3",
     "apollo-link-http": "^1.2.0",
+    "apollo-link-ws": "^1.0.4",
     "babel-runtime": "6.18.0",
     "brace": "^0.9.1",
     "fbemitter": "^2.1.1",
@@ -39,7 +40,8 @@
     "react-router-redux": "^4.0.8",
     "react-spinkit": "^2.1.1",
     "recompose": "^0.25.1",
-    "redux": "^3.6.0"
+    "redux": "^3.6.0",
+    "subscriptions-transport-ws": "^0.9.4"
   },
   "devDependencies": {
     "chai": "^3.5.0",

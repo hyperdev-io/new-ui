@@ -10,6 +10,18 @@ const appsQuery = gql`
     tags
   }}
 `
+const appsSubscription = gql`
+  subscription apps {
+    apps {
+      id
+      name
+      version
+      dockerCompose
+      bigboatCompose
+      tags
+    }
+  }
+`
 
 const instancesQuery = gql`
   {instances {
@@ -32,6 +44,30 @@ const instancesQuery = gql`
       ports
     }
   }}
+`
+const instancesSubscription = gql`
+  subscription instances {
+    instances {
+      id
+      name
+      app {name, version}
+      storageBucket
+      startedBy
+      state
+      desiredState
+      status
+      services {
+        name
+        fqdn
+        ip
+        state
+        errors
+        logs{n1000}
+        container{id, name, created, node}
+        ports
+      }
+    }
+  }
 `
 const bucketsQuery = gql`
   {buckets {
@@ -75,7 +111,9 @@ const appstoreAppsQuery = gql`
 
 export {
     appsQuery,
+    appsSubscription,
     instancesQuery,
+    instancesSubscription,
     bucketsQuery,
     dataStoresQuery,
     resourcesQuery,

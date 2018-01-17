@@ -101,6 +101,8 @@ module.exports = ({ getState, dispatch }) => {
           appName: action.app.name,
           appVersion: action.app.version,
           parameters: {},
+          options: {
+            storageBucket: action.instanceName
           options: {}
         }, res => {
           console.log('done');

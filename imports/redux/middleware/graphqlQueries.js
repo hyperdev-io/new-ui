@@ -76,6 +76,15 @@ const bucketsQuery = gql`
     isLocked
   }}
 `
+const bucketsSubscription = gql`
+  subscription buckets {
+    buckets {
+      id
+      name
+      isLocked
+    }
+  }
+`
 
 const dataStoresQuery = gql`
   {datastores {
@@ -115,6 +124,7 @@ export {
     instancesQuery,
     instancesSubscription,
     bucketsQuery,
+    bucketsSubscription,
     dataStoresQuery,
     resourcesQuery,
     appstoreAppsQuery,

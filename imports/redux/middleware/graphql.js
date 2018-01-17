@@ -26,6 +26,7 @@ import {
   appstoreAppsQuery,
   instancesSubscription,
   appsSubscription,
+  bucketsSubscription,
 } from './graphqlQueries'
 
 import {
@@ -73,6 +74,7 @@ module.exports = ({ getState, dispatch }) => {
 
   subscribeAndDispatch(instancesSubscription, 'COLLECTIONS/INSTANCES', data => ({instances: data.data.instances.map(addId)}) )
   subscribeAndDispatch(appsSubscription, 'COLLECTIONS/APPS', data => ({apps: data.data.apps.map(addId)}) )
+  subscribeAndDispatch(bucketsSubscription, 'COLLECTIONS/BUCKETS', data => ({ buckets: data.data.buckets.map(addId)}) )
 
   const mutate = (mutation, variables, thenCb) => client.mutate({mutation, variables}).then(thenCb).catch(dispatchErrIfAny)
 
@@ -103,7 +105,7 @@ module.exports = ({ getState, dispatch }) => {
           parameters: {},
           options: {
             storageBucket: action.instanceName
-          options: {}
+          }
         }, res => {
           console.log('done');
         })

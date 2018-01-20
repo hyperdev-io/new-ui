@@ -49,6 +49,19 @@ const stopInstance = gql`
   }
 `
 
+const deleteBucket = gql`
+  mutation deleteBucket($name: String!){
+    deleteBucket(name: $name)
+  }
+`
+const copyBucket = gql`
+  mutation deleteBucket($sourceName: String!, $destinationName: String!){
+    deleteBucket(sourceName: $sourceName, destinationName: $destinationName) {
+      id, name, isLocked
+    }
+  }
+`
+
 export {
     createOrUpdateApp,
     removeApp,

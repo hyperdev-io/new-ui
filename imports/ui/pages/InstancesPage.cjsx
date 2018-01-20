@@ -7,7 +7,7 @@ Helpers             = require '../Helpers.coffee'
 
 module.exports = ({instances}) ->
     sortedInstances = _.sortBy instances, ['name']
-    groups = _.values _.groupBy sortedInstances, (i) -> i.name[0]
+    groups = _.values _.groupBy sortedInstances, (i) -> i.name.toUpperCase()[0]
     <G.Section pad='none'>
       {groups.map (group) ->
         groupName = group[0].name[0].toUpperCase()

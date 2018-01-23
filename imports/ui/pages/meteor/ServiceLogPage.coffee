@@ -16,4 +16,4 @@ mergeProps = (stateProps, dispatchProps, ownProps) ->
   Object.assign {}, stateProps, dispatchProps, ownProps,
     onLogClose: -> dispatchProps.onLogClose stateProps.instance.name
 
-module.exports = connect(mapStateToProps, mapDispatchToProps, mergeProps) require '../ServiceLogPage.cjsx'
+module.exports = connect(mapStateToProps, mapDispatchToProps, mergeProps) require '../ServiceLogPage'

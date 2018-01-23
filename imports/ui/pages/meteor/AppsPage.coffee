@@ -16,4 +16,4 @@ mapDispatchToProps = (dispatch) ->
   onNewAppClicked: -> dispatch goToNewAppPage()
   onClearSearch: -> dispatch appSearchChanged ''
 
-module.exports = connect(mapStateToProps, mapDispatchToProps) require '../AppsPage.cjsx'
+module.exports = connect(mapStateToProps, mapDispatchToProps) require '../AppsPage'

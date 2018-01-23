@@ -3,4 +3,4 @@
 mapStateToProps = (state) ->
   instances: state.collections.instances or []
 
-module.exports = connect(mapStateToProps) require '../InstancesPage.cjsx'
+module.exports = connect(mapStateToProps) require '../InstancesPage'

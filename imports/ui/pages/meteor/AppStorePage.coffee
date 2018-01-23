@@ -13,4 +13,4 @@ mapDispatchToProps = (dispatch) ->
   onAppStoreSearchChanged: (value) -> dispatch appstoreSearchChanged value
   onClearSearch: -> dispatch appstoreSearchChanged ''
 
-module.exports = connect(mapStateToProps, mapDispatchToProps) require '../AppStorePage.cjsx'
+module.exports = connect(mapStateToProps, mapDispatchToProps) require '../AppStorePage'

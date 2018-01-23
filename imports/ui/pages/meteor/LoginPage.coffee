@@ -9,4 +9,4 @@ mapStateToProps = (state) ->
 mapDispatchToProps = (dispatch) ->
   onLogin: (username, password) -> dispatch loginRequest username, password
 
-module.exports = connect(mapStateToProps, mapDispatchToProps) require '../LoginPage.cjsx'
+module.exports = connect(mapStateToProps, mapDispatchToProps) require '../LoginPage'

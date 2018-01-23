@@ -10,4 +10,4 @@ mapStateToProps = (state, {params}) ->
   services: services = sortByState state.collections.services
   isLoading: not services?
 
-module.exports = connect(mapStateToProps) require '../ResourcesPage.cjsx'
+module.exports = connect(mapStateToProps) require '../ResourcesPage'

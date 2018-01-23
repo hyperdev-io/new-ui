@@ -9,7 +9,7 @@ React               = require 'react'
 { EventEmitter }    = require 'fbemitter'
 _                   = require 'lodash'
 reactNotify         = require 'react-notification-system-redux'
-routes              = require '../imports/startup/routes.cjsx'
+routes              = require '../imports/startup/routes'
 ErrorMapper         = require '../imports/ErrorMapper.coffee'
 
 # Wrapper = React.createClass

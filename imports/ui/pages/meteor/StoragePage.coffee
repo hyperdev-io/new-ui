@@ -31,4 +31,4 @@ mapDispatchToProps = (dispatch) ->
     dispatch deleteBucketRequest bucket
     dispatch openBucketPageRequest bucket
 
-module.exports = connect(mapStateToProps,mapDispatchToProps) require '../StoragePage.cjsx'
+module.exports = connect(mapStateToProps,mapDispatchToProps) require '../StoragePage'

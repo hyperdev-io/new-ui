@@ -51,4 +51,4 @@ mergeProps = (stateProps, dispatchProps, ownProps) ->
     onRemoveApp: -> dispatchProps.onRemoveApp app
     onStartApp: -> dispatchProps.onStartApp app
 
-module.exports = connect(mapStateToProps, mapDispatchToProps, mergeProps) require '../AppsDetailPage.cjsx'
+module.exports = connect(mapStateToProps, mapDispatchToProps, mergeProps) require '../AppsDetailPage'

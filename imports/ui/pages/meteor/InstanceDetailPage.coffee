@@ -64,4 +64,4 @@ mergeProps = (stateProps, dispatchProps, ownProps) ->
     onOpenBucketPage: -> dispatchProps.onOpenBucketPage stateProps.instance?.storageBucket
     onLogClose: -> dispatchProps.onLogClose stateProps.instance.name
 
-module.exports = connect(mapStateToProps, mapDispatchToProps, mergeProps) require '../InstanceDetailPage.cjsx'
+module.exports = connect(mapStateToProps, mapDispatchToProps, mergeProps) require '../InstanceDetailPage'

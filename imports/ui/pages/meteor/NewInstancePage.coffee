@@ -44,4 +44,4 @@ mergeProps = (stateProps, dispatchProps, ownProps) ->
       console.log 'state', state
       dispatchProps.onStartInstance state.app.name, state.app.version, state.params.name
 
-module.exports = connect(mapStateToProps, mapDispatchToProps, mergeProps) require '../NewInstancePage.cjsx'
+module.exports = connect(mapStateToProps, mapDispatchToProps, mergeProps) require '../NewInstancePage'

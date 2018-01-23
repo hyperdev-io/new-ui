@@ -36,18 +36,24 @@ import {
   stopInstance,
 } from './graphqlMutations'
 
+// import BigboatClient from '@bigboat/server-client'
+// console.log(BigboatClient)
+
+
 const addId = x => Object.assign({_id: x.id}, x)
 
 module.exports = ({ getState, dispatch }) => {
   console.log('init graphql middleware')
-
+  // const bigboatClient = BigboatClient('http://localhost:3010/graphql')
+  //bigboatClient.apps.list().then(apps => console.log('apps!!', apps))
+  
   const dispatchErrIfAny = (err) => err ? dispatch(userError(err)) : null
-
+  
   const client = new ApolloClient({
-    link: new HttpLink({uri: 'http://localhost:3010/graphql'}),
-    cache: new InMemoryCache()
-  });
-  const wsclient = new ApolloClient({
+      link: new HttpLink({uri: 'http://localhost:3010/graphql'}),
+      cache: new InMemoryCache()
+    }); 
+    const wsclient = new ApolloClient({
     link: new WebSocketLink({uri:'ws://localhost:3010/subscriptions', reconnect: true}),
     cache: new InMemoryCache()
   });

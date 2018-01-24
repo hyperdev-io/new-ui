@@ -5,20 +5,20 @@ const { syncHistoryWithStore } = require("react-router-redux");
 
 const App = require("../ui/App");
 const Page = require("../ui/Page");
-const AppsPage = require("../ui/pages/meteor/AppsPage.coffee");
-const AppsDetailPage = require("../ui/pages/meteor/AppsDetailPage.coffee");
-const InstancesPage = require("../ui/pages/meteor/InstancesPage.coffee");
-const InstanceDetailPage = require("../ui/pages/meteor/InstanceDetailPage.coffee");
-const ServiceLogPage = require("../ui/pages/meteor/ServiceLogPage.coffee");
-const StoragePage = require("../ui/pages/meteor/StoragePage.coffee");
-const ResourcesPage = require("../ui/pages/meteor/ResourcesPage.coffee");
-const LoginPage = require("../ui/pages/meteor/LoginPage.coffee");
-const NewInstancePage = require("../ui/pages/meteor/NewInstancePage.coffee");
-const AppStorePage = require("../ui/pages/meteor/AppStorePage.coffee");
+const AppsPage = require("../ui/pages/meteor/AppsPage");
+const AppsDetailPage = require("../ui/pages/meteor/AppsDetailPage");
+const InstancesPage = require("../ui/pages/meteor/InstancesPage");
+const InstanceDetailPage = require("../ui/pages/meteor/InstanceDetailPage");
+const ServiceLogPage = require("../ui/pages/meteor/ServiceLogPage");
+const StoragePage = require("../ui/pages/meteor/StoragePage");
+const ResourcesPage = require("../ui/pages/meteor/ResourcesPage");
+const LoginPage = require("../ui/pages/meteor/LoginPage");
+const NewInstancePage = require("../ui/pages/meteor/NewInstancePage");
+const AppStorePage = require("../ui/pages/meteor/AppStorePage");
 
 const {
   getServiceLogsRequest
-} = require("../redux/actions/instance.coffee");
+} = require("../redux/actions/instance");
 
 const { Provider } = require("react-redux");
 

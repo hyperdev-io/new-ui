@@ -82,8 +82,8 @@ const App = createReactClass({
   }
 });
 
-const { userErrorAcknowledged } = require('../redux/actions/errors.coffee');
-const { logout } = require('..//redux/actions/user.coffee');
+const { userErrorAcknowledged } = require('../redux/actions/errors');
+const { logout } = require('../redux/actions/user');
 
 const mapStateToProps = state =>
   ({

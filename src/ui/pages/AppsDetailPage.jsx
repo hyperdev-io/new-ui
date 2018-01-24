@@ -1,11 +1,11 @@
-React      = require('react')
-DetailPage = require('../DetailPage')
+const React      = require('react')
+const DetailPage = require("../DetailPage");
 
 const { Header, Box, Split, Sidebar, Tabs, Tab } = require('grommet')
 const createReactClass = require("create-react-class");
-AppControls = require('../menus/AppControls')
-YamlEditor = require('../editors/YamlEditor')
-Loading = require('../Loading')
+const AppControls = require("../menus/AppControls");
+const YamlEditor = require("../editors/YamlEditor");
+const Loading = require("../Loading");
 
 module.exports = createReactClass({
   displayName: 'AppsDetailPage',
@@ -28,8 +28,8 @@ module.exports = createReactClass({
   },
   onSaveApp: function(){ this.props.onSaveApp(this.state.dockerCompose, this.state.bigboatCompose, this.state.name, this.state.version)},
   isSaveButtonDisabled: function() {
-    sdc = this.state.dockerCompose
-    sbc = this.state.bigboatCompose
+    const sdc = this.state.dockerCompose;
+    const sbc = this.state.bigboatCompose;
     return (sdc === this.props.dockerCompose ||  !sdc) &&
     (sbc === this.props.bigboatCompose || !sbc)
   },

@@ -1,5 +1,4 @@
 let Article, Box, Header, Heading, Icons, List, ListItem, Paragraph, Search, Sidebar, Split, Title;
-const { Meteor } = require('meteor/meteor');
 const React = require('react');
 
 ({ Article, Box, Header, Heading, Search, Title, Box, Split, Sidebar, Paragraph, Icons, List, ListItem } = require('grommet'));
@@ -7,6 +6,7 @@ const { Status } = Icons;
 const DataStoreUsageMeter = require('../viz/DataStoreUsageMeter');
 const DataBucketsList = require('../lists/DataBucketsList');
 const Loading = require('../Loading');
+const createReactClass = require("create-react-class");
 
 module.exports = createReactClass({
   displayName: 'ResourcesPage',
@@ -15,7 +15,7 @@ module.exports = createReactClass({
     return <Loading isLoading={this.props.isLoading} render={this.renderWithData} />
   },
   renderWithData: function() {
-    services = this.props.services
+    const services = this.props.services
     return (
       <Split flex='left' priority='left'>
         <Article>

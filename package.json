@@ -8,8 +8,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "test_old": "mocha --compilers coffee:coffee-script/register ./**/*.test.coffee",
-    "watchTest": "mocha --compilers coffee:coffee-script/register --watch-extensions test.coffee --watch ./**/*.test.coffee"
+    "test_old": "mocha --compilers coffee:coffee-script/register ./**/*.test",
+    "watchTest": "mocha --compilers coffee:coffee-script/register --watch-extensions test --watch ./**/*.test"
   },
   "dependencies": {
     "@bigboat/server-client": "^1.0.0",

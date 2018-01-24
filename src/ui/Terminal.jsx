@@ -6,7 +6,7 @@ export const Terminal = class Terminal extends React.Component {
       term.scrollTop = term.scrollHeight
   }
   render() {
-    children = this.props.children || []
+    const children = this.props.children || []
     var lines = children.map((line, key) => {
       if(line && line.type === 'kbd') {
         return (

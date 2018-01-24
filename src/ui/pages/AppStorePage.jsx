@@ -1,5 +1,5 @@
-const { Meteor }          = require('meteor/meteor')
 const React = require('react')
+const _ = require('lodash')
 const FilterControl = require('grommet-addons/components/FilterControl')
 const { Article, Button, Box, Card, Header, Heading, Search, Title, Split, Sidebar, Paragraph, Icons, Menu, ListItem } = require('grommet')
 const { Section, Label, Tiles, Tile } = require('grommet')

@@ -11,7 +11,7 @@ const BucketCopyLayer = require('../layers/BucketCopyLayer');
 const BucketRemoveLayer = require('../layers/BucketRemoveLayer');
 const createReactClass = require("create-react-class");
 
-module.exports = 
+module.exports = createReactClass(
 {
   displayName: 'StoragePage',
 
@@ -35,8 +35,8 @@ module.exports =
     </ListItem>
   ,
   render: function() {
-    ds = this.props.dataStore
-    splitFlex =this.props.selectedAppName ? 'right' : 'left'
+    const ds = this.props.dataStore;
+    const splitFlex = this.props.selectedAppName ? "right" : "left";
 
     return (
       <span>

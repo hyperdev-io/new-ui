@@ -3,7 +3,7 @@ const Page = require('../Page')
 const { LoginForm, Box, Headline }     = require('grommet')
 const createReactClass = require("create-react-class");
 
-const welcomeHeader = userName => <Headline>Welcome, {username}</Headline>
+const welcomeHeader = userName => <Headline>Welcome, {userName}</Headline>
 const loginForm = onSubmit => 
   <LoginForm onSubmit={onSubmit}
     primary={true}

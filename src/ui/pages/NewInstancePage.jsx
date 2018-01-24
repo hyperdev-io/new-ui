@@ -8,7 +8,7 @@ module.exports  = createReactClass({
   displayName: 'NewInstancePage',
 
   getAppParams: function() {
-    params = this.props.selectedApp.dockerCompose ? this.props.selectedApp.dockerCompose.match(/(?:\{\{)([\d|\w|_|-]*?)(?=\}\})/g) : []
+    const params = this.props.selectedApp.dockerCompose ? this.props.selectedApp.dockerCompose.match(/(?:\{\{)([\d|\w|_|-]*?)(?=\}\})/g) : []
     return _.uniq((params || []).map((p) => p.replace('{{', '').trim()))
   },
 
@@ -24,7 +24,7 @@ module.exports  = createReactClass({
     this.props.onStateChanged({bucket: evt.option})
   },
   onAppSelectSearch: function(evt) {
-    searchValue = evt.target.value
+    const searchValue = evt.target.value;
     this.props.onStateChanged({appsearch: evt.target.value})
   },
   onNameChange: function(evt,a,v){
@@ -32,7 +32,7 @@ module.exports  = createReactClass({
   },
 
   onParamChanged: function(name) { return (evt) => {
-    obj = {}; 
+    const obj = {}; 
     obj[`param_${name}`] = evt.target.value
     this.props.onStateChanged(obj)
   }},

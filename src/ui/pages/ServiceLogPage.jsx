@@ -2,7 +2,7 @@ const React = require('react');
 const _ = require('lodash');
 const moment = require('moment');
 const DetailPage = require('../DetailPage');
-const Helpers = require('../Helpers.coffee');
+const Helpers = require('../Helpers');
 const { PrismCode } = require('react-prism');
 const ansi_up = require('ansi_up');
 

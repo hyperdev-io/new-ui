@@ -10,7 +10,7 @@ module.exports = createReactClass({
   },
 
   render() {
-    <List selectable={true} onSelect={this.listItemSelected}>
+    return <List selectable={true} onSelect={this.listItemSelected}>
       {this.props.apps.map(app => (
         <ListItem key={app._id} pad="medium" justify="between" align="center">
           <Box direction="column" pad="none">

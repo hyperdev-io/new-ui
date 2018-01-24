@@ -9,13 +9,13 @@ import { InMemoryCache }    from 'apollo-cache-inmemory'
 import { WebSocketLink } from "apollo-link-ws";
 import { SubscriptionClient } from "subscriptions-transport-ws";
 
-import { goToAppsPage }     from '../actions/navigation.coffee'
-import { userError }        from '../actions/errors.coffee'
+import { goToAppsPage }     from '../actions/navigation'
+import { userError }        from '../actions/errors'
 import {
   appSavedNotification,
   appRemovedNotification,
   instanceStopRequestedNotification,
-} from '../actions/notifications.coffee'
+} from '../actions/notifications'
 
 import {
   appsQuery,
@@ -42,7 +42,7 @@ import {
 
 const addId = x => Object.assign({_id: x.id}, x)
 
-module.exports = ({ getState, dispatch }) => {
+export default ({ getState, dispatch }) => {
   console.log('init graphql middleware')
   // const bigboatClient = BigboatClient('http://localhost:3010/graphql')
   //bigboatClient.apps.list().then(apps => console.log('apps!!', apps))

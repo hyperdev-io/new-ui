@@ -1,9 +1,8 @@
-const { Meteor }          = require('meteor/meteor')
 const React = require('react')
 const G = require('grommet')
 const _ = require('lodash')
 const { browserHistory } = require('react-router')
-const Helpers = require('../Helpers.coffee')
+const Helpers = require('../Helpers')
 
 module.exports = ({instances}) => {
   const sortedInstances = _.sortBy(instances, ['name'])

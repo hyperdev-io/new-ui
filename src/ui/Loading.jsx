@@ -11,6 +11,6 @@ module.exports = createReactClass({
       </Box>
   },
   render() {
-    return this.props.isLoading ? thisrenderSpinner() : this.props.render()
+    return this.props.isLoading ? this.renderSpinner() : this.props.render()
   }
 });

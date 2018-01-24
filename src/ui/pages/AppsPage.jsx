@@ -1,4 +1,3 @@
-const { Meteor }          = require('meteor/meteor')
 const React = require('react')
 const FilterableListPage = require('../FilterableListPage')
 const AppsList = require('../lists/AppsList')

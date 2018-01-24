@@ -2,7 +2,7 @@ const React = require('react')
 const _ = require('lodash')
 const moment = require('moment')
 const DetailPage = require('../DetailPage')
-const Helpers = require('../Helpers.coffee')
+const Helpers = require('../Helpers')
 const { PrismCode } = require('react-prism')
 const ansi_up       = require('ansi_up')
 
@@ -34,7 +34,7 @@ module.exports = createReactClass({
   displayName: 'InstanceDetailPage',
 
   copyToClipboard: (data) => () => {
-    element = document.createElement('textarea');
+    const element = document.createElement("textarea");
     element.value = data;
     document.body.appendChild(element);
     element.focus();
@@ -76,7 +76,7 @@ module.exports = createReactClass({
       iconLink(`${this.props.instance.app.name}:${this.props.instance.app.version}`, this.props.onOpenAppPage)
 
     const renderStatus = (s) => {
-      status = s.health && s.health.status ? s.health.status : ''
+      let status = s.health && s.health.status ? s.health.status : ''
       status = status === 'unknown' ? 'waiting for container to become healthy' : status
       return (
         <span>
@@ -87,8 +87,9 @@ module.exports = createReactClass({
 
     const renderNetwork = (net) => {
       if(net){
-        ip = net.ip ? `, ip: ${net.ip}` : ''
-        status = (net.health && (stat = net.health.status) === 'unknown') ? 'waiting for container to become healthy' : stat
+        const ip = net.ip ? `, ip: ${net.ip}` : ''
+        var status = net.health && net.health.status ? net.health.status : ''
+        status = status === "unknown" ? "waiting for container to become healthy" : status
         return (
           <span>
             {net.state} ({status}{ip})

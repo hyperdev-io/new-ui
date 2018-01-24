@@ -11,7 +11,7 @@ const { EventEmitter } = require("fbemitter");
 const _ = require("lodash");
 const reactNotify = require("react-notification-system-redux");
 const routes = require("../imports/startup/routes");
-const ErrorMapper = require("../imports/ErrorMapper.coffee");
+const ErrorMapper = require("../imports/ErrorMapper");
 
 Meteor.startup(function() {
   const ddp = DDP.connect(Meteor.settings.public.ddpServer);
@@ -46,7 +46,7 @@ Meteor.startup(function() {
   const composeEnhancers =
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
   const reducers = combineReducers(
-    Object.assign(require("/imports/redux/reducers/index.coffee"), {
+    Object.assign(require("/imports/redux/reducers/index"), {
       router: routerReducer,
       notifications: reactNotify.reducer
     })
@@ -54,7 +54,7 @@ Meteor.startup(function() {
   const store = createStore(
     reducers,
     init,
-    composeEnhancers(require("/imports/redux/middleware/index.coffee")(ddp))
+    composeEnhancers(require("/imports/redux/middleware/index")(ddp))
   );
 
   return render(routes(store, {}), document.getElementById("render-target"));

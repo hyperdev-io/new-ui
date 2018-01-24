@@ -1,0 +1,90 @@
+/*body {
+  background: -webkit-radial-gradient(#3a3a3a, #1c1c1c);
+  background: -moz-radial-gradient(#3a3a3a, #1c1c1c);
+  background: -o-radial-gradient(#3a3a3a, #1c1c1c);
+  background: -ms-radial-gradient(#3a3a3a, #1c1c1c);
+  background: radial-gradient(#3a3a3a, #1c1c1c);
+  background-attachment: fixed;
+  color: #fff;
+  padding: 50px;
+}*/
+/* Layouts *************/
+
+.terminal-wrapper {
+  width: 100%;
+  background: #fff;
+  padding:10px 40px;
+}
+.terminal {
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 3px;
+  color: #fff;
+}
+.terminal header {
+  padding: 8px;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  border-radius: 3px 3px 0px 0px;
+}
+.terminal .terminal-button {
+  margin: 0px;
+  margin-right: 4px;
+  margin-top: 4px;
+  width: 15px;
+  height: 15px;
+  border-radius: 7px;
+}
+.terminal .terminal-header {
+  color: black;
+  font-size: 16px;
+  font-family: 'Source Code Pro' !important;
+  margin-left: 15px;
+}
+.terminal .terminal-output {
+  padding: 10px;
+  overflow-y: scroll;
+}
+.terminal .terminal-output .terminal-line {
+  line-height: 1.5;
+}
+.terminal .terminal-output .prompt,
+.terminal .terminal-output pre {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+}
+/* Colors ***************/
+.terminal {
+  background-color: rgba(0, 0, 0, .8);
+}
+.terminal header {
+  background: -webkit-linear-gradient(270deg, #eaeaea 0%, #d2d2d2 100%);
+  background: -moz-linear-gradient(270deg, #eaeaea 0%, #d2d2d2 100%);
+  background: -o-linear-gradient(270deg, #eaeaea 0%, #d2d2d2 100%);
+  background: -ms-linear-gradient(270deg, #eaeaea 0%, #d2d2d2 100%);
+  background: linear-gradient(-180deg, #eaeaea 0%, #d2d2d2 100%);
+}
+.terminal .terminal-button.button-close {
+  background: #c85252;
+}
+.terminal .terminal-button.button-minimize {
+  background: #ddb522;
+}
+.terminal .terminal-button.button-zoom {
+  background: #1abf52;
+}
+.terminal .terminal-output .prompt {
+  color: rgba(255,255,255,0.5);
+}
+/* Typography ***********/
+.terminal .terminal-output, .terminal .terminal-output pre, .terminal .terminal-output kbd {
+  font-family: 'Source Code Pro' !important;
+  font-size: 14px;
+}

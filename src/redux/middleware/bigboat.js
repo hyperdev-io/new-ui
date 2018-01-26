@@ -1,5 +1,5 @@
 /*
- Redux middleware that implements actions as Graphql side-effects
+ Redux middleware that implements actions as side-effects
 */
 import _ from 'lodash'
 import { goToAppsPage }     from '../actions/navigation'

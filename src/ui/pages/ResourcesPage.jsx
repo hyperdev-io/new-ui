@@ -1,30 +1,18 @@
-let Article,
+const React = require("react");
+
+const {
+  Article,
   Box,
   Header,
   Heading,
-  Icons,
-  List,
-  ListItem,
-  Paragraph,
-  Search,
-  Sidebar,
-  Split,
-  Title;
-const React = require("react");
-
-({
-  Article,
-  Box,
-  Heading,
   Title,
-  Box,
   Split,
   Sidebar,
   Paragraph,
   Icons,
   List,
   ListItem
-} = require("grommet"));
+} = require("grommet");
 const { Status } = Icons;
 const Loading = require("../Loading");
 const createReactClass = require("create-react-class");

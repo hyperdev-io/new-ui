@@ -1,12 +1,10 @@
-const React               = require('react');
-const { Link }            = require('react-router');
-const Notifications       = require('./Notifications');
-const { connect }         = require('react-redux');
+const React = require("react");
+const Notifications = require("./Notifications");
+const { connect } = require("react-redux");
 
-
-const G = require('grommet')
-const { Button, Icons } = G
-const createReactClass = require("create-react-class")
+const G = require("grommet");
+const { Button, Icons } = G;
+const createReactClass = require("create-react-class");
 
 const App = createReactClass({
   displayName: "App",
@@ -82,23 +80,22 @@ const App = createReactClass({
   }
 });
 
-const { userErrorAcknowledged } = require('../redux/actions/errors');
-const { logout } = require('../redux/actions/user');
+const { userErrorAcknowledged } = require("../redux/actions/errors");
+const { logout } = require("../redux/actions/user");
 
-const mapStateToProps = state =>
-  ({
-    errorMessage: (state.error != null ? state.error.message : undefined),
-    infoMessage: null,
-    isLoggedIn: (state.collections.user != null)
-  })
-  ;
+const mapStateToProps = state => ({
+  errorMessage: state.error != null ? state.error.message : undefined,
+  infoMessage: null,
+  isLoggedIn: state.collections.user != null
+});
 
-const mapDispatchToProps = dispatch =>
-  ({
-    onErrorToastClose() { return dispatch(userErrorAcknowledged()); },
-    onLogout() { return dispatch(logout()); }
-  })
-  ;
+const mapDispatchToProps = dispatch => ({
+  onErrorToastClose() {
+    return dispatch(userErrorAcknowledged());
+  },
+  onLogout() {
+    return dispatch(logout());
+  }
+});
 
 module.exports = connect(mapStateToProps, mapDispatchToProps)(App);
-

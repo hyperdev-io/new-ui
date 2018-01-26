@@ -1,5 +1,4 @@
 const React = require("react");
-const _ = require("lodash");
 const { Router, Route, IndexRoute, browserHistory } = require("react-router");
 const { syncHistoryWithStore } = require("react-router-redux");
 
@@ -16,9 +15,7 @@ const LoginPage = require("../ui/pages/meteor/LoginPage");
 const NewInstancePage = require("../ui/pages/meteor/NewInstancePage");
 const AppStorePage = require("../ui/pages/meteor/AppStorePage");
 
-const {
-  getServiceLogsRequest
-} = require("../redux/actions/instance");
+const { getServiceLogsRequest } = require("../redux/actions/instance");
 
 const { Provider } = require("react-redux");
 
@@ -29,9 +26,11 @@ module.exports = function(store, props) {
     }
   });
 
-  const _onLogPageEnter = ({ params }) => store.dispatch(getServiceLogsRequest(params))
+  const _onLogPageEnter = ({ params }) =>
+    store.dispatch(getServiceLogsRequest(params));
 
-  return <Provider store={store}>
+  return (
+    <Provider store={store}>
       <Router history={history}>
         <Route path="/" component={App}>
           <IndexRoute component={LoginPage} />
@@ -42,10 +41,17 @@ module.exports = function(store, props) {
           <Route path="instances" component={Page} title="Instances">
             <IndexRoute component={InstancesPage} />
           </Route>
-          <Route path="instance/new/:name/:version" component={NewInstancePage} />
+          <Route
+            path="instance/new/:name/:version"
+            component={NewInstancePage}
+          />
           <Route path="instance/new" component={NewInstancePage} />
           <Route path="instances/:name" component={InstanceDetailPage} />
-          <Route path="instances/:name/:service/:type(logs)" onEnter={_onLogPageEnter} component={ServiceLogPage} />
+          <Route
+            path="instances/:name/:service/:type(logs)"
+            onEnter={_onLogPageEnter}
+            component={ServiceLogPage}
+          />
           <Route path="storage" component={StoragePage}>
             <Route path=":name" />
             <Route path=":name/:type(copy|delete)" />
@@ -54,5 +60,6 @@ module.exports = function(store, props) {
           <Route path="appstore" component={AppStorePage} />
         </Route>
       </Router>
-    </Provider>;
+    </Provider>
+  );
 };

@@ -1,21 +1,19 @@
-var _, connect, mapStateToProps, pretty, sortByState;
+var _, connect, mapStateToProps, sortByState;
 
-_ = require('lodash');
+_ = require("lodash");
 
-pretty = require('prettysize');
-
-({connect} = require('react-redux'));
+({ connect } = require("react-redux"));
 
 sortByState = function(services = []) {
-  return _.sortBy(services, ['isUp']);
+  return _.sortBy(services, ["isUp"]);
 };
 
-mapStateToProps = function(state, {params}) {
+mapStateToProps = function(state, { params }) {
   var services;
   return {
-    services: services = sortByState(state.collections.services),
+    services: (services = sortByState(state.collections.services)),
     isLoading: services == null
   };
 };
 
-module.exports = connect(mapStateToProps)(require('../ResourcesPage'));
+module.exports = connect(mapStateToProps)(require("../ResourcesPage"));

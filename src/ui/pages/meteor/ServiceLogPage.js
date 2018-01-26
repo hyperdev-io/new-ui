@@ -1,22 +1,17 @@
-var _, connect, goToInstanceDetailsPage, mapDispatchToProps, mapStateToProps, mergeProps;
+var connect,
+  goToInstanceDetailsPage,
+  mapDispatchToProps,
+  mapStateToProps,
+  mergeProps;
 
-_ = require('lodash');
-
-({connect} = require('react-redux'));
+({ connect } = require("react-redux"));
 
 ({ goToInstanceDetailsPage } = require("../../../redux/actions/navigation"));
 
-mapStateToProps = function(state, {params}) {
-  var instance, startByUser;
-  instance = _.find(state.collections.instances, {
-    name: params.name
-  });
-  startByUser = _.find(state.collections.users, {
-    _id: instance != null ? instance.startedBy : void 0
-  });
+mapStateToProps = function(state, { params }) {
   return {
     title: `${params.name}.${params.service}`,
-    showLogs: params.type === 'logs',
+    showLogs: params.type === "logs",
     log: state.collections.log
   };
 };
@@ -37,4 +32,6 @@ mergeProps = function(stateProps, dispatchProps, ownProps) {
   });
 };
 
-module.exports = connect(mapStateToProps, mapDispatchToProps, mergeProps)(require('../ServiceLogPage'));
+module.exports = connect(mapStateToProps, mapDispatchToProps, mergeProps)(
+  require("../ServiceLogPage")
+);

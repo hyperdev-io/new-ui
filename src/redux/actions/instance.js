@@ -5,9 +5,9 @@ module.exports = {
       instanceName: instanceName
     };
   },
-  getServiceLogsRequest: function(params) {
+  getServiceLogs: function(params) {
     return {
-      type: 'GetServiceLogsRequest',
+      type: 'GetServiceLogs',
       instance: params.name,
       service: params.service
     };

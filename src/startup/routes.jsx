@@ -15,7 +15,7 @@ const LoginPage = require("../ui/pages/meteor/LoginPage");
 const NewInstancePage = require("../ui/pages/meteor/NewInstancePage");
 const AppStorePage = require("../ui/pages/meteor/AppStorePage");
 
-const { getServiceLogsRequest } = require("../redux/actions/instance");
+const { getServiceLogs } = require("../redux/actions/instance");
 
 const { Provider } = require("react-redux");
 
@@ -27,7 +27,7 @@ module.exports = function(store, props) {
   });
 
   const _onLogPageEnter = ({ params }) =>
-    store.dispatch(getServiceLogsRequest(params));
+    store.dispatch(getServiceLogs(params));
 
   return (
     <Provider store={store}>

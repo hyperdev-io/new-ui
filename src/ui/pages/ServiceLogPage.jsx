@@ -46,7 +46,7 @@ module.exports = createReactClass({
   renderWithData: function() {
     return (
       <DetailPage title={this.props.title}>
-        <Box pad="medium" style={{ backgroundColor: "black" }}>
+        <Box pad="medium" style={{ backgroundColor: "black", color: "lightgrey" }}>
           {this.props.log &&
             this.props.log.map((line, i) => (
               <pre key={i} style={{ whiteSpace: "pre-line" }}>

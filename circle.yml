@@ -8,9 +8,9 @@ dependencies:
     - npm run build
     - docker build -t bigboat-io/new-ui .
 
-test:
-  override:
-    - npm test
+# test:
+#   override:
+#     - npm test
 
 deployment:
   tags:

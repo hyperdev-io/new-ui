@@ -8,7 +8,7 @@ dependencies:
   override:
     - npm i
     - npm run build
-    - docker build -t bigboat-io/new-ui .
+    - docker build -t bigboat/new-ui .
 
 # test:
 #   override:
@@ -18,26 +18,25 @@ deployment:
   master:
     branch: master
     commands:
-      - docker tag bigboat-io/new-ui bigboat-io/new-ui:development
+      - docker tag bigboat/new-ui bigboat/new-ui:development
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-      - docker push bigboat-io/new-ui:development
+      - docker push bigboat/new-ui:development
 
-deployment:
   tags:
     tag: /^[0-9]+\.[0-9]+\.[0-9]+$/
     commands:
-      - docker tag bigboat-io/new-ui bigboat-io/new-ui:${CIRCLE_TAG}
-      - MAJOR_VERSION=${CIRCLE_TAG/.*}; docker tag bigboat-io/new-ui:${CIRCLE_TAG} bigboat-io/new-ui:${MAJOR_VERSION}
-      - MINOR_VERSION=${CIRCLE_TAG%.*}; docker tag bigboat-io/new-ui:${CIRCLE_TAG} bigboat-io/new-ui:${MINOR_VERSION}
+      - docker tag bigboat/new-ui bigboat/new-ui:${CIRCLE_TAG}
+      - MAJOR_VERSION=${CIRCLE_TAG/.*}; docker tag bigboat/new-ui:${CIRCLE_TAG} bigboato/new-ui:${MAJOR_VERSION}
+      - MINOR_VERSION=${CIRCLE_TAG%.*}; docker tag bigboat/new-ui:${CIRCLE_TAG} bigboat/new-ui:${MINOR_VERSION}
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-      - docker push bigboat-io/new-ui
-      - docker push bigboat-io/new-ui:${CIRCLE_TAG}
-      - docker push bigboat-io/new-ui:${MINOR_VERSION}
-      - docker push bigboat-io/new-ui:${MAJOR_VERSION}
+      - docker push bigboat/new-ui
+      - docker push bigboat/new-ui:${CIRCLE_TAG}
+      - docker push bigboat/new-ui:${MINOR_VERSION}
+      - docker push bigboat/new-ui:${MAJOR_VERSION}
 
   features:
     branch: /^feature.*$/
     commands:
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-      - docker tag bigboat-io/new-ui:latest bigboat-io/new-ui:${CIRCLE_BRANCH}
-      - docker push bigboat-io/new-ui:${CIRCLE_BRANCH}
+      - docker tag bigboat/new-ui:latest bigboat/new-ui:${CIRCLE_BRANCH}
+      - docker push bigboat/new-ui:${CIRCLE_BRANCH}

@@ -1,13 +1,5 @@
-FROM node:4-slim
+FROM nginx
 
-ENV PORT 80
+WORKDIR /usr/share/nginx/html
 
-WORKDIR /app
-
-ADD /bundle /app
-
-RUN cd /app/programs/server && npm i --production
-
-EXPOSE 80
-
-CMD ["node", "main.js"]
+ADD /build /usr/share/nginx/html

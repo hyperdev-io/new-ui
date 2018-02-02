@@ -41,7 +41,6 @@ module.exports = createReactClass({
     this.props.onStateChanged({ bucket: evt.option });
   },
   onAppSelectSearch: function(evt) {
-    const searchValue = evt.target.value;
     this.props.onStateChanged({ appsearch: evt.target.value });
   },
   onNameChange: function(evt, a, v) {

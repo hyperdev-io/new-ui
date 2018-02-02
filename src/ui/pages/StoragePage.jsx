@@ -1,32 +1,17 @@
-let Box,
-  Button,
-  Header,
-  Heading,
-  Icons,
-  ListItem,
-  Paragraph,
-  Search,
-  Sidebar,
-  Split,
-  Title;
 const React = require("react");
 const filesize = require("filesize");
 const _ = require("lodash");
 
-({
+const {
   Box,
   Button,
   Header,
-  Heading,
-  Search,
-  Title,
-  Box,
   Split,
   Sidebar,
   Paragraph,
   Icons,
   ListItem
-} = require("grommet"));
+} = require("grommet");
 
 const DataStoreUsageMeter = require("../viz/DataStoreUsageMeter");
 const FilterableListPage = require("../FilterableListPage");
@@ -58,14 +43,13 @@ module.exports = createReactClass({
           </Box>
         )}
         {bucket.isLocked && (
-          <img src="/img/hourglass.svg" style={{ padding: "0px 35px" }} />
+          <img src="/img/hourglass.svg" style={{ padding: "0px 35px" }} alt="" />
         )}
       </Box>
     </ListItem>
   ),
   render: function() {
     const ds = this.props.dataStore;
-    const splitFlex = this.props.selectedAppName ? "right" : "left";
 
     return (
       <span>

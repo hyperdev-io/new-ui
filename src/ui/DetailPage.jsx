@@ -1,7 +1,7 @@
 const React = require("react");
 const G = require("grommet");
 
-const { Router, browserHistory } = require("react-router");
+const { browserHistory } = require("react-router");
 const createReactClass = require("create-react-class");
 
 module.exports = createReactClass({

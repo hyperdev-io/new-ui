@@ -1,6 +1,6 @@
 const React                 = require('react');
-const {withState, compose}  = require('recompose');
-const { Button, CheckBox, Layer, Form, Header, Heading, Paragraph, FormFields, FormField, Footer, Icons } = require('grommet');
+const {withState}  = require('recompose');
+const { Button, CheckBox, Layer, Form, Header, Heading, Paragraph, FormFields, Footer, Icons } = require('grommet');
 
 const withRiskChecked = withState('riskChecked', 'setRiskChecked', false);
 

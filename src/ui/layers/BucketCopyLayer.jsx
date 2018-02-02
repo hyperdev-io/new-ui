@@ -1,5 +1,5 @@
 const React                 = require('react');
-const {withState, compose}  = require('recompose');
+const {withState}  = require('recompose');
 const { Button, Layer, Form, Header, Heading, Paragraph, FormFields, FormField, Footer, TextInput } = require('grommet');
 
 const withName = withState('newBucketName', 'setNewBucketName', '');

@@ -20,7 +20,7 @@ const App = createReactClass({
           <G.Sidebar colorIndex="neutral-1">
             <G.Box align="center">
               <G.Header size="large" justify="between">
-                <img src="/logo-140.png" />
+                <img src="/logo-140.png" alt="BigBoat Logo" />
               </G.Header>
             </G.Box>
             <G.Menu fill={true} primary={true} direction="column">

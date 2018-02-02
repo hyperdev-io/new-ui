@@ -1,7 +1,7 @@
 const React      = require('react')
 const DetailPage = require("../DetailPage");
 
-const { Header, Box, Split, Sidebar, Tabs, Tab } = require('grommet')
+const { Header, Split, Sidebar, Tabs, Tab } = require('grommet')
 const createReactClass = require("create-react-class");
 const AppControls = require("../menus/AppControls");
 const YamlEditor = require("../editors/YamlEditor");

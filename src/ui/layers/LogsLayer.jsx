@@ -1,6 +1,5 @@
 const React                 = require('react');
-const {withState, compose}  = require('recompose');
-const { Button, Layer, Box, Form, Header, Heading, Paragraph, FormFields, FormField, Footer, TextInput } = require('grommet');
+const { Layer, Box } = require('grommet');
 const { Terminal }     = require('../Terminal.jsx');
 
 

@@ -23,6 +23,7 @@ export const Terminal = class Terminal extends React.Component {
           </div>
         );
       }
+      return null;
     });
 
     return (

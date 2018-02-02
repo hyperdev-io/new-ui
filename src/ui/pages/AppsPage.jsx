@@ -1,7 +1,6 @@
 const React = require('react')
 const FilterableListPage = require('../FilterableListPage')
-const AppsList = require('../lists/AppsList')
-const { Article, Button, Box, Header, Heading, Search, Title, Split, Sidebar, Paragraph, Icons, Menu, ListItem } = require('grommet')
+const { Button, Box, Header, Split, Sidebar, Icons, Menu, ListItem } = require('grommet')
 const createReactClass = require("create-react-class");
 
 

@@ -44,13 +44,12 @@ determineProtocol = function(port) {
 };
 
 instanceLink = function(instance) {
-  var endpoint, fqdn, port, protocol, ref, ref1, ref10, ref11, ref12, ref13, ref14, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9;
-  port = findWebPort((ref = instance.services) != null ? ref.www : void 0);
-  endpoint = ((ref1 = instance.services) != null ? (ref2 = ref1.www) != null ? (ref3 = ref2.properties) != null ? (ref4 = ref3.bigboat) != null ? (ref5 = ref4.instance) != null ? (ref6 = ref5.endpoint) != null ? ref6.path : void 0 : void 0 : void 0 : void 0 : void 0 : void 0) || ":" + port;
-  protocol = ((ref7 = instance.services) != null ? (ref8 = ref7.www) != null ? (ref9 = ref8.properties) != null ? (ref10 = ref9.bigboat) != null ? (ref11 = ref10.instance) != null ? (ref12 = ref11.endpoint) != null ? ref12.protocol : void 0 : void 0 : void 0 : void 0 : void 0 : void 0) || determineProtocol(port);
-  if (fqdn = (ref13 = instance.services) != null ? (ref14 = ref13.www) != null ? ref14.fqdn : void 0 : void 0) {
-    return `${protocol}://${fqdn}${endpoint}`;
-  }
+  const port = findWebPort(_.get(instance, 'services.www', null))
+  const endpoint = _.get(instance, 'services.www.properties.bigboat.instance.endpoint.path', `:${port}`);
+  const protocol = _.get(instance, "services.www.properties.bigboat.instance.endpoint.protocol", determineProtocol(port));
+  const fqdn = _.get(instance, "services.www.fqdn", false);
+
+  return fqdn ? `${protocol}://${fqdn}${endpoint}` : null;
 };
 
 findServiceLinks = function(instance) {

@@ -4,7 +4,6 @@ const {
   Article,
   Box,
   Header,
-  Heading,
   Title,
   Split,
   Sidebar,

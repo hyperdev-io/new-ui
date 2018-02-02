@@ -1,14 +1,6 @@
 const React = require("react");
 const DetailPage = require("../DetailPage");
-const Helpers = require("../Helpers");
-const { PrismCode } = require("react-prism");
-const ansi_up = require("ansi_up");
-
 const { Box, Button, Paragraph } = require("grommet");
-
-const Loading = require("../Loading");
-const LogsLayer = require("../layers/LogsLayer");
-const { Terminal } = require("../Terminal");
 const createReactClass = require("create-react-class");
 
 module.exports = createReactClass({

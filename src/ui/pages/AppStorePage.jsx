@@ -1,8 +1,8 @@
 const React = require('react')
 const _ = require('lodash')
 const FilterControl = require('grommet-addons/components/FilterControl')
-const { Article, Button, Box, Card, Header, Heading, Search, Title, Split, Sidebar, Paragraph, Icons, Menu, ListItem } = require('grommet')
-const { Section, Label, Tiles, Tile } = require('grommet')
+const { Article, Box, Header, Search, Title, Split, Sidebar} = require('grommet')
+const { Section, Tiles, Tile } = require('grommet')
 
 module.exports = ({ apps, totalResults, searchValue, onAppStoreSearchChanged, onClearSearch }) => {
   const _onSearch = evt => onAppStoreSearchChanged(evt.srcElement.value)
@@ -17,7 +17,7 @@ module.exports = ({ apps, totalResults, searchValue, onAppStoreSearchChanged, on
       )
   }
   return (
-    <Split flex='left' priority='left'>
+    <Split flex='left' priority ='left'>
       <Article>
         <Header fixed={true} pad='medium'>
           <Title responsive={true} truncate={true}>App Store</Title>
@@ -35,7 +35,7 @@ module.exports = ({ apps, totalResults, searchValue, onAppStoreSearchChanged, on
               <Tile key={name} align='center' pad='small' direction='column' size={{width: {min: 'small'}}} onClick={null}>
                 <div style={{height:100}}>
                   <span style={{height:'100%', display:'inline-block', verticalAlign:'middle'}}></span>
-                  <img style={{maxHeight: 100, maxWidth: 150, verticalAlign:'middle'}} src={image} />
+                  <img style={{maxHeight: 100, maxWidth: 150, verticalAlign:'middle'}} src={image} alt={`Icon for ${name}`} />
                 </div>
                 <Box align='center'>
                   <strong>{name}</strong>

@@ -3,7 +3,6 @@
 */
 import _ from "lodash";
 import { goToAppsPage } from "../actions/navigation";
-import { userError } from "../actions/errors";
 import {
   appSavedNotification,
   appRemovedNotification,
@@ -22,7 +21,6 @@ export default ({ getState, dispatch }) => {
   const bigboatSubscriptions = BigBoatSubscriptions(
     "ws://localhost:3010/subscriptions"
   );
-  const dispatchErrIfAny = err => (err ? dispatch(userError(err)) : null);
 
   const listAndDispatch = (list, type, key) =>
     list.then(data =>
@@ -109,6 +107,7 @@ export default ({ getState, dispatch }) => {
         }
         break;
       }
+      default: {}
     }
     next(action);
   };

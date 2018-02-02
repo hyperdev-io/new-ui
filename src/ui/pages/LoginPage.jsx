@@ -7,7 +7,7 @@ const loginForm = onSubmit => (
   <LoginForm
     onSubmit={onSubmit}
     primary={true}
-    logo={<img src="/logo-140.png" className="loginLogo" />}
+    logo={<img src="/logo-140.png" className="loginLogo" alt="BigBoat Logo" />}
     rememberMe={false}
     usernameType="text"
   />

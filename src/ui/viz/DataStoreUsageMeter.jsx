@@ -31,7 +31,6 @@ module.exports = createReactClass({
         legend={true}
         type="circle"
         size="small"
-        legend={true}
         units={used.suffix}
         max={total}
         series={series}

@@ -3,8 +3,6 @@ const _ = require("lodash");
 const moment = require("moment");
 const DetailPage = require("../DetailPage");
 const Helpers = require("../Helpers");
-const { PrismCode } = require("react-prism");
-const ansi_up = require("ansi_up");
 
 const {
   Anchor,
@@ -17,17 +15,13 @@ const {
   List,
   ListItem,
   Heading,
-  Menu,
   Button,
   Icons,
   Paragraph,
-  Layer
 } = require("grommet");
 
 const InstanceControls = require("../menus/InstanceControls");
-const Loading = require("../Loading");
 const { Terminal } = require("../Terminal");
-const LogsLayer = require("../layers/LogsLayer");
 
 const createReactClass = require("create-react-class");
 
@@ -93,7 +87,7 @@ module.exports = createReactClass({
   renderWithData: function() {
     const avatarAndName = () => (
       <span>
-        <img style={avatarStyle} src={this.props.startedBy.gravatar} />
+        <img style={avatarStyle} src={this.props.startedBy.gravatar} alt="" />
         {this.props.startedBy.fullname}
       </span>
     );

@@ -29,11 +29,10 @@ module.exports = function(store, props) {
   const _onLogPageEnter = ({ params }) =>
     store.dispatch(getServiceLogs(params));
 
-  return (
-    <Provider store={store}>
+  return <Provider store={store}>
       <Router history={history}>
         <Route path="/" component={App}>
-          <IndexRoute component={LoginPage} />
+          <IndexRoute component={AppsPage} />
           <Route path="login" component={LoginPage} />
           <Route path="apps" component={AppsPage} />
           <Route path="apps/new" component={AppsDetailPage} />
@@ -41,17 +40,10 @@ module.exports = function(store, props) {
           <Route path="instances" component={Page} title="Instances">
             <IndexRoute component={InstancesPage} />
           </Route>
-          <Route
-            path="instance/new/:name/:version"
-            component={NewInstancePage}
-          />
+          <Route path="instance/new/:name/:version" component={NewInstancePage} />
           <Route path="instance/new" component={NewInstancePage} />
           <Route path="instances/:name" component={InstanceDetailPage} />
-          <Route
-            path="instances/:name/:service/:type(logs)"
-            onEnter={_onLogPageEnter}
-            component={ServiceLogPage}
-          />
+          <Route path="instances/:name/:service/:type(logs)" onEnter={_onLogPageEnter} component={ServiceLogPage} />
           <Route path="storage" component={StoragePage}>
             <Route path=":name" />
             <Route path=":name/:type(copy|delete)" />
@@ -60,6 +52,5 @@ module.exports = function(store, props) {
           <Route path="appstore" component={AppStorePage} />
         </Route>
       </Router>
-    </Provider>
-  );
+    </Provider>;
 };

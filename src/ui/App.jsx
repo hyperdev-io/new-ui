@@ -35,7 +35,7 @@ const App = createReactClass({
               align="center"
               direction="row"
             >
-              {this.props.isLoggedIn ? (
+              {/* {this.props.isLoggedIn ? (
                 <Button
                   align="start"
                   plain={true}
@@ -59,7 +59,7 @@ const App = createReactClass({
                 align="start"
                 plain={true}
                 icon={<Icons.Base.Document />}
-              />
+              /> */}
             </G.Footer>
           </G.Sidebar>
           {this.props.children}

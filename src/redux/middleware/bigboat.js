@@ -16,11 +16,17 @@ import {
 
 const addId = x => Object.assign({ _id: x.id }, x);
 
+const location = window.location
+const server_api =
+  process.env.REACT_APP_SERVER_API ||
+  `${location.protocol}//${location.host}/graphql`;
+const server_ws =
+  process.env.REACT_APP_SERVER_WS ||
+  `ws://${location.host}/subscriptions`;
+
 export default ({ getState, dispatch }) => {
-  const bigboatClient = BigboatClient("http://localhost:3010/graphql");
-  const bigboatSubscriptions = BigBoatSubscriptions(
-    "ws://localhost:3010/subscriptions"
-  );
+  const bigboatClient = BigboatClient(server_api);
+  const bigboatSubscriptions = BigBoatSubscriptions(server_ws);
 
   const listAndDispatch = (list, type, key) =>
     list.then(data =>

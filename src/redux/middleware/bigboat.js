@@ -113,6 +113,14 @@ export default ({ getState, dispatch }) => {
         }
         break;
       }
+      case "DeleteBucketRequest": {
+        await bigboatClient.buckets.remove(action.bucket);
+        break;
+      }
+      case "CopyBucketRequest": {
+        await bigboatClient.buckets.copy(action.fromBucket, action.toBucket);
+        break;
+      }
       default: {}
     }
     next(action);

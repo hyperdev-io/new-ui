@@ -1,3 +1,5 @@
+const reports = require("@testx/reporters-jasmine");
+
 exports.config = {
   SELENIUM_PROMISE_MANAGER: true,
   directConnect: true,
@@ -19,5 +21,6 @@ exports.config = {
     require("testx");
     testx.objects.add(require("./objects"));
     beforeEach(() => (browser.ignoreSynchronization = true));
+    reports();
   }
 };

@@ -1,0 +1,37 @@
+- go to:
+    url: /
+- set:
+    MenuApps:
+    AppsNewApp:
+    AppsDockerCompose:
+- check equals [check docker compose content of new apps]:
+    AppsEditor: |-
+      version: '2.0'
+      services:
+        www:
+          image: nginx
+- set:
+    AppsBigboatCompose:
+- check equals [check docker compose content of new apps]:
+    AppsEditor: |-
+      name: MyNewApp
+      version: '1.0'
+- set [change the docker compose content]:
+    AppsDockerCompose:
+    AppsEditor: &newAppDC |-
+      version: '3.0'
+      services:
+        www:
+          image: nginx:latest
+- check equals [check it has changed]:
+    AppsEditor: *newAppDC
+- check enabled [check the Save button is enabled]:
+    AppsSaveButton: true
+# - set:
+#     AppsBigboatCompose:
+#     AppsEditor: &newAppBC |-
+#       name: my-new-app
+#       version: '2.0'
+# - check equals:
+#     AppsEditor: *newAppBC
+# - sleep: 2s

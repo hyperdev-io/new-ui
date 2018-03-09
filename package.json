@@ -9,6 +9,8 @@
     "test": "echo \"no tests\"; exit 0; react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "test_old": "mocha --compilers coffee:coffee-script/register ./**/*.test",
+    "testx": "protractor tests/conf.js",
+    "test:e2e": "webdriver-manager update; npm run testx",
     "watchTest": "mocha --compilers coffee:coffee-script/register --watch-extensions test --watch ./**/*.test"
   },
   "dependencies": {
@@ -43,9 +45,12 @@
     "redux": "^3.7.2"
   },
   "devDependencies": {
+    "@testx/objects-standard": "^1.0.1",
     "chai": "^3.5.0",
     "mocha": "^3.2.0",
+    "protractor": "^5.3.0",
     "redux-devtools": "^3.3.2",
-    "sinon": "^1.17.7"
+    "sinon": "^1.17.7",
+    "testx": "^3.0.3"
   }
 }

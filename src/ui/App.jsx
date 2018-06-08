@@ -20,14 +20,14 @@ const App = createReactClass({
           <G.Sidebar colorIndex="neutral-1">
             <G.Box align="center">
               <G.Header size="large" justify="between">
-                <img src="/logo-140.png" alt="BigBoat Logo" />
+                <img src="/img/hyperdev-logo.png" alt="HyperDev Logo" style={{maxHeight: 150}} />
               </G.Header>
             </G.Box>
             <G.Menu fill={true} primary={true} direction="column">
               <G.Anchor path="/apps">Apps</G.Anchor>
               <G.Anchor path="/instances">Instances</G.Anchor>
               <G.Anchor path="/storage">Storage</G.Anchor>
-              {/* <G.Anchor path="/resources">Resources</G.Anchor> */}
+              <G.Anchor path="/resources">Resources</G.Anchor>
               <G.Anchor path="/appstore">App Store</G.Anchor>
             </G.Menu>
             <G.Footer

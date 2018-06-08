@@ -40,6 +40,10 @@ module.exports = function(state = {
       return merge(state, {
         appstore_apps: action.apps
       });
+    case 'COLLECTIONS/RESOURCES':
+      const resources = { compute: [], storage: []}
+      action.resources.forEach(r => r.__typename === 'ComputeNode' ? resources.compute.push(r) : resources.storage.push(r))
+      return merge(state, { resources });
     case 'COLLECTIONS/LOG':
       return merge(state, {
         log: action.log

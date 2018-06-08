@@ -70,6 +70,9 @@ export default ({ getState, dispatch }) => {
   bigboatSubscriptions.buckets(buckets =>
     dispatch({ type: "COLLECTIONS/BUCKETS", buckets: buckets.map(addId) })
   );
+  bigboatSubscriptions.resources(resources =>
+    dispatch({ type: "COLLECTIONS/RESOURCES", resources: resources })
+  );
 
   return next => async action => {
     switch (action.type) {

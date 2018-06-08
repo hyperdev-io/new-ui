@@ -1,18 +1,15 @@
-var _, connect, mapStateToProps, sortByState;
+const _ = require("lodash");
+const { connect } = require("react-redux");
 
-_ = require("lodash");
-
-({ connect } = require("react-redux"));
-
-sortByState = function(services = []) {
+const sortByState = function(services = []) {
   return _.sortBy(services, ["isUp"]);
 };
 
-mapStateToProps = function(state, { params }) {
+const mapStateToProps = function(state, { params }) {
   var services;
   return {
-    services: (services = sortByState(state.collections.services)),
-    isLoading: services == null
+    resources: state.collections.resources || {compute: [], storage: []},
+    isLoading: !state.collections.resources
   };
 };
 

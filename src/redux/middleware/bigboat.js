@@ -12,7 +12,7 @@ import {
 import {
   client as BigboatClient,
   subscriptions as BigBoatSubscriptions
-} from "@bigboat/server-client";
+} from "@hyperdev-io/server-client";
 
 const addId = x => Object.assign({ _id: x.id }, x);
 

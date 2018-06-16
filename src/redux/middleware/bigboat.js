@@ -19,10 +19,10 @@ const addId = x => Object.assign({ _id: x.id }, x);
 const location = window.location
 const server_api =
   process.env.REACT_APP_SERVER_API ||
-  `${location.protocol}//${location.host}/graphql`;
+  `${location.protocol}//${location.host}/api/graphql`;
 const server_ws =
   process.env.REACT_APP_SERVER_WS ||
-  `ws://${location.host}/subscriptions`;
+  `ws://${location.host}/api/subscriptions`;
 
 export default ({ getState, dispatch }) => {
   const bigboatClient = BigboatClient(server_api);

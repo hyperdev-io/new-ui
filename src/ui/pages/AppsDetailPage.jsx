@@ -42,7 +42,7 @@ module.exports = createReactClass({
             <Tab title='Docker Compose'>
               <YamlEditor name='dockerCompose' code={this.state.dockerCompose || this.props.dockerCompose} onChange={this.onComposeChange} />
             </Tab>
-            <Tab title='BigBoat Compose'>
+            <Tab title='HyperDev Compose'>
               <YamlEditor name='bigboatCompose' code={this.state.bigboatCompose || this.props.bigboatCompose} onChange={this.onBigboatChange} />
             </Tab>
           </Tabs>

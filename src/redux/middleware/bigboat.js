@@ -25,8 +25,9 @@ const server_ws =
   `ws://${location.host}/api/subscriptions`;
 
 export default ({ getState, dispatch }) => {
-  const bigboatClient = BigboatClient(server_api);
-  const bigboatSubscriptions = BigBoatSubscriptions(server_ws);
+  const id_token = localStorage.getItem('id_token');
+  const bigboatClient = BigboatClient(server_api, id_token);
+  const bigboatSubscriptions = BigBoatSubscriptions(server_ws, id_token);
 
   const listAndDispatch = (list, type, key) =>
     list.then(data =>

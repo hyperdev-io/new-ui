@@ -3,7 +3,7 @@ const Notifications = require("./Notifications");
 const { connect } = require("react-redux");
 
 const G = require("grommet");
-const { Button, Icons } = G;
+const { Button, Icons, Label, Box } = G;
 const createReactClass = require("create-react-class");
 
 const App = createReactClass({
@@ -35,6 +35,15 @@ const App = createReactClass({
               align="center"
               direction="row"
             >
+            {this.props.isLoggedIn ? (
+                <Box direction="row" justify="center">
+                    <Icons.Base.User style={{marginTop: 5}} />
+                    <Box pad={{horizontal: "small"}}>
+                        <Label margin="none">{this.props.userProfile.nickname}</Label>
+                        <Label margin="none" size="small">{this.props.userProfile.name}</Label>
+                    </Box>
+                </Box>
+            ) : ""}
               {/* {this.props.isLoggedIn ? (
                 <Button
                   align="start"
@@ -86,7 +95,8 @@ const { logout } = require("../redux/actions/user");
 const mapStateToProps = state => ({
   errorMessage: state.error != null ? state.error.message : undefined,
   infoMessage: null,
-  isLoggedIn: state.collections.user != null
+  isLoggedIn: state.user && state.user.profile,
+  userProfile: state.user ? state.user.profile : null
 });
 
 const mapDispatchToProps = dispatch => ({

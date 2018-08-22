@@ -14,8 +14,9 @@
     "watchTest": "mocha --compilers coffee:coffee-script/register --watch-extensions test --watch ./**/*.test"
   },
   "dependencies": {
-    "@hyperdev-io/server-client": "^2.3.0",
+    "@hyperdev-io/server-client": "^2.4.3",
     "ansi_up": "^1.3.0",
+    "auth0-js": "^9.6.1",
     "babel-runtime": "6.18.0",
     "brace": "^0.9.1",
     "create-react-class": "^15.6.2",

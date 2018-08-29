@@ -23,10 +23,11 @@ module.exports = {
       app: app
     };
   },
-  startAppFormRequest: function(app) {
+  startAppFormRequest: function(app, defaultName) {
     return {
       type: 'START_APP_FORM_REQUEST',
-      app: app
+      app: app,
+      params: { name: defaultName }
     };
   },
   appSelected: function(name, version) {

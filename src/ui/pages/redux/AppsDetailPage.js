@@ -50,8 +50,8 @@ mapDispatchToProps = function(dispatch) {
     onRemoveApp: function(app) {
       return dispatch(removeAppRequest(app));
     },
-    onStartApp: function(app) {
-      return dispatch(startAppFormRequest(app));
+    onStartApp: function(app, defaultName) {
+      return dispatch(startAppFormRequest(app, defaultName));
     },
     onAppSelected: function(app) {
       return dispatch(appSelected(app.name, app.version));
@@ -60,8 +60,7 @@ mapDispatchToProps = function(dispatch) {
 };
 
 mergeProps = function(stateProps, dispatchProps, ownProps) {
-  var app;
-  app = stateProps.app;
+  const app = stateProps.app;
   return Object.assign({}, stateProps, dispatchProps, ownProps, {
     onSaveApp: function(dockerCompose, bigboatCompose, name, version) {
       app.name = name || app.name;
@@ -75,7 +74,7 @@ mergeProps = function(stateProps, dispatchProps, ownProps) {
       return dispatchProps.onRemoveApp(app);
     },
     onStartApp: function() {
-      return dispatchProps.onStartApp(app);
+      return dispatchProps.onStartApp(app, app.name);
     }
   });
 };

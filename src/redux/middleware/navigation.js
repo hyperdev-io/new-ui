@@ -32,22 +32,28 @@ module.exports = function(browserHistory) {
       return function(action) {
         switch (action.type) {
           case 'APP_SELECTED':
-            return browserHistory.push(`/apps/${action.value.name}/${action.value.version}`);
+            browserHistory.push(`/apps/${action.value.name}/${action.value.version}`);
+            break;
           case 'SHOW_APPS_PAGE':
-            return browserHistory.replace("/apps");
+            browserHistory.replace("/apps");
+            break;
           case 'OPEN_NEW_APP_PAGE_REQUEST':
-            return browserHistory.push("/apps/new");
+            browserHistory.push("/apps/new");
+            break;
           case 'START_APP_FORM_REQUEST':
-            return replaceOnLocationMatch(browserHistory, "^/instance/new", generateNewInstanceUrl(action));
+            replaceOnLocationMatch(browserHistory, "^/instance/new", generateNewInstanceUrl(action));
+            break;
           case 'NewInstancePageCloseRequest':
-            return browserHistory.push(`/apps/${action.app.name}/${action.app.version}`);
+            browserHistory.push(`/apps/${action.app.name}/${action.app.version}`);
+            break;
           case 'OpenBucketPageRequest':
-            return browserHistory.push(`/storage/${action.name}`);
+            browserHistory.push(`/storage/${action.name}`);
+            break;
           case 'OpenInstanceDetailPageRequest':
-            return browserHistory.push(`/instances/${action.name}`);
-          default:
-            return next(action);
+            browserHistory.push(`/instances/${action.name}`);
+            break;
         }
+        return next(action);
       };
     };
   };

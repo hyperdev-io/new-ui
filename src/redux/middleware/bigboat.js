@@ -13,6 +13,7 @@ import {
   client as BigboatClient,
   subscriptions as BigBoatSubscriptions
 } from "@hyperdev-io/server-client";
+import { error as errorAction } from '../actions/errors';
 
 const addId = x => Object.assign({ _id: x.id }, x);
 
@@ -25,7 +26,14 @@ const server_ws =
   `ws://${location.host}/api/subscriptions`;
 
 export default ({ getState, dispatch }) => {
-  const bigboatClient = BigboatClient(server_api);
+  const onUserError = (error) => {
+    if(error.info && error.props){
+      console.log(error)
+      dispatch(errorAction(error));
+    } else console.debug("Received an unknown error", error);
+  }
+
+  const bigboatClient = BigboatClient(server_api, { onUserError });
   const bigboatSubscriptions = BigBoatSubscriptions(server_ws);
 
   const listAndDispatch = (list, type, key) =>

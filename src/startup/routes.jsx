@@ -1,8 +1,11 @@
+import App from "../ui/App";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const React = require("react");
 const { Router, Route, IndexRoute, browserHistory } = require("react-router");
 const { syncHistoryWithStore } = require("react-router-redux");
 
-const App = require("../ui/App");
 const Page = require("../ui/Page");
 const AppsPage = require("../ui/pages/redux/AppsPage");
 const AppsDetailPage = require("../ui/pages/redux/AppsDetailPage");
@@ -19,7 +22,7 @@ const { getServiceLogs } = require("../redux/actions/instance");
 
 const { Provider } = require("react-redux");
 
-module.exports = function(store, props) {
+export default function(store, props) {
   const history = syncHistoryWithStore(browserHistory, store, {
     selectLocationState(s) {
       return s.router;
@@ -29,7 +32,8 @@ module.exports = function(store, props) {
   const _onLogPageEnter = ({ params }) =>
     store.dispatch(getServiceLogs(params));
 
-  return <Provider store={store}>
+  return <React.Fragment>
+    <Provider store={store}>
       <Router history={history}>
         <Route path="/" component={App}>
           <IndexRoute component={AppsPage} />
@@ -52,5 +56,7 @@ module.exports = function(store, props) {
           <Route path="appstore" component={AppStorePage} />
         </Route>
       </Router>
-    </Provider>;
+    </Provider>
+    <ToastContainer autoClose={5000} />
+  </React.Fragment>;
 };

@@ -1,5 +1,4 @@
 const React = require("react");
-const Notifications = require("./Notifications");
 const { connect } = require("react-redux");
 
 const G = require("grommet");
@@ -64,23 +63,11 @@ const App = createReactClass({
           </G.Sidebar>
           {this.props.children}
         </G.Split>
-        {this.props.errorMessage && (
-          <G.Toast status="critical" onClose={this.props.onErrorToastClose}>
-            {this.props.errorMessage}
-          </G.Toast>
-        )}
-        {this.props.infoMessage && (
-          <G.Toast status="ok" onClose={this.onInfoToastClose}>
-            {this.props.infoMessage}
-          </G.Toast>
-        )}
-        <Notifications />
       </G.App>
     );
   }
 });
 
-const { userErrorAcknowledged } = require("../redux/actions/errors");
 const { logout } = require("../redux/actions/user");
 
 const mapStateToProps = state => ({
@@ -90,12 +77,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onErrorToastClose() {
-    return dispatch(userErrorAcknowledged());
-  },
   onLogout() {
     return dispatch(logout());
   }
 });
 
-module.exports = connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -1,18 +1,19 @@
-var merge;
+import { toast } from "react-toastify";
+const { merge } = require('./utils');
 
-({merge} = require('./utils'));
-
-module.exports = function(state = {}, action) {
+export default function(state = {}, action) {
   switch (action.type) {
-    case 'USER_ERROR':
-      return merge(state, {
-        message: `${action.err}`
-      });
-    case 'USER_ERROR_ACK':
-      return merge(state, {
-        message: null
-      });
-    default:
-      return state;
-  }
+    case 'ERROR':
+      if (action.error.info) toast.warn(action.error.info);
+      if (action.error.path) {
+        const obj = {};
+        obj[action.error.path[0]] = {
+          message: action.error.message,
+          info: action.error.info,
+          props: action.error.props
+        };
+        return merge(state, obj);
+      }
+  };
+  return state;
 };

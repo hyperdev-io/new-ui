@@ -13,7 +13,8 @@ const {
   Select,
   CheckBox,
   Anchor,
-  Icons
+  Icons,
+  Notification
 } = require("grommet");
 const createReactClass = require("create-react-class");
 
@@ -167,12 +168,14 @@ module.exports = createReactClass({
           </FormFields>
 
           <Footer pad={{ vertical: "medium" }}>
-            <Button
-              type="button"
-              primary={true}
-              label="Start Instance"
-              onClick={this.startInstance}
-            />
+            <Box direction="column" pad={{vertical: 'medium'}}>
+              <Button
+                type="button"
+                primary={true}
+                label="Start Instance"
+                onClick={this.startInstance}
+              />
+            </Box>
           </Footer>
         </Form>
       </Box>

@@ -27,7 +27,7 @@ const App = createReactClass({
               <G.Anchor path="/instances">Instances</G.Anchor>
               <G.Anchor path="/storage">Storage</G.Anchor>
               <G.Anchor path="/resources">Resources</G.Anchor>
-              <G.Anchor path="/appstore">App Store</G.Anchor>
+              {/*<G.Anchor path="/appstore">App Store</G.Anchor>*/}
             </G.Menu>
             <G.Footer
               pad={{ horizontal: "medium", vertical: "small" }}

@@ -1,7 +1,10 @@
+const loginRequestType = 'LoginRequest';
+
 module.exports = {
+  loginRequestType,
   loginRequest: function(username, password) {
     return {
-      type: 'LoginRequest',
+      type: loginRequestType,
       username: username,
       password: password
     };

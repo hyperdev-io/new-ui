@@ -1,0 +1,9 @@
+.grommetux-button--primary:not(.grommetux-button--focus) {
+    background-color: #003763;
+}
+.grommetux-button--primary:not(.grommetux-button--focus){
+    border-color: #2C0063;
+}
+.grommetux-button:not(.grommetux-button--disabled):not(.grommetux-button--plain):not(.grommetux-button--fill).grommetux-button--primary:hover, .grommetux-button:not(.grommetux-button--disabled):not(.grommetux-button--plain):not(.grommetux-button--fill):hover{
+    box-shadow: 0 0 0 1px #2C0063;
+}

@@ -1,12 +1,11 @@
-
 // Redux middleware that implements navigation to urls upon certain actions
 
 var generateNewInstanceUrl, replaceOnLocationMatch;
 
-generateNewInstanceUrl = function(action) {
+generateNewInstanceUrl = function (action) {
   var key, query, url, val;
   url = `/instance/new/${action.app.name}/${action.app.version}`;
-  query = ((function() {
+  query = ((function () {
     var ref, results;
     ref = action.params;
     results = [];
@@ -21,15 +20,15 @@ generateNewInstanceUrl = function(action) {
   return [url, query].join('?');
 };
 
-replaceOnLocationMatch = function(browserHistory, locationMatch, url) {
+replaceOnLocationMatch = function (browserHistory, locationMatch, url) {
   var ref, ref1;
   return (((ref = browserHistory.getCurrentLocation()) != null ? (ref1 = ref.pathname) != null ? ref1.match(locationMatch) : void 0 : void 0) ? browserHistory.replace : browserHistory.push)(url);
 };
 
-module.exports = function(browserHistory) {
-  return function({getState, dispatch}) {
-    return function(next) {
-      return function(action) {
+module.exports = function (browserHistory) {
+  return function ({getState, dispatch}) {
+    return function (next) {
+      return function (action) {
         switch (action.type) {
           case 'APP_SELECTED':
             browserHistory.push(`/apps/${action.value.name}/${action.value.version}`);
@@ -52,9 +51,13 @@ module.exports = function(browserHistory) {
           case 'OpenInstanceDetailPageRequest':
             browserHistory.push(`/instances/${action.name}`);
             break;
+          case "START_APP_REQUEST":
+            browserHistory.replace(`/instances/${action.instanceName}`);
+            break;
         }
         return next(action);
       };
     };
   };
 };
+3

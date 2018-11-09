@@ -14,7 +14,7 @@
     "watchTest": "mocha --compilers coffee:coffee-script/register --watch-extensions test --watch ./**/*.test"
   },
   "dependencies": {
-    "@hyperdev-io/server-client": "^2.5.0",
+    "@hyperdev-io/graphql-api-client": "^2.5.2",
     "ansi_up": "^1.3.0",
     "babel-runtime": "6.18.0",
     "brace": "^0.9.1",
@@ -43,7 +43,9 @@
     "react-spinkit": "^2.1.1",
     "react-toastify": "^4.3.0",
     "recompose": "^0.25.1",
-    "redux": "^3.7.2"
+    "redux": "^3.7.2",
+    "request": "^2.88.0",
+    "yaml-ast-parser": "0.0.41"
   },
   "devDependencies": {
     "@testx/objects-standard": "^1.0.1",

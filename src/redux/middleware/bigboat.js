@@ -10,14 +10,15 @@ import {
 } from "../actions/notifications";
 
 import {
-  client as BigboatClient,
-  subscriptions as BigBoatSubscriptions
-} from "@hyperdev-io/server-client";
+  client as HyperDevClient,
+  subscriptions as HyperDevSubscriptions
+} from "@hyperdev-io/graphql-api-client";
 import { error as errorAction } from '../actions/errors';
+import {tokenReceivedType} from '../actions/user';
 
 const addId = x => Object.assign({ _id: x.id }, x);
 
-const location = window.location
+const location = window.location;
 const server_api =
   process.env.REACT_APP_SERVER_API ||
   `${location.protocol}//${location.host}/api/graphql`;
@@ -33,106 +34,120 @@ export default ({ getState, dispatch }) => {
     } else console.debug("Received an unknown error", error);
   }
 
-  const bigboatClient = BigboatClient(server_api, { onUserError });
-  const bigboatSubscriptions = BigBoatSubscriptions(server_ws);
+  let hyperdevClient, hyperdevSubscriptions;
 
-  const listAndDispatch = (list, type, key) =>
-    list.then(data =>
-      dispatch(_.fromPairs([["type", type], [key, data.map(addId)]]))
-    ).catch(e => console.error(type, e));
+  const createClient = (token) => {
+    console.log('createClient', token)
+    hyperdevClient = HyperDevClient(server_api, {onUserError, token});
+    hyperdevSubscriptions = HyperDevSubscriptions(server_ws, token);
 
-  listAndDispatch(bigboatClient.apps.list(), "COLLECTIONS/APPS", "apps");
+    const listAndDispatch = (list, type, key) =>
+      list.then(data =>
+        dispatch(_.fromPairs([["type", type], [key, data.map(addId)]]))
+      ).catch(e => console.error(type, e));
 
-  listAndDispatch(
-    bigboatClient.instances.list(),
-    "COLLECTIONS/INSTANCES",
-    "instances"
-  );
-  listAndDispatch(
-    bigboatClient.buckets.list(),
-    "COLLECTIONS/BUCKETS",
-    "buckets"
-  );
-  listAndDispatch(
-    bigboatClient.datastores.list(),
-    "COLLECTIONS/DATASTORE",
-    "dataStore"
-  );
-  listAndDispatch(
-    bigboatClient.resources.list(),
-    "COLLECTIONS/SERVICES",
-    "resources"
-  );
-  listAndDispatch(
-    bigboatClient.appstoreapps.list(),
-    "COLLECTIONS/APPSTORE",
-    "apps"
-  );
+    listAndDispatch(hyperdevClient.apps.list(), "COLLECTIONS/APPS", "apps");
 
-  bigboatSubscriptions.instances(instances =>
-    dispatch({ type: "COLLECTIONS/INSTANCES", instances: instances.map(addId) })
-  );
-  bigboatSubscriptions.apps(apps =>
-    dispatch({ type: "COLLECTIONS/APPS", apps: apps.map(addId) })
-  );
-  bigboatSubscriptions.buckets(buckets =>
-    dispatch({ type: "COLLECTIONS/BUCKETS", buckets: buckets.map(addId) })
-  );
-  bigboatSubscriptions.resources(resources =>
-    dispatch({ type: "COLLECTIONS/RESOURCES", resources: resources })
-  );
+    listAndDispatch(
+      hyperdevClient.instances.list(),
+      "COLLECTIONS/INSTANCES",
+      "instances"
+    );
+    listAndDispatch(
+      hyperdevClient.buckets.list(),
+      "COLLECTIONS/BUCKETS",
+      "buckets"
+    );
+    listAndDispatch(
+      hyperdevClient.datastores.list(),
+      "COLLECTIONS/DATASTORE",
+      "dataStore"
+    );
+    listAndDispatch(
+      hyperdevClient.resources.list(),
+      "COLLECTIONS/SERVICES",
+      "resources"
+    );
+    listAndDispatch(
+      hyperdevClient.appstoreapps.list(),
+      "COLLECTIONS/APPSTORE",
+      "apps"
+    );
+
+    hyperdevSubscriptions.instances(instances =>
+      dispatch({type: "COLLECTIONS/INSTANCES", instances: instances.map(addId)})
+    );
+    hyperdevSubscriptions.apps(apps =>
+      dispatch({type: "COLLECTIONS/APPS", apps: apps.map(addId)})
+    );
+    hyperdevSubscriptions.buckets(buckets =>
+      dispatch({type: "COLLECTIONS/BUCKETS", buckets: buckets.map(addId)})
+    );
+    hyperdevSubscriptions.resources(resources =>
+      dispatch({type: "COLLECTIONS/RESOURCES", resources: resources})
+    );
+  };
 
   return next => async action => {
-    switch (action.type) {
-      case "SAVE_APP_REQUEST": {
-        const app = await bigboatClient.apps.createOrUpdate(
-          action.app.name,
-          action.app.version,
-          action.dockerCompose,
-          action.bigboatCompose
-        );
-        dispatch(appSavedNotification(app));
-        break;
+    if(action.type === tokenReceivedType){
+      if (action.token)
+        createClient(action.token);
+      else if (hyperdevSubscriptions && hyperdevClient) {
+        hyperdevSubscriptions.reset();
+        hyperdevClient.reset();
       }
-      case "REMOVE_APP_REQUEST": {
-        await bigboatClient.apps.remove(action.app.name, action.app.version);
-        dispatch(goToAppsPage());
-        dispatch(appRemovedNotification(action.app));
-        break;
-      }
-      case "START_APP_REQUEST": {
-        await bigboatClient.instances.start(
-          action.instanceName,
-          action.app.name,
-          action.app.version,
-          {},
-          { storageBucket: action.instanceName }
-        );
-        break;
-      }
-      case "StopInstanceRequest": {
-        await bigboatClient.instances.stop(action.instanceName);
-        dispatch(instanceStopRequestedNotification(action.instanceName));
-        break;
-      }
-      case "GetServiceLogs": {
-        try {
-          const log = await bigboatClient.instances.serviceLogs(action.instance, action.service);
-          dispatch({ type: "COLLECTIONS/LOG", log })
-        } catch(e) {
-          console.error(e);
+    }
+    if(hyperdevClient && hyperdevSubscriptions) {
+      switch (action.type) {
+        case "SAVE_APP_REQUEST": {
+          const app = await hyperdevClient.apps.createOrUpdate(
+            action.app.name,
+            action.app.version,
+            action.dockerCompose,
+            action.bigboatCompose
+          );
+          dispatch(appSavedNotification(app));
+          break;
         }
-        break;
+        case "REMOVE_APP_REQUEST": {
+          await hyperdevClient.apps.remove(action.app.name, action.app.version);
+          dispatch(goToAppsPage());
+          dispatch(appRemovedNotification(action.app));
+          break;
+        }
+        case "START_APP_REQUEST": {
+          await hyperdevClient.instances.start(
+            action.instanceName,
+            action.app.name,
+            action.app.version,
+            {},
+            {storageBucket: action.instanceName}
+          );
+          break;
+        }
+        case "StopInstanceRequest": {
+          await hyperdevClient.instances.stop(action.instanceName);
+          dispatch(instanceStopRequestedNotification(action.instanceName));
+          break;
+        }
+        case "GetServiceLogs": {
+          try {
+            const log = await hyperdevClient.instances.serviceLogs(action.instance, action.service);
+            dispatch({type: "COLLECTIONS/LOG", log})
+          } catch (e) {
+            console.error(e);
+          }
+          break;
+        }
+        case "DeleteBucketRequest": {
+          await hyperdevClient.buckets.remove(action.bucket);
+          break;
+        }
+        case "CopyBucketRequest": {
+          await hyperdevClient.buckets.copy(action.fromBucket, action.toBucket);
+          break;
+        }
       }
-      case "DeleteBucketRequest": {
-        await bigboatClient.buckets.remove(action.bucket);
-        break;
-      }
-      case "CopyBucketRequest": {
-        await bigboatClient.buckets.copy(action.fromBucket, action.toBucket);
-        break;
-      }
-      default: {}
     }
     next(action);
   };

@@ -34,21 +34,13 @@ const App = createReactClass({
               align="center"
               direction="row"
             >
-              {/* {this.props.isLoggedIn ? (
-                <Button
-                  align="start"
-                  plain={true}
-                  onClick={this.props.onLogout}
-                  icon={<Icons.Base.Logout />}
-                />
-              ) : (
-                <Button
-                  align="start"
-                  plain={true}
-                  path="/login"
-                  icon={<Icons.Base.Login />}
-                />
-              )}
+              <Button
+                align="start"
+                plain={true}
+                onClick={this.props.onLogout}
+                icon={<Icons.Base.Logout />}
+              />
+              {/*
               <Button
                 align="start"
                 plain={true}

@@ -1,4 +1,4 @@
-import routes from "./startup/routes";
+import root from "./startup/root";
 import reducers from './redux/reducers/index'
 const { render } = require("react-dom");
 const { createStore, combineReducers, compose } = require("redux");
@@ -20,4 +20,4 @@ const store = createStore(
   composeEnhancers(require("./redux/middleware")())
 );
 
-render(routes(store, {}), document.getElementById("render-target"));
+render(root(store), document.getElementById("render-target"));

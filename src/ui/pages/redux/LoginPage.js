@@ -1,24 +1,13 @@
-var connect, loginRequest, mapDispatchToProps, mapStateToProps;
+const { connect } = require('react-redux');
+const { loginRequest } = require("../../../redux/actions/auth");
 
-({connect} = require('react-redux'));
-
-({ loginRequest } = require("../../../redux/actions/auth"));
-
-mapStateToProps = function(state) {
-  var user;
-  user = state.collections.user;
-  return {
-    isLoggedIn: user != null,
-    userFirstname: user != null ? user.profile.firstname : void 0
-  };
-};
-
-mapDispatchToProps = function(dispatch) {
-  return {
-    onLogin: function(username, password) {
-      return dispatch(loginRequest(username, password));
-    }
-  };
-};
+const mapStateToProps = state => ({
+  authenticationFailed: state.user && state.user.authenticationFailed,
+});
+const mapDispatchToProps = dispatch => ({
+  onLogin: function(username, password) {
+    return dispatch(loginRequest(username, password));
+  }
+});
 
 module.exports = connect(mapStateToProps, mapDispatchToProps)(require('../LoginPage'));

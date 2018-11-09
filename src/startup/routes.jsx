@@ -3,6 +3,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const React = require("react");
+const { connect } = require('react-redux');
 const { Router, Route, IndexRoute, browserHistory } = require("react-router");
 const { syncHistoryWithStore } = require("react-router-redux");
 
@@ -14,15 +15,13 @@ const InstanceDetailPage = require("../ui/pages/redux/InstanceDetailPage");
 const ServiceLogPage = require("../ui/pages/redux/ServiceLogPage");
 const StoragePage = require("../ui/pages/redux/StoragePage");
 const ResourcesPage = require("../ui/pages/redux/ResourcesPage");
-const LoginPage = require("../ui/pages/redux/LoginPage");
 const NewInstancePage = require("../ui/pages/redux/NewInstancePage");
 const AppStorePage = require("../ui/pages/redux/AppStorePage");
+const LoginPage = require("../ui/pages/redux/LoginPage");
 
 const { getServiceLogs } = require("../redux/actions/instance");
 
-const { Provider } = require("react-redux");
-
-export default function(store, props) {
+const Routes = ({ store, hasToken }) => {
   const history = syncHistoryWithStore(browserHistory, store, {
     selectLocationState(s) {
       return s.router;
@@ -32,31 +31,42 @@ export default function(store, props) {
   const _onLogPageEnter = ({ params }) =>
     store.dispatch(getServiceLogs(params));
 
-  return <React.Fragment>
-    <Provider store={store}>
+  if (hasToken) {
+    return <React.Fragment>
       <Router history={history}>
         <Route path="/" component={App}>
-          <IndexRoute component={AppsPage} />
-          <Route path="login" component={LoginPage} />
-          <Route path="apps" component={AppsPage} />
-          <Route path="apps/new" component={AppsDetailPage} />
-          <Route path="apps/:name/:version" component={AppsDetailPage} />
+          <IndexRoute component={AppsPage}/>
+          <Route path="apps" component={AppsPage}/>
+          <Route path="apps/new" component={AppsDetailPage}/>
+          <Route path="apps/:name/:version" component={AppsDetailPage}/>
           <Route path="instances" component={Page} title="Instances">
-            <IndexRoute component={InstancesPage} />
+            <IndexRoute component={InstancesPage}/>
           </Route>
-          <Route path="instance/new/:name/:version" component={NewInstancePage} />
-          <Route path="instance/new" component={NewInstancePage} />
-          <Route path="instances/:name" component={InstanceDetailPage} />
-          <Route path="instances/:name/:service/:type(logs)" onEnter={_onLogPageEnter} component={ServiceLogPage} />
+          <Route path="instance/new/:name/:version" component={NewInstancePage}/>
+          <Route path="instance/new" component={NewInstancePage}/>
+          <Route path="instances/:name" component={InstanceDetailPage}/>
+          <Route path="instances/:name/:service/:type(logs)" onEnter={_onLogPageEnter} component={ServiceLogPage}/>
           <Route path="storage" component={StoragePage}>
-            <Route path=":name" />
-            <Route path=":name/:type(copy|delete)" />
+            <Route path=":name"/>
+            <Route path=":name/:type(copy|delete)"/>
           </Route>
-          <Route path="resources" component={ResourcesPage} />
-          <Route path="appstore" component={AppStorePage} />
+          <Route path="resources" component={ResourcesPage}/>
+          <Route path="appstore" component={AppStorePage}/>
         </Route>
       </Router>
-    </Provider>
-    <ToastContainer autoClose={5000} />
-  </React.Fragment>;
+      <ToastContainer autoClose={5000}/>
+    </React.Fragment>;
+  } else {
+    return <LoginPage />
+  }
 };
+
+
+const mapStateToProps = state => ({
+  hasToken: state.user && state.user.token
+})
+const mapDispatchToProps = dispatch => ({
+
+});
+export default connect(mapStateToProps, mapDispatchToProps)(Routes);
+

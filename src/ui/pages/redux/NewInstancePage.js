@@ -94,4 +94,4 @@ mergeProps = function(stateProps, dispatchProps, ownProps) {
   });
 };
 
-module.exports = connect(mapStateToProps, mapDispatchToProps, mergeProps)(require('../NewInstancePage'));
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(require('../NewInstancePage'));

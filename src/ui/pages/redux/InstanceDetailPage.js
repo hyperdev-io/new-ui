@@ -1,3 +1,5 @@
+import InstanceDetailPage from '../InstanceDetailPage'
+
 var HTTPS_PORTS, HTTP_PORTS, _, appSelected, connect, determineProtocol, findServiceLinks, findWebPort, goToInstanceDetailsPage, instanceLink, mapDispatchToProps, mapStateToProps, md5, mergeProps, openBucketPageRequest, stopInstanceRequest,
   indexOf = [].indexOf;
 
@@ -123,4 +125,4 @@ mergeProps = function(stateProps, dispatchProps, ownProps) {
   });
 };
 
-module.exports = connect(mapStateToProps, mapDispatchToProps, mergeProps)(require('../InstanceDetailPage'));
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(InstanceDetailPage);

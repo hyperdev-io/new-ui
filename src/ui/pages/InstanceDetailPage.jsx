@@ -41,7 +41,7 @@ const li = (name, val) => (
   </ListItem>
 );
 
-module.exports = createReactClass({
+export default createReactClass({
   displayName: "InstanceDetailPage",
 
   copyToClipboard: data => () => {

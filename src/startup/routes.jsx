@@ -1,21 +1,21 @@
 import App from "../ui/App";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import NewInstancePage from '../ui/pages/redux/NewInstancePage';
+import InstancesPage from '../ui/pages/redux/InstancesPage';
+import InstanceDetailPage from '../ui/pages/redux/InstanceDetailPage';
 
 const React = require("react");
 const { connect } = require('react-redux');
 const { Router, Route, IndexRoute, browserHistory } = require("react-router");
-const { syncHistoryWithStore } = require("react-router-redux");
 
+const { syncHistoryWithStore } = require("react-router-redux");
 const Page = require("../ui/Page");
 const AppsPage = require("../ui/pages/redux/AppsPage");
 const AppsDetailPage = require("../ui/pages/redux/AppsDetailPage");
-const InstancesPage = require("../ui/pages/redux/InstancesPage");
-const InstanceDetailPage = require("../ui/pages/redux/InstanceDetailPage");
 const ServiceLogPage = require("../ui/pages/redux/ServiceLogPage");
 const StoragePage = require("../ui/pages/redux/StoragePage");
 const ResourcesPage = require("../ui/pages/redux/ResourcesPage");
-const NewInstancePage = require("../ui/pages/redux/NewInstancePage");
 const AppStorePage = require("../ui/pages/redux/AppStorePage");
 const LoginPage = require("../ui/pages/redux/LoginPage");
 

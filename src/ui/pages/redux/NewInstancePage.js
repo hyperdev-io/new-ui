@@ -1,3 +1,5 @@
+import NewInstancePage from '../NewInstancePage';
+
 var _, connect, mapDispatchToProps, mapStateToProps, mergeProps, newInstancePageCloseRequest, startAppRequest;
 
 _ = require('lodash');
@@ -94,4 +96,4 @@ mergeProps = function(stateProps, dispatchProps, ownProps) {
   });
 };
 
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(require('../NewInstancePage'));
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(NewInstancePage);

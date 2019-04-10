@@ -17,7 +17,6 @@ const ServiceLogPage = require("../ui/pages/redux/ServiceLogPage");
 const StoragePage = require("../ui/pages/redux/StoragePage");
 const ResourcesPage = require("../ui/pages/redux/ResourcesPage");
 const AppStorePage = require("../ui/pages/redux/AppStorePage");
-const LoginPage = require("../ui/pages/redux/LoginPage");
 
 const { getServiceLogs } = require("../redux/actions/instance");
 
@@ -30,6 +29,8 @@ const Routes = ({ store, hasToken }) => {
 
   const _onLogPageEnter = ({ params }) =>
     store.dispatch(getServiceLogs(params));
+
+  console.log('cookies', document.cookie)
 
   if (hasToken) {
     return <React.Fragment>
@@ -52,12 +53,12 @@ const Routes = ({ store, hasToken }) => {
           </Route>
           <Route path="resources" component={ResourcesPage}/>
           <Route path="appstore" component={AppStorePage}/>
-        </Route>
+        </Route>3
       </Router>
       <ToastContainer autoClose={5000}/>
     </React.Fragment>;
   } else {
-    return <LoginPage />
+    return <div>Not authenticated</div>
   }
 };
 

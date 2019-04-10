@@ -89,14 +89,16 @@ export default ({ getState, dispatch }) => {
   };
 
   return next => async action => {
-    if(action.type === tokenReceivedType){
-      if (action.token)
-        createClient(action.token);
-      else if (hyperdevSubscriptions && hyperdevClient) {
-        hyperdevSubscriptions.reset();
-        hyperdevClient.reset();
-      }
+    // if(action.type === tokenReceivedType){
+      // if (action.token)
+    if(!hyperdevClient || !hyperdevSubscriptions) {
+      createClient(action.token);
     }
+      // else if (hyperdevSubscriptions && hyperdevClient) {
+      //   hyperdevSubscriptions.reset();
+      //   hyperdevClient.reset();
+      // }
+    // }
     if(hyperdevClient && hyperdevSubscriptions) {
       switch (action.type) {
         case "SAVE_APP_REQUEST": {

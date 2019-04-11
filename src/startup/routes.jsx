@@ -32,34 +32,34 @@ const Routes = ({ store, hasToken }) => {
 
   console.log('cookies', document.cookie)
 
-  if (hasToken) {
-    return <React.Fragment>
-      <Router history={history}>
-        <Route path="/" component={App}>
-          <IndexRoute component={AppsPage}/>
-          <Route path="apps" component={AppsPage}/>
-          <Route path="apps/new" component={AppsDetailPage}/>
-          <Route path="apps/:name/:version" component={AppsDetailPage}/>
-          <Route path="instances" component={Page} title="Instances">
-            <IndexRoute component={InstancesPage}/>
-          </Route>
-          <Route path="instance/new/:name/:version" component={NewInstancePage}/>
-          <Route path="instance/new" component={NewInstancePage}/>
-          <Route path="instances/:name" component={InstanceDetailPage}/>
-          <Route path="instances/:name/:service/:type(logs)" onEnter={_onLogPageEnter} component={ServiceLogPage}/>
-          <Route path="storage" component={StoragePage}>
-            <Route path=":name"/>
-            <Route path=":name/:type(copy|delete)"/>
-          </Route>
-          <Route path="resources" component={ResourcesPage}/>
-          <Route path="appstore" component={AppStorePage}/>
-        </Route>3
-      </Router>
-      <ToastContainer autoClose={5000}/>
-    </React.Fragment>;
-  } else {
-    return <div>Not authenticated</div>
-  }
+  // if (hasToken) {
+  return <React.Fragment>
+    <Router history={history}>
+      <Route path="/" component={App}>
+        <IndexRoute component={AppsPage}/>
+        <Route path="apps" component={AppsPage}/>
+        <Route path="apps/new" component={AppsDetailPage}/>
+        <Route path="apps/:name/:version" component={AppsDetailPage}/>
+        <Route path="instances" component={Page} title="Instances">
+          <IndexRoute component={InstancesPage}/>
+        </Route>
+        <Route path="instance/new/:name/:version" component={NewInstancePage}/>
+        <Route path="instance/new" component={NewInstancePage}/>
+        <Route path="instances/:name" component={InstanceDetailPage}/>
+        <Route path="instances/:name/:service/:type(logs)" onEnter={_onLogPageEnter} component={ServiceLogPage}/>
+        <Route path="storage" component={StoragePage}>
+          <Route path=":name"/>
+          <Route path=":name/:type(copy|delete)"/>
+        </Route>
+        <Route path="resources" component={ResourcesPage}/>
+        <Route path="appstore" component={AppStorePage}/>
+      </Route>
+    </Router>
+    <ToastContainer autoClose={5000}/>
+  </React.Fragment>;
+  // } else {
+  //   return <div>Not authenticated</div>
+  // }
 };
 
 

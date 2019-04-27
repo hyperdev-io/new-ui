@@ -8,6 +8,9 @@ import {
   appRemovedNotification,
   instanceStopRequestedNotification
 } from "../actions/notifications";
+import {
+  userLogoutRequestType
+} from '../actions/user';
 
 import {
   client as HyperDevClient,
@@ -101,6 +104,11 @@ export default ({ getState, dispatch }) => {
     // }
     if(hyperdevClient && hyperdevSubscriptions) {
       switch (action.type) {
+        case userLogoutRequestType: {
+          document.cookie = 'jwt_token' + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/; domain=.hyperdev.local';
+          location.reload(true);
+          break;
+        }
         case "SAVE_APP_REQUEST": {
           const app = await hyperdevClient.apps.createOrUpdate(
             action.app.name,

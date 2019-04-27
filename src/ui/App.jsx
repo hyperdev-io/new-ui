@@ -40,7 +40,6 @@ const App = createReactClass({
                 onClick={this.props.onLogout}
                 icon={<Icons.Base.Logout />}
               />
-              {/*
               <Button
                 align="start"
                 plain={true}
@@ -49,8 +48,8 @@ const App = createReactClass({
               <Button
                 align="start"
                 plain={true}
-                icon={<Icons.Base.Document />}
-              /> */}
+                icon={<Icons.Base.CircleInformation />}
+              />
             </G.Footer>
           </G.Sidebar>
           {this.props.children}

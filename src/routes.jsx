@@ -9,13 +9,13 @@ import NewInstancePage from './ui/pages/redux/NewInstancePage';
 import InstancesPage from './ui/pages/redux/InstancesPage';
 import InstanceDetailPage from './ui/pages/redux/InstanceDetailPage';
 import AboutPage from './ui/pages/AboutPage';
+import AppsPage from './ui/pages/redux/AppsPage';
+import StoragePage from './ui/pages/redux/StoragePage';
 
 const { syncHistoryWithStore } = require("react-router-redux");
 const Page = require("./ui/Page");
-const AppsPage = require("./ui/pages/redux/AppsPage");
 const AppsDetailPage = require("./ui/pages/redux/AppsDetailPage");
 const ServiceLogPage = require("./ui/pages/redux/ServiceLogPage");
-const StoragePage = require("./ui/pages/redux/StoragePage");
 const ResourcesPage = require("./ui/pages/redux/ResourcesPage");
 const AppStorePage = require("./ui/pages/redux/AppStorePage");
 
@@ -39,9 +39,7 @@ const routes = (store) => {
           <Route path="apps" component={AppsPage}/>
           <Route path="apps/new" component={AppsDetailPage}/>
           <Route path="apps/:name/:version" component={AppsDetailPage}/>
-          <Route path="instances" component={Page} title="Instances">
-            <IndexRoute component={InstancesPage}/>
-          </Route>
+          <Route path="instances" component={InstancesPage}/>
           <Route path="instance/new/:name/:version" component={NewInstancePage}/>
           <Route path="instance/new" component={NewInstancePage}/>
           <Route path="instances/:name" component={InstanceDetailPage}/>

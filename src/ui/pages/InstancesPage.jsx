@@ -1,11 +1,12 @@
-const React = require('react')
-const G = require('grommet')
-const _ = require('lodash')
-const { browserHistory } = require('react-router')
-const Helpers = require('../Helpers')
+import React from 'react';
+import { browserHistory } from 'react-router';
+import _ from 'lodash';
+import G from 'grommet';
+import Helpers from '../Helpers';
+import FilterableItemsPage from '../FilterableItemsPage';
 
-module.exports = ({instances}) => {
-  const sortedInstances = _.sortBy(instances, ['name'])
+const InstancesView = ({ items }) => {
+  const sortedInstances = _.sortBy(items, ['name'])
   const groups = _.values(_.groupBy(sortedInstances, (i) => i.name.toUpperCase()[0]))
   return (
     <G.Section pad='none'>
@@ -38,4 +39,12 @@ module.exports = ({instances}) => {
       })}
     </G.Section>
   )
- }
+};
+
+const filterFun = (search) => (item) => item.name.match(search) || item.state.match(search);
+
+export default ({ instances }) => (
+  <FilterableItemsPage title="Instances" items={instances} filterFun={filterFun}>
+    <InstancesView />
+  </FilterableItemsPage>
+);

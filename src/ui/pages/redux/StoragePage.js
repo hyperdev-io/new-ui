@@ -1,3 +1,5 @@
+import StoragePage from '../StoragePage';
+
 var _,
   bucketSearchChanged,
   connect,
@@ -64,6 +66,6 @@ mapDispatchToProps = function(dispatch) {
   };
 };
 
-module.exports = connect(mapStateToProps, mapDispatchToProps)(
-  require("../StoragePage")
+export default connect(mapStateToProps, mapDispatchToProps)(
+  StoragePage
 );

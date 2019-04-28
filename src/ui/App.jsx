@@ -1,8 +1,10 @@
+import { goToAboutPage } from '../redux/actions/navigation';
+
 const React = require("react");
 const { connect } = require("react-redux");
 
 const G = require("grommet");
-const { Button, Icons } = G;
+const { Button, Icons, Box } = G;
 const createReactClass = require("create-react-class");
 
 const App = createReactClass({
@@ -37,19 +39,30 @@ const App = createReactClass({
               <Button
                 align="start"
                 plain={true}
+                a11yTitle="Logout"
+                title="Logout"
                 onClick={this.props.onLogout}
                 icon={<Icons.Base.Logout />}
               />
               <Button
                 align="start"
                 plain={true}
-                icon={<Icons.Base.Configure />}
-              />
-              <Button
-                align="start"
-                plain={true}
+                a11yTitle="About page"
+                title="About page"
+                onClick={this.props.goToAboutPage}
                 icon={<Icons.Base.CircleInformation />}
               />
+              <Box basis="full">
+                {this.props.user &&
+                <Box alignSelf="end"
+                     style={{height: 50, width: 50, borderRadius: '50%', border: '#6699cc solid 2px'}}>
+                  <img src={this.props.user.picture}
+                       alt={this.props.user.name}
+                       title={this.props.user.name}
+                       style={{borderRadius: '50%'}}/>
+                </Box>
+                }
+              </Box>
             </G.Footer>
           </G.Sidebar>
           {this.props.children}
@@ -64,13 +77,12 @@ const { logout } = require("../redux/actions/user");
 const mapStateToProps = state => ({
   errorMessage: state.error != null ? state.error.message : undefined,
   infoMessage: null,
-  isLoggedIn: state.collections.user != null
+  user: state.collections.user
 });
 
 const mapDispatchToProps = dispatch => ({
-  onLogout() {
-    return dispatch(logout());
-  }
+  onLogout: () => dispatch(logout()),
+  goToAboutPage: () => dispatch(goToAboutPage())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

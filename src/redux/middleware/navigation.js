@@ -51,8 +51,11 @@ module.exports = function (browserHistory) {
           case 'OpenInstanceDetailPageRequest':
             browserHistory.push(`/instances/${action.name}`);
             break;
-          case "START_APP_REQUEST":
+          case 'START_APP_REQUEST':
             browserHistory.replace(`/instances/${action.instanceName}`);
+            break;
+          case 'OPEN_ABOUT_PAGE':
+            browserHistory.push('/about');
             break;
         }
         return next(action);

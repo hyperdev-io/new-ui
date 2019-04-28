@@ -8,9 +8,9 @@ module.exports = function(state = {
     buckets: []
   }, action) {
   switch (action.type) {
-    case 'COLLECTIONS/USER':
+    case 'USER':
       return merge(state, {
-        user: action.user
+        user: action.payload
       });
     case 'COLLECTIONS/APPS':
       return merge(state, {

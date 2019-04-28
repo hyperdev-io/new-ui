@@ -77,6 +77,11 @@ export default ({ getState, dispatch }) => {
       "apps"
     );
 
+    hyperdevClient.currentUser.get().then(user => dispatch({
+      type: 'USER',
+      payload: user
+    })).catch(e => console.error('currentUser.get()', e))
+
     hyperdevSubscriptions.instances(instances =>
       dispatch({type: "COLLECTIONS/INSTANCES", instances: instances.map(addId)})
     );

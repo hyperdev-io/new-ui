@@ -1,6 +1,6 @@
 import React from 'react';
-
+import Page from '../Page';
 
 export default () => (
-  <h1>About</h1>
+  <Page title="About" />
 );

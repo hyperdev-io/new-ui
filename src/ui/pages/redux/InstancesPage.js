@@ -1,3 +1,4 @@
+import InstancesPage from '../InstancesPage';
 var connect, mapStateToProps;
 
 ({connect} = require('react-redux'));
@@ -8,4 +9,4 @@ mapStateToProps = function(state) {
   };
 };
 
-module.exports = connect(mapStateToProps)(require('../InstancesPage'));
+export default connect(mapStateToProps)(InstancesPage);

@@ -1,32 +1,34 @@
-const React = require('react')
-const FilterableListPage = require('../FilterableListPage')
-const { Button, Box, Header, Split, Sidebar, Icons, Menu, ListItem } = require('grommet')
-const createReactClass = require("create-react-class");
+import React from 'react';
+import { Button, Box, Header, Split, Sidebar, Icons, Menu, ListItem, List } from 'grommet';
+import createReactClass from 'create-react-class';
+import FilterableItemsPage from '../FilterableItemsPage';
 
+const filterFun = (search) => (item) => item.name.match(search) || item.version.match(search);
 
-module.exports = createReactClass({
-  displayName: 'AppsPage',
-  renderItem: (app) => {
-    return (
-      <ListItem key={app._id} pad='medium' justify='between' align='center'>
+const AppsList = ({ items, onSelect }) => (
+  <List
+    selectable={true}
+    onSelect={idx => onSelect(items[idx])}
+  >
+    {items.map(item => (
+      <ListItem key={item._id} pad='medium' justify='between' align='center'>
         <Box direction='column' pad='none'>
-          <strong>{app.name}</strong>
-          <span>{app.version}</span>
+          <strong>{item.name}</strong>
+          <span>{item.version}</span>
         </Box>
       </ListItem>
-    )
-  },
+    ))}
+  </List>
+);
+
+export default createReactClass({
+  displayName: 'AppsPage',
   render: function() {
     return (
       <Split flex='left' priority='left'>
-        <FilterableListPage title='Apps'
-          searchValue={this.props.appSearchValue}
-          totalResults={this.props.totalResults}
-          items={this.props.items}
-          onSearch={this.props.onAppSearchEntered}
-          onClearSearch={this.props.onClearSearch}
-          onListItemSelected={this.props.onAppNameSelected}
-          renderItem={this.renderItem}/>
+        <FilterableItemsPage title="Apps" items={this.props.items} filterFun={filterFun} >
+          <AppsList onSelect={this.props.onAppNameSelected} />
+        </FilterableItemsPage>
         <Sidebar size='medium' colorIndex='light-2' direction='column'>
           <Header pad='medium' size='large' direction='column'>
           </Header>
@@ -37,4 +39,4 @@ module.exports = createReactClass({
       </Split>
     )
   }
-})
+});

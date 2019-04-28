@@ -1,3 +1,4 @@
+import AppsPage from '../AppsPage';
 var _, appSearchChanged, appSelected, connect, goToNewAppPage, mapDispatchToProps, mapStateToProps;
 
 _ = require('lodash');
@@ -40,4 +41,4 @@ mapDispatchToProps = function(dispatch) {
   };
 };
 
-module.exports = connect(mapStateToProps, mapDispatchToProps)(require('../AppsPage'));
+export default connect(mapStateToProps, mapDispatchToProps)(AppsPage);

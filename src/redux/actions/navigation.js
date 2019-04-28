@@ -1,18 +1,4 @@
-module.exports = {
-  goToAppsPage: function() {
-    return {
-      type: 'SHOW_APPS_PAGE'
-    };
-  },
-  goToNewAppPage: function() {
-    return {
-      type: 'OPEN_NEW_APP_PAGE_REQUEST'
-    };
-  },
-  goToInstanceDetailsPage: function(instanceName) {
-    return {
-      type: 'OpenInstanceDetailPageRequest',
-      name: instanceName
-    };
-  }
-};
+export const goToAboutPage = () => ({ type: 'OPEN_ABOUT_PAGE' });
+export const goToAppsPage = () => ({ type: 'SHOW_APPS_PAGE'});
+export const goToNewAppPage = () => ({ type: 'OPEN_NEW_APP_PAGE_REQUEST' });
+export const goToInstanceDetailsPage = instanceName => ({ type: 'OpenInstanceDetailPageRequest', name: instanceName });

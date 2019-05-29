@@ -1,10 +1,10 @@
-import { goToAboutPage } from '../redux/actions/navigation';
+import { goToAboutPage, goToPortalPage, goToTokenPage } from '../redux/actions/navigation';
 
 const React = require("react");
 const { connect } = require("react-redux");
 
 const G = require("grommet");
-const { Button, Icons, Box } = G;
+const { Button, Icons, Box, Menu, Anchor, Label } = G;
 const createReactClass = require("create-react-class");
 
 const App = createReactClass({
@@ -54,13 +54,24 @@ const App = createReactClass({
               />
               <Box basis="full">
                 {this.props.user &&
-                <Box alignSelf="end"
-                     style={{height: 50, width: 50, borderRadius: '50%', border: '#6699cc solid 2px'}}>
-                  <img src={this.props.user.picture}
-                       alt={this.props.user.name}
-                       title={this.props.user.name}
-                       style={{borderRadius: '50%'}}/>
-                </Box>
+                  <Menu responsive={true}
+                        dropAlign={{right:'right', bottom:'bottom'}}
+                        alignSelf="end"
+                        label={`${this.props.user.name.split(' ').map(n => n.substr(0, 1)).join('')}`}
+                        inline={false}
+                        icon={<img src={this.props.user.picture}
+                                 alt={this.props.user.name}
+                                 title={this.props.user.name}
+                                 style={{borderRadius: '50%', width: 50}} />}
+                        primary={false}
+                        closeOnClick={true}>
+                    <Anchor path='/portal'>
+                      Manage HyperDev
+                    </Anchor>
+                    <Anchor path='/token'>
+                      Auth tokens
+                    </Anchor>
+                  </Menu>
                 }
               </Box>
             </G.Footer>
@@ -82,7 +93,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onLogout: () => dispatch(logout()),
-  goToAboutPage: () => dispatch(goToAboutPage())
+  goToAboutPage: () => dispatch(goToAboutPage()),
+  goToPortalPage: () => dispatch(goToPortalPage()),
+  goToTokenPage: () => dispatch(goToTokenPage()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -57,6 +57,12 @@ module.exports = function (browserHistory) {
           case 'OPEN_ABOUT_PAGE':
             browserHistory.push('/about');
             break;
+          case 'OPEN_PORTAL_PAGE':
+            browserHistory.push('/portal');
+            break;
+          case 'OPEN_TOKEN_PAGE':
+            browserHistory.push('/token');
+            break;
         }
         return next(action);
       };

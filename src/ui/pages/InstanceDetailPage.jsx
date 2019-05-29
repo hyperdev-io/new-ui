@@ -64,8 +64,9 @@ export default createReactClass({
           full={true}
           justify="center"
         >
-          <Box width={150}>
-            <h1>Instance not found...</h1>
+          <Box width={150} align="center" textAlign="center">
+            <img src="/img/oops.png" style={{ width: 200 }}  />
+            <h1>Instance not found</h1>
             <Paragraph size="large">
               Probably this instance was just terminated. Anyhow, it doesn&#39;t
               exist anymore.
@@ -85,10 +86,11 @@ export default createReactClass({
     }
   },
   renderWithData: function() {
+    console.log('instance props', this.props)
     const avatarAndName = () => (
       <span>
         <img style={avatarStyle} src={this.props.startedBy.gravatar} alt="" />
-        {this.props.startedBy.fullname}
+        {this.props.startedBy.name}
       </span>
     );
 
@@ -247,9 +249,9 @@ export default createReactClass({
                   li("Created", moment(service.container.created).fromNow())}
                 {li("State", renderStatus(service))}
                 {li("FQDN", service.fqdn)}
+                {li("IP-address", service.ip)}
                 {service.container &&
                   li("Container name", service.container.name)}
-                {li("Ports", service.ports)}
                 {service.aux && li("Network", renderNetwork(service.aux.net))}
                 {service.aux && li("SSH", renderSsh(service.aux.ssh))}
               </List>

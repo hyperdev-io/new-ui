@@ -21,6 +21,4 @@ const store = createStore(
   composeEnhancers(require("./redux/middleware")())
 );
 
-console.log('routes', routes(store))
-
 render(routes(store), document.getElementById("render-target"));

@@ -14,7 +14,6 @@ import StoragePage from './ui/pages/redux/StoragePage';
 import IFramePage from './ui/pages/IFramePage';
 
 const { syncHistoryWithStore } = require("react-router-redux");
-const Page = require("./ui/Page");
 const AppsDetailPage = require("./ui/pages/redux/AppsDetailPage");
 const ServiceLogPage = require("./ui/pages/redux/ServiceLogPage");
 const ResourcesPage = require("./ui/pages/redux/ResourcesPage");
@@ -52,8 +51,10 @@ const routes = (store) => {
           <Route path="resources" component={ResourcesPage}/>
           <Route path="appstore" component={AppStorePage}/>
           <Route path="about" component={AboutPage}/>
-          <Route path="portal" component={IFramePage} iFramePath="_portal" />
-          <Route path="token" component={IFramePage} iFramePath="_token" />
+          <Route path="portal" component={IFramePage} iFramePath="/_portal" />
+          <Route path="portal/subscription" component={IFramePage} iFramePath="/_portal/subscription" />
+          <Route path="portal/invoices" component={IFramePage} iFramePath="/_portal/invoices" />
+          <Route path="token" component={IFramePage} iFramePath="/_token" />
         </Route>
       </Router>
       <ToastContainer autoClose={5000} />

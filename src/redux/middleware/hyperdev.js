@@ -17,7 +17,6 @@ import {
   subscriptions as HyperDevSubscriptions
 } from "@hyperdev-io/graphql-api-client";
 import { error as errorAction } from '../actions/errors';
-import {tokenReceivedType} from '../actions/user';
 
 const addId = x => Object.assign({ _id: x.id }, x);
 
@@ -32,7 +31,6 @@ const server_ws =
 export default ({ getState, dispatch }) => {
   const onUserError = (error) => {
     if(error.info && error.props){
-      console.log(error)
       dispatch(errorAction(error));
     } else console.debug("Received an unknown error", error);
   }
@@ -40,7 +38,6 @@ export default ({ getState, dispatch }) => {
   let hyperdevClient, hyperdevSubscriptions;
 
   const createClient = (token) => {
-    console.log('createClient', token)
     hyperdevClient = HyperDevClient(server_api, {onUserError, token});
     hyperdevSubscriptions = HyperDevSubscriptions(server_ws, token);
 
@@ -80,7 +77,7 @@ export default ({ getState, dispatch }) => {
     hyperdevClient.currentUser.get().then(user => dispatch({
       type: 'USER',
       payload: user
-    })).catch(e => console.error('currentUser.get()', e))
+    })).catch(e => console.error('currentUser.get()', e));
 
     hyperdevSubscriptions.instances(instances =>
       dispatch({type: "COLLECTIONS/INSTANCES", instances: instances.map(addId)})
@@ -97,20 +94,14 @@ export default ({ getState, dispatch }) => {
   };
 
   return next => async action => {
-    // if(action.type === tokenReceivedType){
-      // if (action.token)
     if(!hyperdevClient || !hyperdevSubscriptions) {
       createClient(action.token);
     }
-      // else if (hyperdevSubscriptions && hyperdevClient) {
-      //   hyperdevSubscriptions.reset();
-      //   hyperdevClient.reset();
-      // }
-    // }
     if(hyperdevClient && hyperdevSubscriptions) {
       switch (action.type) {
         case userLogoutRequestType: {
-          document.cookie = 'jwt_token' + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/; domain=.hyperdev.local';
+          // TODO; redirect use to logout endpoint (does not exist yet) of the auth portal
+          document.cookie = 'jwt_token=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/; domain=.hyperdev.local';
           location.reload(true);
           break;
         }
@@ -161,6 +152,9 @@ export default ({ getState, dispatch }) => {
         case "CopyBucketRequest": {
           await hyperdevClient.buckets.copy(action.fromBucket, action.toBucket);
           break;
+        }
+        default: {
+
         }
       }
     }

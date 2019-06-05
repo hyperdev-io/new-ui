@@ -1,5 +1,5 @@
 const React = require("react");
-const filesize = require('filesize')
+const filesize = require('filesize');
 
 const {
   Article,
@@ -10,15 +10,12 @@ const {
   Sidebar,
   Paragraph,
   Icons,
-  List,
-  ListItem,
   Tiles,
   Tile,
   Label,
   Meter,
   Value
 } = require("grommet");
-const { Status } = Icons;
 const Loading = require("../Loading");
 const createReactClass = require("create-react-class");
 
@@ -108,8 +105,6 @@ module.exports = createReactClass({
   },
   renderWithData: function() {
     const resources = this.props.resources;
-    console.log("resources", resources);
-    const services = []
     return <Split flex="left" priority="left">
         <Article>
           <Header fixed={true} pad="medium" justify="between">

@@ -81,11 +81,6 @@ mapStateToProps = function(state, {params}) {
     serviceLinks: findServiceLinks(instance),
     log: state.collections.log,
     instanceLink: instance ? instanceLink(instance) : void 0,
-    startedBy: {
-      fullname: `${(startByUser != null ? (ref = startByUser.profile) != null ? ref.firstname : void 0 : void 0)} ${(startByUser != null ? (ref1 = startByUser.profile) != null ? ref1.lastname : void 0 : void 0)}`,
-      email: startByUser != null ? (ref2 = startByUser.profile) != null ? ref2.email : void 0 : void 0,
-      gravatar: (startByUser != null ? (ref3 = startByUser.profile) != null ? ref3.email : void 0 : void 0) != null ? `http://www.gravatar.com/avatar/${md5(startByUser != null ? (ref4 = startByUser.profile) != null ? ref4.email : void 0 : void 0)}` : void 0
-    }
   };
 };
 

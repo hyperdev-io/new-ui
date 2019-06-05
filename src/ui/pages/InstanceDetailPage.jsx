@@ -86,18 +86,18 @@ export default createReactClass({
     }
   },
   renderWithData: function() {
-    console.log('instance props', this.props)
+    console.log('instance props', this.props.instance)
     const avatarAndName = () => (
       <span>
-        <img style={avatarStyle} src={this.props.startedBy.gravatar} alt="" />
-        {this.props.startedBy.name}
+        <img style={avatarStyle} src={this.props.instance.startedBy.picture} alt="" />
+        {this.props.instance.startedBy.name}
       </span>
     );
 
     const iconLink = (content, onClickHandler, icon = Icons.Base.Link) => (
       <Anchor
         onClick={onClickHandler}
-        icon={<icon style={{ width: 20 }} />}
+        icon={React.createElement(icon,{ style: { width: 20 }})}
         label={
           <span style={{ fontSize: 16, fontWeight: "normal" }}>{content}</span>
         }

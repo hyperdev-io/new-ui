@@ -21,17 +21,9 @@ const createReactClass = require("create-react-class");
 
 module.exports = createReactClass({
   displayName: "NewInstancePage",
-  getInitialState: function(){
-    return {
-      hideBuckets: false
-    }
-  },
 
-  hideBuckets: function() {
-    console.log(this.props);
-    this.setState({
-      hideBuckets: !this.state.hideBuckets
-    })
+  onPersistedStorageChange: function(evt) {
+    this.props.onStateChanged({ stateful: evt });
   },
 
   getAppParams: function() {
@@ -60,6 +52,7 @@ module.exports = createReactClass({
     this.props.onAppSelected(evt.value.name, evt.value.version);
   },
   onBucketSelected: function(evt) {
+    console.log('onBucketSelected', evt)
     this.props.onStateChanged({ bucket: evt.option });
   },
   onAppSelectSearch: function(evt) {
@@ -172,8 +165,8 @@ module.exports = createReactClass({
               <Box direction="row" justify="between">
                 <CheckBox
                   toggle={true}
-                  defaultChecked
-                  onChange={this.hideBuckets}
+                  checked={this.props.stateful}
+                  onChange={(evt) => this.onPersistedStorageChange(evt.target.checked)}
                   label={
                     <Heading style={{paddingTop: 10}} tag="h3">
                       Persisted Storage
@@ -181,7 +174,7 @@ module.exports = createReactClass({
                   }
                 />
               </Box>
-              {!this.state.hideBuckets && (<FormField label="Storage bucket" size="medium">
+              {this.props.stateful && (<FormField label="Storage bucket" size="medium">
                 <Select
                   onSearch={() => console.log("search")}
                   value={this.props.bucket || this.props.name}

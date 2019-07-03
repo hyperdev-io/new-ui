@@ -37,6 +37,7 @@ mapStateToProps = function(state, {params, location}) {
     }),
     selectedAppName: selectedAppName,
     selectedAppVersion: selectedAppVersion,
+    stateful: query.stateful!=null ? query.stateful==='true' : true,
     appParams: _.fromPairs(_.filter(_.toPairs(query), function([key]) {
       return key.match("^param_");
     }))
@@ -46,6 +47,7 @@ mapStateToProps = function(state, {params, location}) {
 mapDispatchToProps = function(dispatch) {
   return {
     onStateChanged: function(state) {
+      console.log('stateOn',state)
       return dispatch(Object.assign({
         type: 'START_APP_FORM_REQUEST'
       }, state));
@@ -53,14 +55,16 @@ mapDispatchToProps = function(dispatch) {
     onClose: function(name, version) {
       return dispatch(newInstancePageCloseRequest(name, version));
     },
-    onStartInstance: function(appName, version, instanceName) {
-      return dispatch(startAppRequest(appName, version, instanceName));
+    onStartInstance: function(appName, version, instanceName, stateful) {
+      console.log('stateful', stateful)
+      return dispatch(startAppRequest(appName, version, instanceName, stateful));
     }
   };
 };
 
 mergeProps = function(stateProps, dispatchProps, ownProps) {
   var state;
+  console.log('stateProps',stateProps);
   state = {
     app: {
       name: stateProps.selectedAppName,
@@ -69,7 +73,8 @@ mergeProps = function(stateProps, dispatchProps, ownProps) {
     params: Object.assign({}, stateProps.appParams, {
       name: stateProps.name,
       bucket: stateProps.bucket,
-      appsearch: stateProps.appsearch
+      appsearch: stateProps.appsearch,
+      stateful: stateProps.stateful
     })
   };
   return Object.assign({}, stateProps, dispatchProps, ownProps, {
@@ -91,7 +96,7 @@ mergeProps = function(stateProps, dispatchProps, ownProps) {
     },
     onStartInstance: function() {
       console.log('state', state);
-      return dispatchProps.onStartInstance(state.app.name, state.app.version, state.params.name);
+      return dispatchProps.onStartInstance(state.app.name, state.app.version, state.params.name, state.params.stateful);
     }
   });
 };

@@ -86,7 +86,6 @@ export default createReactClass({
     }
   },
   renderWithData: function() {
-    console.log('instance props', this.props.instance)
     const avatarAndName = () => (
       <span>
         <img style={avatarStyle} src={this.props.instance.startedBy.picture} alt="" />

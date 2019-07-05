@@ -17,6 +17,13 @@ mapStateToProps = function(state, {params, location}) {
   query = location.query;
   selectedAppName = params.name || null;
   selectedAppVersion = params.version || null;
+  var selectedApp = _.find(state.collections.apps, {
+    name: selectedAppName,
+    version: selectedAppVersion
+  });
+  var buckets =(ref1 = state.collections.buckets) != null ? ref1.map(function(b) {
+      return b.name;
+    }): void 0;
   return {
     apps: (ref = state.collections.apps) != null ? ref.map(function(a) {
       return {
@@ -25,19 +32,17 @@ mapStateToProps = function(state, {params, location}) {
         version: a.version || []
       };
     }) : void 0,
-    buckets: (ref1 = state.collections.buckets) != null ? ref1.map(function(b) {
-      return b.name;
-    }) : void 0,
+    buckets: buckets,
     name: query != null ? query.name : void 0,
-    bucket: query != null ? query.bucket : void 0,
+    bucket: query.bucket != null ? query.bucket :
+      (buckets!=null ? buckets.find(bucket=>bucket===selectedAppName) : void 0),
     appsearch: query != null ? query.appsearch : void 0,
-    selectedApp: _.find(state.collections.apps, {
-      name: selectedAppName,
-      version: selectedAppVersion
-    }),
+    selectedApp: selectedApp,
     selectedAppName: selectedAppName,
     selectedAppVersion: selectedAppVersion,
-    stateful: query.stateful!=null ? query.stateful==='true' : true,
+    stateful: query.stateful!=null ? query.stateful==='true' : (selectedApp!=null?(selectedApp.dockerCompose
+      ? new RegExp(/(volumes:[\s ]+-)/g).test(selectedApp.dockerCompose)
+      : false): true),
     appParams: _.fromPairs(_.filter(_.toPairs(query), function([key]) {
       return key.match("^param_");
     }))
@@ -55,16 +60,14 @@ mapDispatchToProps = function(dispatch) {
     onClose: function(name, version) {
       return dispatch(newInstancePageCloseRequest(name, version));
     },
-    onStartInstance: function(appName, version, instanceName, stateful) {
-      console.log('stateful', stateful)
-      return dispatch(startAppRequest(appName, version, instanceName, stateful));
+    onStartInstance: function(appName, version, instanceName, stateful, bucket) {
+      return dispatch(startAppRequest(appName, version, instanceName, stateful, bucket));
     }
   };
 };
 
 mergeProps = function(stateProps, dispatchProps, ownProps) {
   var state;
-  console.log('stateProps',stateProps);
   state = {
     app: {
       name: stateProps.selectedAppName,
@@ -95,8 +98,7 @@ mergeProps = function(stateProps, dispatchProps, ownProps) {
       return dispatchProps.onClose(state.app.name, state.app.version);
     },
     onStartInstance: function() {
-      console.log('state', state);
-      return dispatchProps.onStartInstance(state.app.name, state.app.version, state.params.name, state.params.stateful);
+      return dispatchProps.onStartInstance(state.app.name, state.app.version, state.params.name, state.params.stateful, state.params.bucket);
     }
   });
 };

@@ -159,7 +159,7 @@ module.exports = createReactClass({
             {this.props.selectedApp &&
               !this.getAnyVolume() &&
 
-            (<Label colorIndex="light-3">Warning! No volumes were specified - instance will be stateless</Label>) ||
+            (<Label>Warning! No volumes were specified - instance will be stateless</Label>) ||
 
             (<fieldset>
               <Box direction="row" justify="between">

@@ -7,14 +7,16 @@ module.exports = {
       bigboatCompose: bigboatCompose
     };
   },
-  startAppRequest: function(appName, version, instanceName) {
+  startAppRequest: function(appName, version, instanceName, stateful, bucket) {
     return {
       type: 'START_APP_REQUEST',
       app: {
         name: appName,
         version: version
       },
-      instanceName: instanceName
+      instanceName: instanceName,
+      bucket: bucket,
+      stateful: stateful
     };
   },
   removeAppRequest: function(app) {

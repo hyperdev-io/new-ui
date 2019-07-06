@@ -27,8 +27,8 @@ mapStateToProps = function(state, { params }) {
   searchVal = ((ref = state.search) != null ? ref.bucket_search : void 0) || "";
   return {
     dataStore: {
-      total: (dsTotal = parseInt((ds != null ? ds.total : void 0) || 0, 10)),
-      used: (dsUsed = parseInt((ds != null ? ds.used : void 0) || 0, 10)),
+      total: (dsTotal = parseInt((ds != null ? ds[0].total : void 0) || 0, 10)),
+      used: (dsUsed = parseInt((ds != null ? ds[0].used : void 0) || 0, 10)),
       free: dsTotal - dsUsed
     },
     selectedBucket: params.name,

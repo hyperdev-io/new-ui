@@ -11,6 +11,7 @@ const {
   FormField,
   TextInput,
   Select,
+  Label,
   CheckBox,
   Anchor,
   Icons,
@@ -21,6 +22,10 @@ const createReactClass = require("create-react-class");
 module.exports = createReactClass({
   displayName: "NewInstancePage",
 
+  onPersistedStorageChange: function(evt) {
+    this.props.onStateChanged({ stateful: evt });
+  },
+
   getAppParams: function() {
     const params = this.props.selectedApp.dockerCompose
       ? this.props.selectedApp.dockerCompose.match(
@@ -28,6 +33,14 @@ module.exports = createReactClass({
         )
       : [];
     return _.uniq((params || []).map(p => p.replace("{{", "").trim()));
+  },
+
+  getAnyVolume: function() {
+    return this.props.selectedApp.dockerCompose
+      ? this.props.selectedApp.dockerCompose.match(
+        /(volumes:[\s ]+-)/g
+      )
+      : false;
   },
 
   getAppNameFromProps: function() {
@@ -141,30 +154,34 @@ module.exports = createReactClass({
               </FormField>
             </fieldset>
             {this.props.selectedApp &&
-              this.renderAppParams(this.getAppParams(), this.onParamChanged)}
+            this.renderAppParams(this.getAppParams(), this.onParamChanged)}
+            {this.props.selectedApp &&
+            !this.getAnyVolume() &&
 
-            <fieldset>
+            (<Label>Warning! No volumes were specified - instance will be stateless</Label>) ||
+
+            (<fieldset>
               <Box direction="row" justify="between">
                 <CheckBox
                   toggle={true}
-                  defaultChecked
+                  checked={this.props.stateful}
+                  onChange={(evt) => this.onPersistedStorageChange(evt.target.checked)}
                   label={
-                    <Heading style={{ paddingTop: 10 }} tag="h3">
+                    <Heading style={{paddingTop: 10}} tag="h3">
                       Persisted Storage
                     </Heading>
                   }
                 />
               </Box>
-
-              <FormField label="Storage bucket" size="medium">
+              {this.props.stateful && (<FormField label="Storage bucket" size="medium">
                 <Select
                   onSearch={() => console.log("search")}
                   value={this.props.bucket || this.props.name}
                   onChange={this.onBucketSelected}
                   options={this.props.buckets}
                 />
-              </FormField>
-            </fieldset>
+              </FormField>)}
+            </fieldset>)}
           </FormFields>
 
           <Footer pad={{ vertical: "medium" }}>

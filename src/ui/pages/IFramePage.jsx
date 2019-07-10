@@ -1,9 +1,10 @@
 import React from 'react';
 import { Button, Header, Icons, Menu, Sidebar, Split, Anchor } from 'grommet';
 
-export default ({ route: { iFramePath }}) => (
+export default ({ route: { iFramePath }, router}) => (
+
   <Split flex='left' priority='left' id='iframe-split'>
-    <iframe border="0" style={{width: '100%', height: '100%', border: 0}} src={iFramePath} scrolling="no" />
+    <iframe border="0" style={{width: '100%', height: '100%', border: 0}} src={`${iFramePath}${router.location.search}`} scrolling="no" />
     <Sidebar size='medium' colorIndex='light-2' direction='column'>
       <Header pad='medium' size='large' direction='column'>
       </Header>

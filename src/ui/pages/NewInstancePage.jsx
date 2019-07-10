@@ -5,17 +5,17 @@ const {
   Button,
   Heading,
   Header,
+  Headline,
   Footer,
   Form,
   FormFields,
   FormField,
   TextInput,
   Select,
-  Label,
   CheckBox,
   Anchor,
   Icons,
-  Notification
+  Icons: { Status, Base: { CircleInformation } },
 } = require("grommet");
 const createReactClass = require("create-react-class");
 
@@ -158,7 +158,17 @@ module.exports = createReactClass({
             {this.props.selectedApp &&
             !this.getAnyVolume() &&
 
-            (<Label>Warning! No volumes were specified - instance will be stateless</Label>) ||
+            (<React.Fragment>
+              <Box pad="small" direction="row" colorIndex="warning">
+                <Box pad="small" direction="column">
+                  <CircleInformation />
+                </Box>
+                <Box pad="small" flex direction="column">
+                  <Headline size="small" style={{fontSize:'1.3rem'}}>The instance will not be persisted.</Headline>
+                  <Box>The application does not define any volumes.</Box>
+                </Box>
+              </Box>
+            </React.Fragment>) ||
 
             (<fieldset>
               <Box direction="row" justify="between">

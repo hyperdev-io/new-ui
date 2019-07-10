@@ -125,7 +125,7 @@ export default ({ getState, dispatch }) => {
             action.app.name,
             action.app.version,
             {},
-            {storageBucket: action.instanceName}
+            {storageBucket: action.bucket}
           );
           break;
         }

@@ -177,14 +177,14 @@ export default createReactClass({
           <Section pad="medium">
             <List>
               {li("Application", appWithLink())}
-              {this.props.instance.storageBucket &&
-                li(
-                  "Storage bucket",
-                  iconLink(
-                    this.props.instance.storageBucket,
-                    this.props.onOpenBucketPage
-                  )
-                )}
+              {li(
+                "Storage bucket",
+                this.props.instance.storageBucket?
+                iconLink(
+                  this.props.instance.storageBucket,
+                  this.props.onOpenBucketPage
+                ):"Stateless (not persisted)"
+              )}
               {li("Started by", avatarAndName())}
             </List>
           </Section>

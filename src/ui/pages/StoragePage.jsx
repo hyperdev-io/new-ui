@@ -17,7 +17,7 @@ import DataStoreUsageMeter from '../viz/DataStoreUsageMeter';
 import BucketCopyLayer from '../layers/BucketCopyLayer';
 import BucketRemoveLayer from '../layers/BucketRemoveLayer';
 
-const filterFun = (search) => (bucket) => bucket.name.match(search);
+const filterFun = (search) => (bucket) => bucket.name.toLowerCase().match(search.toLowerCase());
 
 const BucketsList = ({ items }) => (
   <List

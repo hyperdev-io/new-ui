@@ -3,7 +3,7 @@ import { Button, Box, Header, Split, Sidebar, Icons, Menu, ListItem, List } from
 import createReactClass from 'create-react-class';
 import FilterableItemsPage from '../FilterableItemsPage';
 
-const filterFun = (search) => (item) => item.name.match(search) || item.version.match(search);
+const filterFun = (search) => (item) => item.name.toLowerCase().match(search.toLowerCase()) || item.version.toLowerCase().match(search.toLowerCase());
 
 const AppsList = ({ items, onSelect }) => (
   <List

@@ -41,7 +41,7 @@ const InstancesView = ({ items }) => {
   )
 };
 
-const filterFun = (search) => (item) => item.name.match(search) || item.state.match(search);
+const filterFun = (search) => (item) => item.name.toLowerCase().match(search.toLowerCase()) || item.state.toLowerCase().match(search.toLowerCase());
 
 export default ({ instances }) => (
   <FilterableItemsPage title="Instances" items={instances} filterFun={filterFun}>

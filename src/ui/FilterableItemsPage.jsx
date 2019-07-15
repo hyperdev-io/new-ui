@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Article, Box, Header, Search, Title } from 'grommet';
+import { Article, Box, Header, Search, Title, Anchor } from 'grommet';
 import FilterControl from 'grommet-addons/components/FilterControl';
 
 export default ({ title, items = [], filterFun, children }) => {
@@ -29,12 +29,24 @@ export default ({ title, items = [], filterFun, children }) => {
       {searchValue.length > 0 && filteredItems.length >= 8 && (
         <Box textAlign="center" pad="large">
           This list is filtered by <strong>&ldquo;{searchValue}&rdquo;</strong>
+          <Anchor
+            onClick={() => setSearchValue('')}
+            label={
+              <span style={{ fontSize: 16, fontWeight: "normal" }}>Clear</span>
+            }
+          />
         </Box>
       )}
       {React.Children.map(children, child => React.cloneElement(child, { items: filteredItems }))}
       {searchValue.length > 0 && (
         <Box textAlign="center" pad="large">
           This list is filtered by <strong>&ldquo;{searchValue}&rdquo;</strong>
+          <Anchor
+            onClick={() => setSearchValue('')}
+            label={
+              <span style={{ fontSize: 16, fontWeight: "normal" }}>Clear</span>
+            }
+          />
         </Box>
       )}
     </Article>

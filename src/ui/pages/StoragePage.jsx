@@ -19,7 +19,7 @@ import BucketRemoveLayer from '../layers/BucketRemoveLayer';
 
 const filterFun = (search) => (bucket) => bucket.name.toLowerCase().match(search.toLowerCase());
 
-const BucketsList = ({ items }) => (
+const BucketsList = ({ items, instances }) => (
   <List
     selectable={true}
   >
@@ -27,6 +27,10 @@ const BucketsList = ({ items }) => (
       <ListItem key={bucket._id} pad="medium" justify="between" align="center">
         <Box direction="column" pad="none">
           <span style={{ fontSize: 20 }}>{bucket.name}</span>
+          <Box direction="row">
+            {bucket.instances.length>0 && (<span>Used by: {bucket.instances.map(instance=> instance.name).join(", ")}</span> )}
+            {bucket.instances.length==0 && (<span>Not used</span>)}
+          </Box>
         </Box>
         <Box direction="row" pad="none" align="center">
           <span style={{ paddingRight: 20 }}>{filesize(bucket.size || 0)}</span>

@@ -22,9 +22,22 @@ _ = require("lodash");
 } = require("../../../redux/actions/buckets"));
 
 mapStateToProps = function(state, { params }) {
-  var ds, dsTotal, dsUsed, ref, ref1, searchVal;
+  var ds, dsTotal, dsUsed, ref, ref1, searchVal, buckets, instances;
   ds = state.collections.dataStore;
+  instances = state.collections ? state.collections.instances : [];
   searchVal = ((ref = state.search) != null ? ref.bucket_search : void 0) || "";
+  buckets = _.filter(state.collections.buckets, function (bucket) {
+    var ref2;
+    return (ref2 = bucket.name) != null ? ref2.match(searchVal) : void 0;
+  });
+  buckets.map(bucket => {
+    bucket.instances = [];
+    instances ? instances.map(instance => {
+      if (instance.storageBucket === bucket.name) {
+        bucket.instances.push(instance);
+      }
+    }) : void 0;
+  });
   return {
     dataStore: {
       total: (dsTotal = parseInt((ds != null ? ds[0].total : void 0) || 0, 10)),
@@ -37,11 +50,8 @@ mapStateToProps = function(state, { params }) {
     searchValue: searchVal,
     totalResults:
       ((ref1 = state.collections.buckets) != null ? ref1.length : void 0) || 0,
-    buckets: _.filter(state.collections.buckets, function(bucket) {
-      var ref2;
-      return (ref2 = bucket.name) != null ? ref2.match(searchVal) : void 0;
-    })
-  };
+    buckets: buckets
+  }
 };
 
 mapDispatchToProps = function(dispatch) {

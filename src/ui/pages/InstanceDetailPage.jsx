@@ -54,6 +54,7 @@ export default createReactClass({
     document.body.removeChild(element);
   },
   render: function() {
+    console.log('this.props.instance.services',this.props)
     if (this.props.notFound) {
       return (
         <Box

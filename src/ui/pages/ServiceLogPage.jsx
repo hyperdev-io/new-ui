@@ -15,13 +15,19 @@ module.exports = createReactClass({
     const location = window.location;
     var uri = `${location.protocol}//${location.host}/api/event-stream?serviceName=swarm-${this.props.params.name}_${this.props.params.service}`;
     source = new EventSource(uri);
-    this.setState({source: source})
+    this.setState({source: source});
+    source.addEventListener("ping", function(e) {
+      console.log('ping')
+    }, false);
     source.addEventListener('message', (e) => {
       var messageData = e.data;
       var {log}=this.state;
       var match = messageData.includes('\\n');
+      if (messageData==='hb'){
+        return
+      }
       if (match) {
-        messageData = messageData.split('\\n')
+        messageData = messageData.split('\\n');
         log = log.concat(messageData);
       } else {
         log.push(messageData);

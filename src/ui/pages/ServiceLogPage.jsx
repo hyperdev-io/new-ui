@@ -2,6 +2,7 @@ const React = require("react");
 const DetailPage = require("../DetailPage");
 const { Box, Button, Paragraph } = require("grommet");
 const createReactClass = require("create-react-class");
+const Anser = require("anser");
 
 module.exports = createReactClass({
   displayName: "ServiceLogPage",
@@ -17,7 +18,7 @@ module.exports = createReactClass({
     source = new EventSource(uri);
     this.setState({source: source});
     source.addEventListener("ping", function(e) {
-      console.log('ping')
+      //keep connection
     }, false);
     source.addEventListener('message', (e) => {
       var messageData = e.data;
@@ -71,14 +72,15 @@ module.exports = createReactClass({
     } else return this.renderWithData();
   },
   renderWithData: function() {
+    function createMarkup(line) {
+      return {__html: Anser.ansiToHtml(JSON.parse('"' + line + '"'))};
+    }
     return (
       <DetailPage title={this.props.title}>
         <Box full="vertical" pad="medium" style={{ backgroundColor: "black", color: "lightgrey", }} className="terminal-font">
           {this.state.log &&
             this.state.log.map((line, i) => (
-              <span key={i} style={{ whiteSpace: "pre-line" }}>
-                {line}
-              </span>
+              <div dangerouslySetInnerHTML={createMarkup(line)} />
             ))}
         </Box>
       </DetailPage>

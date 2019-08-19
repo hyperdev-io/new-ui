@@ -23,16 +23,9 @@ module.exports = createReactClass({
     source.addEventListener('message', (e) => {
       var messageData = e.data;
       var {log}=this.state;
-      var match = messageData.includes('\\n');
-      if (messageData==='hb'){
-        return
-      }
-      if (match) {
-        messageData = messageData.split('\\n');
-        log = log.concat(messageData);
-      } else {
-        log.push(messageData);
-      }
+      console.log(messageData,(messageData.match(/\\n/g) || '').length);
+      messageData = messageData.split('\\n');
+      log = log.concat(messageData);
       this.setState({log: log})
     });
   },
@@ -79,9 +72,12 @@ module.exports = createReactClass({
       <DetailPage title={this.props.title}>
         <Box full="vertical" pad="medium" style={{ backgroundColor: "black", color: "lightgrey", }} className="terminal-font">
           {this.state.log &&
-            this.state.log.map((line, i) => (
-              <div dangerouslySetInnerHTML={createMarkup(line)} />
-            ))}
+            this.state.log.map((line, i) => {
+              if (this.state.log.length-1===i){
+                document.querySelector(".grommetux-split__column--flex").scrollTop = document.querySelector(".grommetux-split__column--flex").scrollHeight
+              }
+              return <div key={i} dangerouslySetInnerHTML={createMarkup(line)} />
+          })}
         </Box>
       </DetailPage>
     );

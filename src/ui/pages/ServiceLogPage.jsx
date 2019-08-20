@@ -8,7 +8,7 @@ module.exports = createReactClass({
   displayName: "ServiceLogPage",
 
   getInitialState() {
-    return {log: []};
+    return {log: [], doScrolling: true};
   },
 
   componentDidMount: function() {
@@ -23,16 +23,34 @@ module.exports = createReactClass({
     source.addEventListener('message', (e) => {
       var messageData = e.data;
       var {log}=this.state;
-      console.log(messageData,(messageData.match(/\\n/g) || '').length);
       messageData = messageData.split('\\n');
       log = log.concat(messageData);
       this.setState({log: log})
+      setTimeout(() => this.setState({doScrolling: false}), 1000);
     });
   },
 
   componentWillUnmount: function() {
     const { source } = this.state
     source.close();
+  },
+
+  startDownloadLogs: function() {
+    const location = window.location;
+    var uri = `${location.protocol}//${location.host}/api/log-download?serviceName=swarm-${this.props.params.name}_${this.props.params.service}`;
+    var saveData = (function () {
+      var a = document.createElement("a");
+      document.body.appendChild(a);
+      a.style = "display: none";
+      return function (uri) {
+        a.href = uri;
+        a.download = 'fileName';
+        a.click();
+        window.URL.revokeObjectURL(uri);
+      };
+    }());
+
+    saveData(uri);
   },
 
   render: function() {
@@ -65,15 +83,21 @@ module.exports = createReactClass({
     } else return this.renderWithData();
   },
   renderWithData: function() {
+    var {doScrolling} = this.state;
     function createMarkup(line) {
       return {__html: Anser.ansiToHtml(JSON.parse('"' + line + '"'))};
     }
     return (
       <DetailPage title={this.props.title}>
+        <Button
+            label="Take me to the instances"
+            primary={true}
+            onClick={()=>this.startDownloadLogs()}
+        />
         <Box full="vertical" pad="medium" style={{ backgroundColor: "black", color: "lightgrey", }} className="terminal-font">
           {this.state.log &&
             this.state.log.map((line, i) => {
-              if (this.state.log.length-1===i){
+              if (this.state.log.length-1===i && this.state.log.length<1000 && this.state.log.length>100 && doScrolling){
                 document.querySelector(".grommetux-split__column--flex").scrollTop = document.querySelector(".grommetux-split__column--flex").scrollHeight
               }
               return <div key={i} dangerouslySetInnerHTML={createMarkup(line)} />

@@ -20,6 +20,11 @@ mapStateToProps = function(state) {
     items: _.filter(state.collections.apps, function(app) {
       var ref2, ref3;
       return ((ref2 = app.name) != null ? ref2.match(searchVal) : void 0) || ((ref3 = app.version) != null ? ref3.match(searchVal) : void 0);
+    }).sort((a, b) => {
+      if (a.name === b.name) {
+        return a.version < b.version ? -1 : 1
+      }
+      return a.name < b.name ? -1 : 1
     })
   };
 };

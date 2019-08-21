@@ -90,7 +90,7 @@ module.exports = createReactClass({
     return (
       <DetailPage title={this.props.title}>
         <Button
-            label="Take me to the instances"
+            label="download"
             primary={true}
             onClick={()=>this.startDownloadLogs()}
         />

@@ -53,6 +53,24 @@ export default createReactClass({
     document.execCommand("copy");
     document.body.removeChild(element);
   },
+  startDownloadLogs: function(serviceName) {
+    const location = window.location;
+    console.log(this.props)
+    var uri = `${location.protocol}//${location.host}/api/log-download?serviceName=swarm-${this.props.params.name}_${serviceName}`;
+    var saveData = (function () {
+      var a = document.createElement("a");
+      document.body.appendChild(a);
+      a.style = "display: none";
+      return function (uri) {
+        a.href = uri;
+        a.download = 'fileName';
+        a.click();
+        window.URL.revokeObjectURL(uri);
+      };
+    }());
+
+    saveData(uri);
+  },
   render: function() {
     console.log('this.props.instance.services',this.props)
     if (this.props.notFound) {
@@ -243,6 +261,14 @@ export default createReactClass({
                       </span>
                     }
                   />
+                  <Anchor
+                    reverse={true}
+                    label={
+                      <Icons.Base.Download/>
+                    }
+                    onClick={()=>this.startDownloadLogs(service.name)}
+                  />
+
                 </Box>
               </Header>
               <List>

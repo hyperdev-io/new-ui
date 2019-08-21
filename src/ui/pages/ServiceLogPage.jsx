@@ -35,24 +35,6 @@ module.exports = createReactClass({
     source.close();
   },
 
-  startDownloadLogs: function() {
-    const location = window.location;
-    var uri = `${location.protocol}//${location.host}/api/log-download?serviceName=swarm-${this.props.params.name}_${this.props.params.service}`;
-    var saveData = (function () {
-      var a = document.createElement("a");
-      document.body.appendChild(a);
-      a.style = "display: none";
-      return function (uri) {
-        a.href = uri;
-        a.download = 'fileName';
-        a.click();
-        window.URL.revokeObjectURL(uri);
-      };
-    }());
-
-    saveData(uri);
-  },
-
   render: function() {
     if (this.props.notFound) {
       return (
@@ -89,11 +71,6 @@ module.exports = createReactClass({
     }
     return (
       <DetailPage title={this.props.title}>
-        <Button
-            label="download"
-            primary={true}
-            onClick={()=>this.startDownloadLogs()}
-        />
         <Box full="vertical" pad="medium" style={{ backgroundColor: "black", color: "lightgrey", }} className="terminal-font">
           {this.state.log &&
             this.state.log.map((line, i) => {

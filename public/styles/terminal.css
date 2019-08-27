@@ -83,6 +83,9 @@
 .terminal .terminal-output .prompt {
   color: rgba(255,255,255,0.5);
 }
+.terminal-font{
+  font-family: "Courier New", Courier, monospace;
+}
 /* Typography ***********/
 .terminal .terminal-output, .terminal .terminal-output pre, .terminal .terminal-output kbd {
   font-family: 'Source Code Pro' !important;

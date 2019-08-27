@@ -12,6 +12,7 @@ module.exports = createReactClass({
   },
 
   componentDidMount: function() {
+    console.log(this.props.params);
     var source;
     const location = window.location;
     var uri = `${location.protocol}//${location.host}/api/event-stream?serviceName=swarm-${this.props.params.name}_${this.props.params.service}`;
